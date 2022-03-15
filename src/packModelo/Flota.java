@@ -1,11 +1,15 @@
 package packModelo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class Flota {
 
 	private Casilla[][] tablero;
 	private ListaArmas armamento;
 	private Double presupuesto;
 	private int numBarcos;
+	private ArrayList<Barco> listaBarcos;
 
 	public Flota() {
 		// TODO - implement Flota.Flota
@@ -31,14 +35,13 @@ public class Flota {
 	 * 
 	 * @param Coordenada
 	 */
-	private Barco buscarBarco(pcord Coordenada) {
+	private Barco buscarBarco(Coordenada pcord ) {
 		// TODO - implement Flota.buscarBarco
 		throw new UnsupportedOperationException();
 	}
 
 	private Iterator<Barco> obtIterador() {
-		// TODO - implement Flota.obtIterador
-		throw new UnsupportedOperationException();
+		return this.listaBarcos.iterator();
 	}
 
 }
