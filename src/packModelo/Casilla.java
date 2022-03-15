@@ -2,17 +2,15 @@ package packModelo;
 
 public class Casilla {
 
-	private string estado;
+	private String estado;
 	private Coordenada posicion;
 
-	public Casilla() {
-		// TODO - implement Casilla.Casilla
-		throw new UnsupportedOperationException();
+	public Casilla(Coordenada pCoordenada) {
+		posicion= pCoordenada;
 	}
 
 	public boolean esDisparada() {
-		// TODO - implement Casilla.esDisparada
-		throw new UnsupportedOperationException();
+		return estado.equals("aqui hay que que estado esta");
 	}
 
 }
