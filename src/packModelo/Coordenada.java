@@ -5,29 +5,26 @@ public class Coordenada {
 	private int coordX;
 	private int coordY;
 
-	public Coordenada() {
-		// TODO - implement Coordenada.Coordenada
-		throw new UnsupportedOperationException();
+	public Coordenada(int pX, int pY) {
+		
+		this.coordX = pX;
+		this.coordY = pY;
 	}
 
 	public int getX() {
-		// TODO - implement Coordenada.getX
-		throw new UnsupportedOperationException();
+		return this.coordX;
 	}
 
 	public int getY() {
-		// TODO - implement Coordenada.getY
-		throw new UnsupportedOperationException();
+		return this.coordY;
 	}
 
-	public int setX() {
-		// TODO - implement Coordenada.setX
-		throw new UnsupportedOperationException();
+	public void setX(int pX) {
+		this.coordX = pX;
 	}
 
-	public int setY() {
-		// TODO - implement Coordenada.setY
-		throw new UnsupportedOperationException();
+	public void setY(int pY) {
+		this.coordY = pY;
 	}
 
 }

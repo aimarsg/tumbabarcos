@@ -10,7 +10,7 @@ public class Arma {
 
 	public double getPrecio() {
 		// TODO - implement Arma.getPrecio
-		throw new UnsupportedOperationException();
+		return precio;
 	}
 
 }

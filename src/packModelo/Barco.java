@@ -1,8 +1,10 @@
 package packModelo;
 
+import java.util.ArrayList;
+
 public class Barco {
 
-	private Coleccion<Casilla> casillasOcupadas;
+	private ArrayList<Casilla> casillasOcupadas;
 	private int contLibres;
 	private boolean hundido;
 	private String nombre;
@@ -16,7 +18,7 @@ public class Barco {
 	 * 
 	 * @param Coordenada
 	 */
-	public boolean tieneCordenada(pcord Coordenada) {
+	public boolean tieneCordenada(Coordenada pCord) {
 		// TODO - implement Barco.tieneCordenada
 		throw new UnsupportedOperationException();
 	}
@@ -25,7 +27,7 @@ public class Barco {
 	 * 
 	 * @param Double
 	 */
-	public double reparBarco(psaldo Double) {
+	public double reparBarco(Double pSaldo) {
 		// TODO - implement Barco.reparBarco
 		throw new UnsupportedOperationException();
 	}
