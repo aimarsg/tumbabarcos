@@ -2,6 +2,7 @@ package packVista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.JFrame;
@@ -39,5 +40,12 @@ public class Vista extends JFrame implements Observer{
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 
 }
