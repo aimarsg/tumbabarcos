@@ -2,6 +2,8 @@ package packVista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -12,6 +14,7 @@ import javax.swing.border.EmptyBorder;
 public class Vista extends JFrame implements Observer{
 
 	private JPanel contentPane;
+	private Controler controler = null;
 
 	/**
 	 * Launch the application.
@@ -45,6 +48,25 @@ public class Vista extends JFrame implements Observer{
 	public void update(Observable o, Object arg) {
 		// TODO Auto-generated method stub
 		
+	}
+	private Controler getControler() {
+		if(controler==null) {
+			controler = new Controler();
+		}
+		return controler;
+	}
+	private class Controler implements ActionListener{
+		public void actionPerfromed(ActionEvent e) {
+			if(e.getSource().equals("Aqui hay que poner el nombre del boton")) {
+				//aqui lo que pasa con el boton
+			}
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 	}
 	
 
