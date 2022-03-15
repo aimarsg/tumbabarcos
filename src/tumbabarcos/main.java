@@ -6,4 +6,7 @@ public class main {
 	//xddx
 	//otro comment
      // va
+	public static void main(String args[]) {
+		System.out.println("q onda");
+	}
 }
