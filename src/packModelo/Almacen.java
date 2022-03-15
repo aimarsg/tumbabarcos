@@ -1,17 +1,21 @@
 package packModelo;
 
+import java.util.ArrayList;
+
 public class Almacen {
 
-	private Almacen miAlmacen;
-	private ListaArmas armas;
+	private static Almacen miAlmacen;
+	private ArrayList<Arma> armas;
 
-	public Almacen getAlmacen() {
-		// TODO - implement Almacen.getAlmacen
-		throw new UnsupportedOperationException();
+	public static Almacen getAlmacen() {
+		if(miAlmacen==null) {
+			miAlmacen= new Almacen();
+		}
+		return miAlmacen;
 	}
 
 	private Almacen() {
-		// TODO - implement Almacen.Almacen
+		armas = new ArrayList<Arma>();
 		throw new UnsupportedOperationException();
 	}
 
@@ -20,7 +24,7 @@ public class Almacen {
 	 * @param Double
 	 * @param String
 	 */
-	public double Comprar(pSaldo Double, arma String) {
+	public double Comprar(Double pSaldo,String pArma) {
 		// TODO - implement Almacen.Comprar
 		throw new UnsupportedOperationException();
 	}
