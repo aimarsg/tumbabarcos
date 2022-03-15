@@ -1,8 +1,11 @@
 package packModelo;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+
 public class ListaArmas {
 
-	private Coleccion<Arma> listaArmas;
+	private ArrayList<Arma> listaArmas;
 
 	public ListaArmas() {
 		// TODO - implement ListaArmas.ListaArmas
@@ -13,22 +16,22 @@ public class ListaArmas {
 	 * 
 	 * @param Arma
 	 */
-	public void anadirArma(pArma Arma) {
+	public void anadirArma( Arma pArma) {
 		// TODO - implement ListaArmas.anadirArma
 		throw new UnsupportedOperationException();
 	}
 
 	private Iterator<Arma> obtIterador() {
 		// TODO - implement ListaArmas.obtIterador
-		throw new UnsupportedOperationException();
-	}
+		return this.listaArmas.iterator();
+		}
 
 	/**
 	 * 
 	 * @param Double
 	 * @param String
 	 */
-	public double comprar(pSaldo Double, arma String) {
+	public double comprar( Double pSaldo,  String arma) {
 		// TODO - implement ListaArmas.comprar
 		throw new UnsupportedOperationException();
 	}
@@ -37,7 +40,7 @@ public class ListaArmas {
 	 * 
 	 * @param String
 	 */
-	private Arma buscarArma(nombre String) {
+	private Arma buscarArma( String nombre) {
 		// TODO - implement ListaArmas.buscarArma
 		throw new UnsupportedOperationException();
 	}

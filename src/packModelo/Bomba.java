@@ -12,8 +12,9 @@ public class Bomba extends Arma {
 	 * @param Coordenada
 	 */
 	public void lanzar(Coordenada pCord) {
-		// TODO - implement Bomba.lanzar
+		// TODO - implement Bomba.lanza 
 		throw new UnsupportedOperationException();
 	}
+	
 
 }
