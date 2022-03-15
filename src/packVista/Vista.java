@@ -2,12 +2,13 @@ package packVista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class Vista extends JFrame {
+public class Vista extends JFrame implements Observer{
 
 	private JPanel contentPane;
 
