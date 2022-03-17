@@ -9,6 +9,7 @@ import java.util.Observer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
@@ -102,15 +103,16 @@ public class Vista extends JFrame implements Observer{
 		if (pT==0) {
 			lblNewLabel = new JLabel("  ");
 		}else {
-			lblNewLabel = new JLabel("    "+pT);
+			lblNewLabel = new JLabel(""+pT);
 		}   
-       
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		return lblNewLabel; 
 	}
 	private JLabel clblLetras(int pL) {
 		char asci = (char) pL;
 		String ascii = String.valueOf(asci);
-		JLabel lblNewLabel = new JLabel("  "+ascii);
+		JLabel lblNewLabel = new JLabel(ascii);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
         return lblNewLabel; 
 	}
 	private void crearButtons() {
