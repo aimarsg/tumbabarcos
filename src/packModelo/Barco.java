@@ -2,7 +2,7 @@ package packModelo;
 
 import java.util.ArrayList;
 
-public class Barco {
+public abstract class Barco {
 
 	private ArrayList<Casilla> casillasOcupadas;
 	private int contLibres;
@@ -36,5 +36,6 @@ public class Barco {
 		// TODO - implement Barco.esTocado
 		throw new UnsupportedOperationException();
 	}
+	public abstract void colocarBarco();
 
 }

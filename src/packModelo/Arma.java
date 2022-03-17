@@ -1,5 +1,5 @@
 package packModelo;
-public class Arma {
+public abstract class Arma {
 
 	private Double precio;
 

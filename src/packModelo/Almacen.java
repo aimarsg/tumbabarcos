@@ -28,5 +28,12 @@ public class Almacen {
 		// TODO - implement Almacen.Comprar
 		throw new UnsupportedOperationException();
 	}
+	public void anadirArma(Arma pArma) {
+		armas.add(pArma);
+	}
+	public Arma generarArma(String pTipo) {
+		return null;
+		
+	}
 
 }
