@@ -18,7 +18,7 @@ public class Almacen {
 		armas = new ArrayList<Arma>();
 		throw new UnsupportedOperationException();
 	}
-
+	
 	/**
 	 * 
 	 * @param Double
