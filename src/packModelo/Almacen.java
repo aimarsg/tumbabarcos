@@ -33,7 +33,6 @@ public class Almacen {
 	}
 	public Arma generarArma(String pTipo) {
 		return null;
-		
 	}
 
 }
