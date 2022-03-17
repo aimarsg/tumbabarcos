@@ -19,7 +19,8 @@ public class Vista extends JFrame implements Observer{
 
 	private JPanel contentPane;
 	private Controler controler = null;
-
+	private JPanel flotaJugador;
+	private JPanel flotaOrdenador;
 	/**
 	 * Launch the application.
 	 */
@@ -47,13 +48,13 @@ public class Vista extends JFrame implements Observer{
 		setContentPane(contentPane);
 		contentPane.setLayout(new GridLayout(2, 2, 0, 0));
 		
-		JPanel panel = new JPanel();
-		contentPane.add(panel);
-		panel.setLayout(new GridLayout(11, 11, 0, 0));
+		flotaJugador = new JPanel();
+		contentPane.add(flotaJugador);
+		flotaJugador.setLayout(new GridLayout(11, 11, 0, 0));
 		
-		JPanel panel_1 = new JPanel();
-		contentPane.add(panel_1);
-		panel_1.setLayout(new GridLayout(11, 11, 0, 0));
+		flotaOrdenador = new JPanel();
+		contentPane.add(flotaOrdenador);
+		flotaOrdenador.setLayout(new GridLayout(11, 11, 0, 0));
 		
 		JPanel panel_2 = new JPanel();
 		contentPane.add(panel_2);
@@ -62,6 +63,7 @@ public class Vista extends JFrame implements Observer{
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		crearButtons();
 	}
 
 	@Override
@@ -88,6 +90,54 @@ public class Vista extends JFrame implements Observer{
 			
 		}
 	}
+	private JButton cbt(int i, int j) { //parámetros de entrada
+        JButton btnNewButton = new JButton(); //texto del botón
+      btnNewButton.addActionListener(getControler());
+        return btnNewButton;
+        }
+	
+	
+	private JLabel clbl(int pT) {
+		 JLabel lblNewLabel;
+		if (pT==0) {
+			lblNewLabel = new JLabel("  ");
+		}else {
+			lblNewLabel = new JLabel("    "+pT);
+		}   
+       
+		return lblNewLabel; 
+	}
+	private JLabel clblLetras(int pL) {
+		char asci = (char) pL;
+		String ascii = String.valueOf(asci);
+		JLabel lblNewLabel = new JLabel("  "+ascii);
+        return lblNewLabel; 
+	}
+	private void crearButtons() {
+        int i,j;
+        for(i=0; i<11;i++) {
+            for(j=0; j<11;j++) {
+            	if(i==0 && j==0) {
+            		flotaJugador.add(clbl(0),BorderLayout.CENTER,i*11+j);
+            		flotaOrdenador.add(clbl(0),BorderLayout.CENTER,i*11+j);
+            	}else {
+            	if(i==0 && j>0) {
+            		flotaJugador.add(clbl(j),BorderLayout.CENTER,i*11+j);
+            		flotaOrdenador.add(clbl(j),BorderLayout.CENTER,i*11+j);
+            	}else {
+            		if(j==0 && i>0) {
+            			flotaJugador.add(clblLetras(i+64),BorderLayout.CENTER,i*11+j);
+                		flotaOrdenador.add(clblLetras(i+64),BorderLayout.CENTER,i*11+j);
+            		}else {
+            			flotaJugador.add(cbt(i,j), BorderLayout.CENTER, i*11+j);
+            			flotaOrdenador.add(cbt( i, j), BorderLayout.CENTER, i*11+j);
+            		}
+            	}
+            }
+           }
+        }
+    }
+
 	
 
 }
