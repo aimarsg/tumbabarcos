@@ -10,6 +10,10 @@ import java.util.Observer;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.GridLayout;
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 public class Vista extends JFrame implements Observer{
 
@@ -37,11 +41,27 @@ public class Vista extends JFrame implements Observer{
 	 */
 	public Vista() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 729, 618);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+		contentPane.setLayout(new GridLayout(2, 2, 0, 0));
+		
+		JPanel panel = new JPanel();
+		contentPane.add(panel);
+		panel.setLayout(new GridLayout(11, 11, 0, 0));
+		
+		JPanel panel_1 = new JPanel();
+		contentPane.add(panel_1);
+		panel_1.setLayout(new GridLayout(11, 11, 0, 0));
+		
+		JPanel panel_2 = new JPanel();
+		contentPane.add(panel_2);
+		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		JPanel panel_3 = new JPanel();
+		contentPane.add(panel_3);
+		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
 	}
 
 	@Override
