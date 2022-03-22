@@ -9,10 +9,10 @@ public class Casilla {
 		posicion= pCoordenada;
 	}
 
-	public String CombrobarEstado() {
+	public String combrobarEstado() {
 		return estado;
 	}
-	public void CambiarEstado(String pEstado){
+	public void cambiarEstado(String pEstado){
 		estado= pEstado;
 	}
 }
