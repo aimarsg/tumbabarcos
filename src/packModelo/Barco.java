@@ -36,6 +36,6 @@ public abstract class Barco {
 		// TODO - implement Barco.esTocado
 		throw new UnsupportedOperationException();
 	}
-	public abstract void colocarBarco();
+	public abstract void colocarBarco(Coordenada pCoordenada, boolean pHorizontal);
 
 }
