@@ -34,6 +34,7 @@ public class Flota extends Observable{
 					listaBarcos.remove(nuevo);
 					barcosColocados.add(nuevo);
 					//notifyObservers
+					System.out.println("se coloca");
 					setChanged();
 					notifyObservers(pCord);
 					
@@ -46,6 +47,29 @@ public class Flota extends Observable{
 		}
 	}
 
+	public boolean disparar(Coordenada pCoordenada){
+		boolean tocado= false;
+		
+		Casilla casillaActual = tablero[pCoordenada.getX()][pCoordenada.getY()];
+		
+		String estado=casillaActual.combrobarEstado();
+		
+		if (estado.equals("Disparado")||estado.equals("Tocado")) {
+			setChanged();
+			notifyObservers("Has disparado a una casilla ya disparada")
+		}else{
+			
+		if(estado.equals("Barco")){
+			casillaActual.cambiarEstado("Tocado");
+			setChanged();
+			notifyObservers(pCoordenada);
+		}else{
+			casillaActual.cambiarEstado("Disparado");
+			}
+		}
+		
+		return tocado;
+	}
 	public void inicializarFlota() {
 		
 		for (int i = 0; i<10; i++) {

@@ -6,6 +6,10 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -26,11 +30,14 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
+import javax.swing.BorderFactory;
+import javax.swing.JTextField;
 
 public class Vista extends JFrame implements Observer{
 
 	private JPanel contentPane;
 	private Controler controler = null;
+	private MouseControler mouseC = null;
 	private JPanel flotaJugador;
 	private JPanel flotaOrdenador;
 	private JRadioButton Destructores;
@@ -38,9 +45,11 @@ public class Vista extends JFrame implements Observer{
 	private JRadioButton Submarinos;
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JRadioButton Disparar;
+	private JButton Disparar;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	
+	private JTextField textField;
+	private ArrayList<JLabel> labelsUsuario ;
+	private ArrayList<JLabel> labelsIA;
 	/**
 	 * Launch the application.
 	 */
@@ -62,8 +71,9 @@ public class Vista extends JFrame implements Observer{
 	 */
 	public Vista() {
 		Modelo.getModelo().getFlotaUsuario().addObserver(this);
-		
-		
+		this.labelsUsuario = new ArrayList<JLabel>();
+		this.labelsIA = new ArrayList<JLabel>();
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 729, 618);
 		contentPane = new JPanel();
@@ -108,58 +118,46 @@ public class Vista extends JFrame implements Observer{
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
 		
-		Disparar = new JRadioButton("Disparar");
-		buttonGroup_1.add(Disparar);
+		Disparar = new JButton("Disparar");
 		panel_3.add(Disparar);
+		Disparar.addActionListener(getControler());
+		
+		textField = new JTextField();
+		panel_3.add(textField);
+		textField.setColumns(10);
+		
+		
 		crearButtons();
 	}
 
-	@Override
-	public void update(Observable o, Object arg) {
-		// TODO Auto-generated method stub
+	private Iterator<JLabel> getIteradorUsuario(){
+		return this.labelsUsuario.iterator();
+	}
+
+	
+	
 		
-	}
-	private Controler getControler() {
-		if(controler==null) {
-			controler = new Controler();
-		}
-		return controler;
-	}
-	private class Controler implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			if(e.getSource().equals(PortaAviones)) {
-				System.out.println("Se ha ");
-				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(1,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
-			}
-			if(e.getSource().equals(Submarinos)) {
-				System.out.println("Se ha añadidio submarino ");
-				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(3,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
-			}
-			if(e.getSource().equals(Destructores)) {
-				System.out.println("Se ha pulsado destructores");
-				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(5,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
-			}
-			if(e.getSource().equals(Fragatas)) {
-				System.out.println("Se ha añadidio una fragata");
-				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(4,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
-			}
-		}
-		
-	}
-	private JButton cbt(int i, int j) { //parámetros de entrada
+	
+	/*private JButton cbt(int i, int j) { //parámetros de entrada
         JButton btnNewButton = new JButton(); //texto del botón
       btnNewButton.addActionListener(getControler());
         return btnNewButton;
         }
-	
+	*/
+	private JLabel cbt(boolean usuario) { //parámetros de entrada
+		JLabel nuevo = new JLabel();
+		nuevo.setBorder(BorderFactory.createLineBorder(Color.white));
+		nuevo.setOpaque(true);
+		nuevo.setBackground(Color.cyan);
+		//anadir a arraylist
+		if (usuario) {
+			labelsUsuario.add(nuevo);
+		}else {
+			labelsIA.add(nuevo);
+		}
+		nuevo.addMouseListener( getMouseControler());
+		return nuevo;
+	}
 	
 	private JLabel clbl(int pT) {
 		 JLabel lblNewLabel;
@@ -194,8 +192,8 @@ public class Vista extends JFrame implements Observer{
             			flotaJugador.add(clblLetras(i+64),BorderLayout.CENTER,i*11+j);
                 		flotaOrdenador.add(clblLetras(i+64),BorderLayout.CENTER,i*11+j);
             		}else {
-            			flotaJugador.add(cbt(i,j), BorderLayout.CENTER, i*11+j);
-            			flotaOrdenador.add(cbt( i, j), BorderLayout.CENTER, i*11+j);
+            			flotaJugador.add(cbt( true), BorderLayout.CENTER, i*11+j);
+            			flotaOrdenador.add(cbt( false), BorderLayout.CENTER, i*11+j);
             		}
             	}
             }
@@ -203,13 +201,21 @@ public class Vista extends JFrame implements Observer{
         }
     }
 
-	public void update(Observable arg0, Coordenada pCord) {
+	public void update(Observable arg0, Object pCord) {
 		System.out.println("ha entrado");
 
-		if (arg0 instanceof Flota) {
+		if (pCord instanceof Coordenada) {
 			System.out.println("ha entrado");
-			flotaJugador.getComponentAt(pCord.getX(), pCord.getY()).setBackground(Color.darkGray);
+			int x = ((Coordenada)pCord).getX();
+			int y = ((Coordenada)pCord).getY();
+			int index = x*10+y;
+			labelsUsuario.get(index).setBackground(Color.BLACK);
+			System.out.println(index);
+			PortaAviones.setSelected(false);
 		}
+		//if (texto instanceof String) {
+			//textField.setText(texto);
+		//}
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -220,4 +226,96 @@ public class Vista extends JFrame implements Observer{
 		public void actionPerformed(ActionEvent e) {
 		}
 	}
+	private MouseControler getMouseControler() {
+		if (mouseC== null){
+			mouseC =  new MouseControler();
+		}
+		return mouseC;
+	}
+	
+	
+	private Controler getControler() {
+		if(controler==null) {
+			controler = new Controler();
+		}
+		return controler;
+	}
+	private class MouseControler implements MouseListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			JLabel l = (JLabel) e.getSource();
+				int pos= labelsUsuario.indexOf(l);
+				l.setBackground(Color.BLACK);
+				System.out.println("Posicion clicada: " + pos);
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+		
+	}
+	private class Controler implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource().equals(PortaAviones)) {
+				System.out.println("Se ha ");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(1,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+			}
+			if(e.getSource().equals(Submarinos)) {
+				System.out.println("Se ha añadidio submarino ");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(3,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+			}
+			if(e.getSource().equals(Destructores)) {
+				System.out.println("Se ha pulsado destructores");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(5,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+			}
+			if(e.getSource().equals(Fragatas)) {
+				System.out.println("Se ha añadidio una fragata");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(4,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+			}
+			if(e.getSource().equals(Disparar)) {
+				System.out.println("Se ha añadidio Disparado");
+				Flota flotaO=Modelo.getModelo().getFlotaOrdenador();
+				Coordenada nueva = new Coordenada(5,6);
+				flotaO.disparar(nueva);
+				/*
+				Coordenada de pega para hacer pruebas
+				
+				*/
+				
+			}
+			if ( e.getSource() instanceof JLabel) {
+				
+				}
+			}
+		}
 }
