@@ -9,10 +9,10 @@ public class Casilla {
 		posicion= pCoordenada;
 	}
 
-	public boolean esDisparada() {
-		return estado.equals("aqui hay que poner que estado esta");
+	public String CombrobarEstado() {
+		return estado;
 	}
-	public void ColocarBarco(){
-		estado= "barco";
+	public void CambiarEstado(String pEstado){
+		estado= pEstado;
 	}
 }
