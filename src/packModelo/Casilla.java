@@ -10,7 +10,9 @@ public class Casilla {
 	}
 
 	public boolean esDisparada() {
-		return estado.equals("aqui hay que que estado esta");
+		return estado.equals("aqui hay que poner que estado esta");
 	}
-
+	public void ColocarBarco(){
+		estado= "barco";
+	}
 }
