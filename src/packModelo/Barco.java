@@ -32,6 +32,9 @@ public abstract class Barco {
 		// TODO - implement Barco.reparBarco
 		throw new UnsupportedOperationException();
 	}
+	public boolean esBarco(String pTipo) {
+		return nombre.equals(pTipo);
+	}
 
 	public void esTocado() {
 		// TODO - implement Barco.esTocado
