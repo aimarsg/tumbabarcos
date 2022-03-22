@@ -18,7 +18,7 @@ public class Modelo extends Observable {
 		throw new UnsupportedOperationException();
 	}
 
-	public Modelo getModelo() {
+	public static Modelo getModelo() {
 		if (Modelo.miModelo==null) {
 			Modelo.miModelo = new Modelo();
 		}
