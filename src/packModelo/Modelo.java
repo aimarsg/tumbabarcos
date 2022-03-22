@@ -6,7 +6,7 @@ import java.util.Observable;
 public class Modelo extends Observable {
 
 	private Flota[] flotas;
-	prisubvate static Modelo miModelo;
+	private static Modelo miModelo;
 
 	public void jugar() {
 		// TODO - implement Modelo.jugar
