@@ -31,13 +31,10 @@ public class Flota {
 				}else {
 					System.out.println("El barco no se puede colocar en esa posicion");
 				}
-			
 		}else {
 			//no existe el barco 
 			System.out.println("No existe el barco");
-			
 		}
-		
 	}
 
 	public void inicializarFlota() {

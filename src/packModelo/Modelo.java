@@ -5,8 +5,8 @@ import java.util.Observable;
 
 public class Modelo extends Observable {
 
-	private ArrayList<Flota> flotas;
-	private Modelo miModelo;
+	private Flota[] flotas;
+	private static Modelo miModelo;
 
 	public void jugar() {
 		// TODO - implement Modelo.jugar
@@ -19,13 +19,16 @@ public class Modelo extends Observable {
 	}
 
 	public Modelo getModelo() {
-		// TODO - implement Modelo.getModelo
-		throw new UnsupportedOperationException();
+		if (Modelo.miModelo==null) {
+			Modelo.miModelo = new Modelo();
+		}
+		return Modelo.miModelo;
 	}
 
 	private Modelo() {
-		// TODO - implement Modelo.Modelo
-		throw new UnsupportedOperationException();
+		for (int i=0; i<2; i++) {
+			flotas[i] = new Flota();
+		}
 	}
 
 	private void operation() {
