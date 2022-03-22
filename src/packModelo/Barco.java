@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public abstract class Barco {
 
 	private ArrayList<Casilla> casillasOcupadas;
-	private int contLibres;
+	private int contLibres; //este parametro indica cuantas casillas quedan sin tocar
+							// inicialmente su valor sera la longitud del barco
 	private boolean hundido;
 	private String nombre;
 
