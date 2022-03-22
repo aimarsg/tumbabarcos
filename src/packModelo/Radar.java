@@ -5,9 +5,10 @@ public class Radar extends Arma {
 	private int numConsultas;
 	private Coordenada ubicacion;
 
-	public Radar() {
-		// TODO - implement Radar.Radar
-		throw new UnsupportedOperationException();
+	public Radar(double pPrecio, Coordenada pUbicacion, int pConsultas) {
+		super(pPrecio);
+		ubicacion= pUbicacion;
+		numConsultas= pConsultas;
 	}
 
 	public void mover() {

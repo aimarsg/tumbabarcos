@@ -2,9 +2,8 @@ package packModelo;
 
 public class Bomba extends Arma {
 
-	public Bomba() {
-		// TODO - implement Bomba.Bomba
-		throw new UnsupportedOperationException();
+	public Bomba(double pPrecio) {
+		super(pPrecio);
 	}
 
 	/**

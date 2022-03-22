@@ -2,9 +2,8 @@ package packModelo;
 
 public class Misil extends Arma {
 
-	public Misil() {
-		// TODO - implement Misil.Misil
-		throw new UnsupportedOperationException();
+	public Misil(double pPrecio) {
+		super(pPrecio);
 	}
 
 	/**
