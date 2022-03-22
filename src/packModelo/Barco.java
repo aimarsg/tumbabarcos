@@ -14,7 +14,7 @@ public abstract class Barco {
 		// TODO - implement Barco.Barco
 		throw new UnsupportedOperationException();
 	}
-
+	
 	/**
 	 * 
 	 * @param Coordenada

@@ -1,9 +1,13 @@
 package packModelo; 
 public class Fragata extends Barco {
+	
+	
 
-	public void colocarBarco() {
-		// TODO - implement Fragata.colocarBarco
-		throw new UnsupportedOperationException();
+	public void colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero) {
+	int x= pCoordenada.getX();
+	int y= pCoordenada.getY();
+	
+	pTablero[x][y].ColocarBarco();
 	}
 
 }
