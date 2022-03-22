@@ -35,5 +35,10 @@ public class Modelo extends Observable {
 		// TODO - implement Modelo.operation
 		throw new UnsupportedOperationException();
 	}
-
+	public Flota getFlotaUsuario() {
+		return flotas[0];
+	}
+	public Flota getFlotaOrdenador() {
+		return flotas[1];
+	}
 }

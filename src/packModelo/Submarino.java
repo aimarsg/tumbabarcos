@@ -1,6 +1,8 @@
 package packModelo; 
 public class Submarino extends Barco {
-
+	public Submarino(int numLibres, boolean hundido, String pNom){
+		super(numLibres,hundido,pNom);
+	}
 	public void colocarBarco(Coordenada pCoord, boolean pHorizontal, Casilla[][] pTablero) {
 		// TODO - implement Submarino.colocarBarco
 		throw new UnsupportedOperationException();

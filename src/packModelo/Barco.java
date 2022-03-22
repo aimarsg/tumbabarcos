@@ -10,10 +10,13 @@ public abstract class Barco {
 	private boolean hundido;
 	private String nombre;
 
-	public Barco() {
-		// TODO - implement Barco.Barco
-		throw new UnsupportedOperationException();
+	public Barco(int numLibres, boolean hundido, String pNom) {
+		this.contLibres = numLibres;
+		this.hundido = hundido;
+		this.nombre = pNom;
+		
 	}
+	
 	
 	/**
 	 * 
@@ -41,5 +44,6 @@ public abstract class Barco {
 		throw new UnsupportedOperationException();
 	}
 	public abstract boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero);
-
+	
+	
 }

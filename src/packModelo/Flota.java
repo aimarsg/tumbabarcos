@@ -13,8 +13,11 @@ public class Flota {
 	private ArrayList<Barco> barcosColocados;
 	
 	public Flota() {
-		// TODO - implement Flota.Flota
-		throw new UnsupportedOperationException();
+		tablero= new Casilla[10][10];
+		armamento= new ListaArmas();
+		presupuesto= 500.00;
+		listaBarcos= new ArrayList<Barco>();
+		barcosColocados= new ArrayList<Barco>();
 	}
 
 	public void jugarTurno() {
