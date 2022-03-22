@@ -3,9 +3,9 @@ public abstract class Arma {
 
 	private Double precio;
 
-	public Arma() {
-		// TODO - implement Arma.Arma
-		throw new UnsupportedOperationException();
+	public Arma(Double pPrec) {
+		precio= pPrec;
+		
 	}
 
 	public double getPrecio() {

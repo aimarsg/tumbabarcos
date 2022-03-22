@@ -2,6 +2,7 @@ package packVista;
 
 import packModelo.*;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -37,6 +38,7 @@ public class Vista extends JFrame implements Observer{
 	private JRadioButton Submarinos;
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -57,6 +59,9 @@ public class Vista extends JFrame implements Observer{
 	 * Create the frame.
 	 */
 	public Vista() {
+		Modelo.getModelo().addObserver(this);
+		
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 729, 618);
 		contentPane = new JPanel();
@@ -120,7 +125,7 @@ public class Vista extends JFrame implements Observer{
 				System.out.println("Se ha ");
 				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
 				Coordenada nueva = new Coordenada(1,2);
-				flotaU.colocarBarcos(null, "PortaAviones", true);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
 			}
 			if(e.getSource().equals(Submarinos)) {
 				//aqui lo que pasa con el boton
@@ -183,7 +188,11 @@ public class Vista extends JFrame implements Observer{
         }
     }
 
-	
+	public void update(Observable arg0, Coordenada pCord) {
+		if (arg0 instanceof Modelo) {
+			flotaJugador.getComponentAt(pCord.getX(), pCord.getY()).setBackground(Color.darkGray);
+		}
+	}
 
 	private class SwingAction extends AbstractAction {
 		public SwingAction() {

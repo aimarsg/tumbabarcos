@@ -26,6 +26,7 @@ public class Modelo extends Observable {
 	}
 
 	private Modelo() {
+		this.flotas = new Flota[2];
 		for (int i=0; i<2; i++) {
 			flotas[i] = new Flota();
 		}

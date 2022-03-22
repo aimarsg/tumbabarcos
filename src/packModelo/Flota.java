@@ -2,8 +2,9 @@ package packModelo;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Observable;
 
-public class Flota {
+public class Flota extends Observable{
 
 	private Casilla[][] tablero;
 	private ListaArmas armamento;
@@ -13,11 +14,12 @@ public class Flota {
 	private ArrayList<Barco> barcosColocados;
 	
 	public Flota() {
-		tablero= new Casilla[10][10];
+		tablero= new Casilla[9][9];
 		armamento= new ListaArmas();
 		presupuesto= 500.00;
 		listaBarcos= new ArrayList<Barco>();
 		barcosColocados= new ArrayList<Barco>();
+		this.inicializarFlota();
 	}
 
 	public void jugarTurno() {
@@ -31,6 +33,10 @@ public class Flota {
 				if (nuevo.colocarBarco(pCord, horizontal, tablero)){
 					listaBarcos.remove(nuevo);
 					barcosColocados.add(nuevo);
+					//notifyObservers
+					setChanged();
+					notifyObservers(pCord);
+					
 				}else {
 					System.out.println("El barco no se puede colocar en esa posicion");
 				}

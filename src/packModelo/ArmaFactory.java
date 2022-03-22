@@ -4,13 +4,14 @@ public class ArmaFactory {
 	private static ArmaFactory mArmaFactory;
 
 	private ArmaFactory() {
-		// TODO - implement ArmaFactory.ArmaFactory
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public static ArmaFactory getArmaFactory() {
-		// TODO - implement ArmaFactory.getArmaFactory
-		throw new UnsupportedOperationException();
+		if (mArmaFactory==null){
+			mArmaFactory= new ArmaFactory();
+		}
+		return mArmaFactory;
 	}
 
 	/**
@@ -18,7 +19,6 @@ public class ArmaFactory {
 	 * @param pTipo
 	 */
 	public Arma crearArma(  String pTipo) {
-		// TODO - implement ArmaFactory.crearArma
 		throw new UnsupportedOperationException();
 	}
 

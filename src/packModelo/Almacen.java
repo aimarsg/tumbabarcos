@@ -16,7 +16,6 @@ public class Almacen {
 
 	private Almacen() {
 		armas = new ArrayList<Arma>();
-		throw new UnsupportedOperationException();
 	}
 	
 	/**

@@ -4,13 +4,14 @@ public class BarcoFactory {
 	private static BarcoFactory miBarcoFactory;
 
 	private BarcoFactory() {
-		// TODO - implement BarcoFactory.BarcoFactory
-		throw new UnsupportedOperationException();
+		
 	}
 
 	public static BarcoFactory getBarcoFactory() {
-		// TODO - implement BarcoFactory.getBarcoFactory
-		throw new UnsupportedOperationException();
+		if(miBarcoFactory==null){
+			miBarcoFactory = new BarcoFactory();
+		}
+		return miBarcoFactory;
 	}
 
 	/**
@@ -30,6 +31,7 @@ public class BarcoFactory {
 		else if (pTipo.equals("Fragata")){
 			return (new Fragata(1, false, "Fragata"));
 		}
+		else return null;
 	}
 
 }
