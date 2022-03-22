@@ -38,6 +38,8 @@ public class Vista extends JFrame implements Observer{
 	private JRadioButton Submarinos;
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
+	private JRadioButton Disparar;
+	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	
 	/**
 	 * Launch the application.
@@ -105,6 +107,10 @@ public class Vista extends JFrame implements Observer{
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		
+		Disparar = new JRadioButton("Disparar");
+		buttonGroup_1.add(Disparar);
+		panel_3.add(Disparar);
 		crearButtons();
 	}
 
