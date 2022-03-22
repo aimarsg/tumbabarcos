@@ -6,7 +6,7 @@ import java.util.Observable;
 public class Modelo extends Observable {
 
 	private Flota[] flotas;
-	private static Modelo miModelo;
+	prisubvate static Modelo miModelo;
 
 	public void jugar() {
 		// TODO - implement Modelo.jugar
@@ -18,7 +18,7 @@ public class Modelo extends Observable {
 		throw new UnsupportedOperationException();
 	}
 
-	public Modelo getModelo() {
+	public static Modelo getModelo() {
 		if (Modelo.miModelo==null) {
 			Modelo.miModelo = new Modelo();
 		}
