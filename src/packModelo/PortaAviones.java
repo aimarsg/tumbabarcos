@@ -14,6 +14,7 @@ public class PortaAviones extends Barco {
 			}
 			cont++;
 		}
+		return true;
 	}
 
 }
