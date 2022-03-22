@@ -59,7 +59,7 @@ public class Vista extends JFrame implements Observer{
 	 * Create the frame.
 	 */
 	public Vista() {
-		Modelo.getModelo().addObserver(this);
+		Modelo.getModelo().getFlotaUsuario().addObserver(this);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -128,13 +128,22 @@ public class Vista extends JFrame implements Observer{
 				flotaU.colocarBarcos(nueva, "PortaAviones", true);
 			}
 			if(e.getSource().equals(Submarinos)) {
-				//aqui lo que pasa con el boton
+				System.out.println("Se ha añadidio submarino ");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(3,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
 			}
 			if(e.getSource().equals(Destructores)) {
-				//aqui lo que pasa con el boton
+				System.out.println("Se ha pulsado destructores");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(5,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
 			}
 			if(e.getSource().equals(Fragatas)) {
-				//aqui lo que pasa con el boton
+				System.out.println("Se ha añadidio una fragata");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(4,2);
+				flotaU.colocarBarcos(nueva, "PortaAviones", true);
 			}
 		}
 		
@@ -189,7 +198,10 @@ public class Vista extends JFrame implements Observer{
     }
 
 	public void update(Observable arg0, Coordenada pCord) {
-		if (arg0 instanceof Modelo) {
+		System.out.println("ha entrado");
+
+		if (arg0 instanceof Flota) {
+			System.out.println("ha entrado");
 			flotaJugador.getComponentAt(pCord.getX(), pCord.getY()).setBackground(Color.darkGray);
 		}
 	}
