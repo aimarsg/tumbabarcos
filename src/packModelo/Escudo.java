@@ -5,9 +5,10 @@ public class Escudo extends Arma {
 	private Coordenada ubicacion;
 	private int numImpactos;
 
-	public Escudo() {
-		// TODO - implement Escudo.Escudo
-		throw new UnsupportedOperationException();
+	public Escudo(double pPrecio, Coordenada pUbicacion, int pImpactos) {
+		super(pPrecio);
+		ubicacion= pUbicacion;
+		numImpactos= pImpactos;
 	}
 
 	public void esAlcanzado() {
