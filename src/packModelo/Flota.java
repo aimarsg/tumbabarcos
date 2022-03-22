@@ -14,7 +14,7 @@ public class Flota extends Observable{
 	private ArrayList<Barco> barcosColocados;
 	
 	public Flota() {
-		tablero= new Casilla[9][9];
+		tablero= new Casilla[10][10];
 		armamento= new ListaArmas();
 		presupuesto= 500.00;
 		listaBarcos= new ArrayList<Barco>();
@@ -47,6 +47,16 @@ public class Flota extends Observable{
 	}
 
 	public void inicializarFlota() {
+		
+		for (int i = 0; i<10; i++) {
+			for (int j = 0; j<10; j++) {
+				
+				Coordenada pCord = new Coordenada(i, j);
+				tablero[i][j] = new Casilla(pCord);
+							
+			}
+		}
+		
 		listaBarcos.add(BarcoFactory.getBarcoFactory().crearBarco("PortaAviones"));
 		listaBarcos.add(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
 		listaBarcos.add(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
