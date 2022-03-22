@@ -8,8 +8,7 @@ public class ListaArmas {
 	private ArrayList<Arma> listaArmas;
 
 	public ListaArmas() {
-		// TODO - implement ListaArmas.ListaArmas
-		throw new UnsupportedOperationException();
+		listaArmas=new ArrayList<Arma>();
 	}
 
 	/**

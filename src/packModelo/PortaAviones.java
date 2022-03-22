@@ -1,5 +1,10 @@
 package packModelo; 
 public class PortaAviones extends Barco {
+	public PortaAviones(int numLibres, boolean hundido, String pNom) {
+		super(numLibres, hundido, pNom);
+		// TODO Auto-generated constructor stub
+	}
+
 	//longitud del portaaviones = 4
 	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] tablero) {
 		int i = pCoordenada.getX();

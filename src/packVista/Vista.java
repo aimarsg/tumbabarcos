@@ -1,5 +1,6 @@
 package packVista;
 
+import packModelo.*;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
@@ -11,10 +12,19 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
+import packModelo.Coordenada;
+import packModelo.Flota;
+import packModelo.Modelo;
+
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 
 public class Vista extends JFrame implements Observer{
 
@@ -22,6 +32,11 @@ public class Vista extends JFrame implements Observer{
 	private Controler controler = null;
 	private JPanel flotaJugador;
 	private JPanel flotaOrdenador;
+	private JRadioButton Destructores;
+	private JRadioButton PortaAviones;
+	private JRadioButton Submarinos;
+	private JRadioButton Fragatas;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
 	/**
 	 * Launch the application.
 	 */
@@ -57,9 +72,30 @@ public class Vista extends JFrame implements Observer{
 		contentPane.add(flotaOrdenador);
 		flotaOrdenador.setLayout(new GridLayout(11, 11, 0, 0));
 		
-		JPanel panel_2 = new JPanel();
-		contentPane.add(panel_2);
-		panel_2.setLayout(new GridLayout(0, 3, 0, 0));
+		JPanel PanelBarcos = new JPanel();
+		contentPane.add(PanelBarcos);
+		PanelBarcos.setLayout(new GridLayout(2, 2, 0, 0));
+		
+		PortaAviones = new JRadioButton("PortaAviones");
+		buttonGroup.add(PortaAviones);
+		PanelBarcos.add(PortaAviones);
+		PortaAviones.addActionListener(getControler());
+		
+		Submarinos = new JRadioButton("Submarino");
+		buttonGroup.add(Submarinos);
+		PanelBarcos.add(Submarinos);
+		Submarinos.addActionListener(getControler());
+		
+		
+		Destructores = new JRadioButton("Destructores");
+		buttonGroup.add(Destructores);
+		PanelBarcos.add(Destructores);
+		Destructores.addActionListener(getControler());
+		
+		Fragatas = new JRadioButton("Fragatas");
+		buttonGroup.add(Fragatas);
+		PanelBarcos.add(Fragatas);
+		Fragatas.addActionListener(getControler());
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
@@ -79,17 +115,24 @@ public class Vista extends JFrame implements Observer{
 		return controler;
 	}
 	private class Controler implements ActionListener{
-		public void actionPerfromed(ActionEvent e) {
-			if(e.getSource().equals("Aqui hay que poner el nombre del boton")) {
+		public void actionPerformed(ActionEvent e) {
+			if(e.getSource().equals(PortaAviones)) {
+				System.out.println("Se ha ");
+				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
+				Coordenada nueva = new Coordenada(1,2);
+				flotaU.colocarBarcos(null, "PortaAviones", true);
+			}
+			if(e.getSource().equals(Submarinos)) {
+				//aqui lo que pasa con el boton
+			}
+			if(e.getSource().equals(Destructores)) {
+				//aqui lo que pasa con el boton
+			}
+			if(e.getSource().equals(Fragatas)) {
 				//aqui lo que pasa con el boton
 			}
 		}
 		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
 	}
 	private JButton cbt(int i, int j) { //parámetros de entrada
         JButton btnNewButton = new JButton(); //texto del botón
@@ -142,4 +185,12 @@ public class Vista extends JFrame implements Observer{
 
 	
 
+	private class SwingAction extends AbstractAction {
+		public SwingAction() {
+			putValue(NAME, "SwingAction");
+			putValue(SHORT_DESCRIPTION, "Some short description");
+		}
+		public void actionPerformed(ActionEvent e) {
+		}
+	}
 }

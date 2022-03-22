@@ -2,7 +2,7 @@ package packModelo;
 public class Fragata extends Barco {
 	
 	public Fragata(int numLibres, boolean hundido, String pNom){
-        super();
+        super(numLibres,hundido,pNom);
     }
 
 	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero) {
