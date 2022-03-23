@@ -10,7 +10,7 @@ public class Fragata extends Barco {
 		int y= pCoordenada.getY();
 		boolean posible=true;
 		Casilla casilla= pTablero[x][y];
-		if((x>-1 && x<11) && (y>-1 && y<11)) {
+		if((x>-1 && x<10) && (y>-1 && y<10)) {
 			if(casilla.combrobarEstado()!="Agua") {
 				if(pTablero[x+1][y].combrobarEstado()!="Agua"&&
 					pTablero[x][y+1].combrobarEstado()!="Agua"&&
