@@ -56,7 +56,7 @@ public class Flota extends Observable{
 		
 		if (estado.equals("Disparado")||estado.equals("Tocado")) {
 			setChanged();
-			notifyObservers("Has disparado a una casilla ya disparada")
+			notifyObservers("Has disparado a una casilla ya disparada");
 		}else{
 			
 		if(estado.equals("Barco")){
@@ -119,8 +119,14 @@ public class Flota extends Observable{
 		return nuevo;
 	}
 
+	 public String obtenerEstadoCasilla(int X, int Y) {
+		 return tablero[X][Y].combrobarEstado();
+	 }
+	
+	
 	private Iterator<Barco> obtIterador() {
 		return this.listaBarcos.iterator();
 	}
+	
 
 }

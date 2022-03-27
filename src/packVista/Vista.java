@@ -155,7 +155,7 @@ public class Vista extends JFrame implements Observer{
 		}else {
 			labelsIA.add(nuevo);
 		}
-		nuevo.addMouseListener( getMouseControler());
+		nuevo.addMouseListener(getMouseControler());
 		return nuevo;
 	}
 	
@@ -253,14 +253,26 @@ public class Vista extends JFrame implements Observer{
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
+			JLabel l = (JLabel) e.getSource();
+			int pos= labelsUsuario.indexOf(l);
+			l.setBackground(Color.BLACK);
+			System.out.println("Posicion clicada: " + pos);
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
+			JLabel l = (JLabel) e.getSource();
+			int pos= labelsUsuario.indexOf(l);
+			int X = pos/10;
+			int Y = pos%10;
+			String estadoCasilla = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(X, Y);
 			
+			if (estadoCasilla != "Barco") {
+				l.setBackground(Color.cyan);
+				System.out.println("Posicion clicada: " + pos);
+			
+		
+			}
 		}
 
 		@Override

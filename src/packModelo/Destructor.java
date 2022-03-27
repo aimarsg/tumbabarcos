@@ -20,6 +20,7 @@ public class Destructor extends Barco {
 			}else{
 				Y++;
 			}
-		}		
+		}
+		return false;		
 	}
 }
