@@ -20,6 +20,7 @@ public class Fragata extends Barco {
 					pTablero[x-1][y+1].combrobarEstado().equals("Agua")&&
 					pTablero[x-1][y-1].combrobarEstado().equals("Agua")&&
 					pTablero[x+1][y-1].combrobarEstado().equals("Agua")) {
+					super.getCasillasOcupadas().add(pTablero[x][y]);
 					pTablero[x][y].cambiarEstado("Barco");
 				}else {
 					posible= false;
