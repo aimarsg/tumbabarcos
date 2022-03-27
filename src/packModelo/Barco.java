@@ -14,9 +14,12 @@ public abstract class Barco {
 		this.contLibres = numLibres;
 		this.hundido = hundido;
 		this.nombre = pNom;
+		this.casillasOcupadas = new ArrayList<>();
 		
 	}
-	
+	public ArrayList<Casilla> getCasillas(){
+		return this.casillasOcupadas;
+	}
 	
 	/**
 	 * 
@@ -45,5 +48,8 @@ public abstract class Barco {
 	}
 	public abstract boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero);
 	
+	protected ArrayList<Casilla> getCasillasOcupadas(){
+		return this.casillasOcupadas;
+	}
 	
 }

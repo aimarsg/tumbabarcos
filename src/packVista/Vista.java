@@ -25,6 +25,7 @@ import packModelo.Modelo;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
@@ -47,9 +48,18 @@ public class Vista extends JFrame implements Observer{
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton Disparar;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
-	private JTextField textField;
+	private JLabel texto;
 	private ArrayList<JLabel> labelsUsuario ;
 	private ArrayList<JLabel> labelsIA;
+	private JRadioButton Seleccion;
+	private JCheckBox horizontal;
+	private JCheckBox vertical;
+	
+	
+	private static Coordenada coordClickada;
+	private static JLabel labelClicado;
+	private boolean	horiz = true;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -91,7 +101,7 @@ public class Vista extends JFrame implements Observer{
 		
 		JPanel PanelBarcos = new JPanel();
 		contentPane.add(PanelBarcos);
-		PanelBarcos.setLayout(new GridLayout(2, 2, 0, 0));
+		PanelBarcos.setLayout(new GridLayout(3, 2, 0, 0));
 		
 		PortaAviones = new JRadioButton("PortaAviones");
 		buttonGroup.add(PortaAviones);
@@ -113,18 +123,32 @@ public class Vista extends JFrame implements Observer{
 		buttonGroup.add(Fragatas);
 		PanelBarcos.add(Fragatas);
 		Fragatas.addActionListener(getControler());
+
+		/*Seleccion = new JRadioButton("Vertical");
+		PanelBarcos.add(Seleccion);
+		Seleccion.addActionListener(getControler());*/
+		
+		vertical = new JCheckBox("Vertical");
+		PanelBarcos.add(vertical);
+		buttonGroup_1.add(vertical);
+		vertical.addActionListener(getControler());
+	
+		horizontal = new JCheckBox("horizontal");
+		PanelBarcos.add(horizontal);
+		horizontal.setSelected(true);
+		buttonGroup_1.add(horizontal);
+		horizontal.addActionListener(getControler());
 		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(1, 0, 0, 0));
+		panel_3.setLayout(new GridLayout(3, 1, 0, 0));
 		
 		Disparar = new JButton("Disparar");
 		panel_3.add(Disparar);
 		Disparar.addActionListener(getControler());
 		
-		textField = new JTextField();
-		panel_3.add(textField);
-		textField.setColumns(10);
+		texto = new JLabel();
+		panel_3.add(texto);
 		
 		
 		crearButtons();
@@ -201,17 +225,22 @@ public class Vista extends JFrame implements Observer{
         }
     }
 
-	public void update(Observable arg0, Object pCord) {
-		System.out.println("ha entrado");
+	public void update(Observable arg0, Object arg1) {
+		//System.out.println("ha entrado");
 
-		if (pCord instanceof Coordenada) {
-			System.out.println("ha entrado");
-			int x = ((Coordenada)pCord).getX();
-			int y = ((Coordenada)pCord).getY();
-			int index = x*10+y;
-			labelsUsuario.get(index).setBackground(Color.BLACK);
-			System.out.println(index);
-			PortaAviones.setSelected(false);
+		//para pintar los cuadrados despues de colocar el barco
+		if (arg1 instanceof ArrayList<?>) {
+			for (Casilla c : (ArrayList<Casilla>)arg1) {
+				int x = c.getPosicion().getX();
+				int y = c.getPosicion().getY();
+				int index = x*10+y;
+				labelsUsuario.get(index).setBackground(Color.BLACK);
+				PortaAviones.setSelected(false);		
+			}
+		}
+		//para mostrar texto
+		if (arg1 instanceof String) {
+			texto.setText((String) arg1);
 		}
 		//if (texto instanceof String) {
 			//textField.setText(texto);
@@ -244,19 +273,37 @@ public class Vista extends JFrame implements Observer{
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
+			
 			JLabel l = (JLabel) e.getSource();
-				int pos= labelsUsuario.indexOf(l);
-				l.setBackground(Color.BLACK);
-				System.out.println("Posicion clicada: " + pos);
+			int pos= labelsUsuario.indexOf(l);
+			int x= (pos/10);
+			int y= (pos%10);
+			String estadoCasilla = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(x, y);
+			if (labelClicado!=null && estadoCasilla!= "Barco"){
+				labelClicado.setBackground(Color.cyan);
+			}
+			labelClicado= l;
+			coordClickada= new Coordenada(x,y);
+			System.out.println("X:" + y);
+			System.out.println("Y:" + x);
+			l.setBackground(Color.darkGray);
+			System.out.println("Posicion clicada: " + pos);
 			
 		}
 
 		@Override
-		public void mouseEntered(MouseEvent e) {
+		public void mouseEntered(MouseEvent e) {			
 			JLabel l = (JLabel) e.getSource();
 			int pos= labelsUsuario.indexOf(l);
-			l.setBackground(Color.BLACK);
-			System.out.println("Posicion clicada: " + pos);
+			int X = pos/10;
+			int Y = pos%10;
+			String estadoCasilla = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(X, Y);
+			if (coordClickada!= null) {
+				if (estadoCasilla != "Barco" && (coordClickada.getX()!=X || coordClickada.getY()!=Y)){
+					l.setBackground(Color.lightGray);
+					System.out.println("Posicion clicada: " + pos);
+				}
+			}
 		}
 
 		@Override
@@ -266,12 +313,12 @@ public class Vista extends JFrame implements Observer{
 			int X = pos/10;
 			int Y = pos%10;
 			String estadoCasilla = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(X, Y);
-			
-			if (estadoCasilla != "Barco") {
-				l.setBackground(Color.cyan);
-				System.out.println("Posicion clicada: " + pos);
-			
-		
+			if (coordClickada!=null){
+				if (estadoCasilla != "Barco" && (coordClickada.getX()!=X || coordClickada.getY()!=Y)) {
+					l.setBackground(Color.cyan);
+					System.out.println("Posicion clicada: " + pos);
+				
+				}
 			}
 		}
 
@@ -293,26 +340,25 @@ public class Vista extends JFrame implements Observer{
 			if(e.getSource().equals(PortaAviones)) {
 				System.out.println("Se ha ");
 				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(1,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+				
+				flotaU.colocarBarcos(coordClickada, "PortaAviones", true);
 			}
 			if(e.getSource().equals(Submarinos)) {
 				System.out.println("Se ha añadidio submarino ");
 				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
 				Coordenada nueva = new Coordenada(3,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+				flotaU.colocarBarcos(nueva, "Submarino", true);
 			}
 			if(e.getSource().equals(Destructores)) {
 				System.out.println("Se ha pulsado destructores");
 				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(5,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+				Boolean vertical = Seleccion.isSelected();
+				flotaU.colocarBarcos(coordClickada, "Destructor", vertical);
 			}
 			if(e.getSource().equals(Fragatas)) {
 				System.out.println("Se ha añadidio una fragata");
 				Flota flotaU=Modelo.getModelo().getFlotaUsuario();
-				Coordenada nueva = new Coordenada(4,2);
-				flotaU.colocarBarcos(nueva, "PortaAviones", true);
+				flotaU.colocarBarcos(coordClickada, "Fragata", true);
 			}
 			if(e.getSource().equals(Disparar)) {
 				System.out.println("Se ha añadidio Disparado");

@@ -12,6 +12,7 @@ public class PortaAviones extends Barco {
 		int cont = 0;
 		while (cont < 4) {
 			tablero[i][j].cambiarEstado("Barco");
+			super.getCasillasOcupadas().add(tablero[i][j]);
 			if (pHorizontal) {
 				i++;
 			}else {

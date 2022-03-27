@@ -15,12 +15,13 @@ public class Destructor extends Barco {
 		int Y = pCoordenada.getY();
 		for (int i = 0; i < 2; i++) {
 			pTablero[X][Y].cambiarEstado("Barco");
+			super.getCasillasOcupadas().add(pTablero[X][Y]);
 			if (pHorizontal) {
 				X++;
 			}else{
 				Y++;
 			}
 		}
-		return false;		
+		return true;		
 	}
 }

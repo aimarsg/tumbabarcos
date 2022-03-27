@@ -36,7 +36,7 @@ public class Flota extends Observable{
 					//notifyObservers
 					System.out.println("se coloca");
 					setChanged();
-					notifyObservers(pCord);
+					notifyObservers(nuevo.getCasillas());
 					
 				}else {
 					System.out.println("El barco no se puede colocar en esa posicion");
@@ -44,6 +44,8 @@ public class Flota extends Observable{
 		}else {
 			//no existe el barco 
 			System.out.println("No existe el barco");
+			setChanged();
+			notifyObservers("No queda ningun barco del tipo "+pTipo+" por colocar. Selecciona otro.");
 		}
 	}
 

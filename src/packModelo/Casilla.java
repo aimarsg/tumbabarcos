@@ -15,4 +15,7 @@ public class Casilla {
 	public void cambiarEstado(String pEstado){
 		estado= pEstado;
 	}
+	public Coordenada getPosicion() {
+		return this.posicion;
+	}
 }
