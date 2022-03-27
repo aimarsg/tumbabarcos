@@ -5,11 +5,12 @@ public class Casilla {
 	private String estado;
 	private Coordenada posicion;
 
-	public Casilla(Coordenada pCoordenada) {
-		posicion= pCoordenada;
+	public Casilla(String pEstado,Coordenada pCoordenada) {
+		estado= pEstado;
+		posicion= pCoordenada;		
 	}
 
-	public String combrobarEstado() {
+	public String comprobarEstado() {
 		return estado;
 	}
 	public void cambiarEstado(String pEstado){
@@ -18,4 +19,6 @@ public class Casilla {
 	public Coordenada getPosicion() {
 		return this.posicion;
 	}
+	
+	
 }

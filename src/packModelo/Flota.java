@@ -3,10 +3,11 @@ package packModelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
+import java.util.Random;
 
 public class Flota extends Observable{
 
-	private Casilla[][] tablero;
+	private Tablero tablero;
 	private ListaArmas armamento;
 	private Double presupuesto;
 	private int numBarcos;
@@ -14,7 +15,7 @@ public class Flota extends Observable{
 	private ArrayList<Barco> barcosColocados;
 	
 	public Flota() {
-		tablero= new Casilla[10][10];
+		tablero= new Tablero(10,10);
 		armamento= new ListaArmas();
 		presupuesto= 500.00;
 		listaBarcos= new ArrayList<Barco>();
@@ -30,7 +31,7 @@ public class Flota extends Observable{
 	public void colocarBarcos(Coordenada pCord, String pTipo, boolean horizontal) {	
 		Barco nuevo =this.obtenerBarco(pTipo);
 		if (nuevo!=null) {
-				if (nuevo.colocarBarco(pCord, horizontal, tablero)){
+				if (nuevo.colocarBarco(pCord, !horizontal, tablero)){ //horizontal invertido porque la x y la y van al reves
 					listaBarcos.remove(nuevo);
 					barcosColocados.add(nuevo);
 					//notifyObservers
@@ -52,9 +53,9 @@ public class Flota extends Observable{
 	public boolean disparar(Coordenada pCoordenada){
 		boolean tocado= false;
 		
-		Casilla casillaActual = tablero[pCoordenada.getX()][pCoordenada.getY()];
+		Casilla casillaActual = tablero.getCasilla(pCoordenada.getX(),pCoordenada.getY());
 		
-		String estado=casillaActual.combrobarEstado();
+		String estado=casillaActual.comprobarEstado();
 		
 		if (estado.equals("Disparado")||estado.equals("Tocado")) {
 			setChanged();
@@ -70,18 +71,11 @@ public class Flota extends Observable{
 			}
 		}
 		
-		return tocado;
+		return tocado; 
 	}
 	public void inicializarFlota() {
 		
-		for (int i = 0; i<10; i++) {
-			for (int j = 0; j<10; j++) {
-				
-				Coordenada pCord = new Coordenada(i, j);
-				tablero[i][j] = new Casilla(pCord);
-							
-			}
-		}
+		tablero.inicializarTablero();
 		
 		listaBarcos.add(BarcoFactory.getBarcoFactory().crearBarco("PortaAviones"));
 		listaBarcos.add(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
@@ -122,13 +116,37 @@ public class Flota extends Observable{
 	}
 
 	 public String obtenerEstadoCasilla(int X, int Y) {
-		 return tablero[X][Y].combrobarEstado();
+		 return tablero.getCasilla(X,Y).comprobarEstado();
 	 }
 	
 	
 	private Iterator<Barco> obtIterador() {
 		return this.listaBarcos.iterator();
 	}
-	
 
+	
+	
+	
+	
+	//metodos para la flota del ordenador
+	public void colocarBarcosOrdenador() {
+		this.inicializarFlota();
+		Random randomizer = new Random();
+		int col;
+		int fil;
+		boolean colocado;
+		boolean horizontal;
+		for (Barco b : this.listaBarcos) {
+			colocado = false;
+			while (!colocado) {
+				col= randomizer.nextInt(9);
+				fil = randomizer.nextInt(9);
+				horizontal = randomizer.nextBoolean();
+				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, tablero);
+				colocado = true;
+			}
+			setChanged();
+			notifyObservers(b.getCasillas());
+		}
+	}
 }

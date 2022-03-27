@@ -13,9 +13,9 @@ public class Modelo extends Observable {
 		throw new UnsupportedOperationException();
 	}
 
-	private void inicializar() {
-		// TODO - implement Modelo.inicializar
-		throw new UnsupportedOperationException();
+	public void inicializar() {
+		this.getFlotaOrdenador().colocarBarcosOrdenador();
+		this.getFlotaUsuario().inicializarFlota();
 	}
 
 	public static Modelo getModelo() {

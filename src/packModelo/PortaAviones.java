@@ -6,21 +6,37 @@ public class PortaAviones extends Barco {
 	}
 
 	//longitud del portaaviones = 4
-	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] tablero) {
-		int i = pCoordenada.getX();
-		int j = pCoordenada.getY();
-		int cont = 0;
-		while (cont < 4) {
-			tablero[i][j].cambiarEstado("Barco");
-			super.getCasillasOcupadas().add(tablero[i][j]);
-			if (pHorizontal) {
-				i++;
-			}else {
-				j++;
-			}
-			cont++;
+	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Tablero pTablero) {
+		int X = pCoordenada.getX();
+		int Y = pCoordenada.getY();
+		boolean puede=true;
+		int j=0;
+		while (puede && j < 4){
+			if(pTablero.estaRodeadoAgua(new Coordenada(X,Y))){
+				if (pHorizontal) {
+					X++;
+				}else{
+					Y++;
+				}
+			}else{
+				puede=false;
+			}	
+			j++;
 		}
-		return true;
-	}
 
+		if (puede){
+			X = pCoordenada.getX();
+			Y = pCoordenada.getY();
+			for (int i = 0; i < 4; i++) {
+				pTablero.getCasilla(X,Y).cambiarEstado("Barco");
+				super.getCasillasOcupadas().add(pTablero.getCasilla(X, Y));
+				if (pHorizontal) {
+					X++;
+				}else{
+					Y++;
+				}
+			}
+		}
+		return puede;		
+	}
 }

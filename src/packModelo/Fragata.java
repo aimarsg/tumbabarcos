@@ -5,39 +5,13 @@ public class Fragata extends Barco {
         super(numLibres,hundido,pNom);
     }
 
-	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero) {
-		int x= pCoordenada.getX();
-		int y= pCoordenada.getY();
-		boolean posible=true;
-		Casilla casilla= pTablero[x][y];
-		if((x>-1 && x<10) && (y>-1 && y<10)) {
-			if(casilla.combrobarEstado().equals("Agua")) {
-				if(pTablero[x+1][y].combrobarEstado().equals("Agua")&&
-					pTablero[x][y+1].combrobarEstado().equals("Agua")&&
-					pTablero[x-1][y].combrobarEstado().equals("Agua")&&
-					pTablero[x][y-1].combrobarEstado().equals("Agua")&&
-					pTablero[x+1][y+1].combrobarEstado().equals("Agua")&&
-					pTablero[x-1][y+1].combrobarEstado().equals("Agua")&&
-					pTablero[x-1][y-1].combrobarEstado().equals("Agua")&&
-					pTablero[x+1][y-1].combrobarEstado().equals("Agua")) {
-					super.getCasillasOcupadas().add(pTablero[x][y]);
-					pTablero[x][y].cambiarEstado("Barco");
-				}else {
-					posible= false;
-					System.out.println("El Barco no esta completamente rodeado de agua");
-				}
-			}else {
-				posible= false;
-				System.out.println("la casilla seleccionada no es agua");
-			}
-			
-		}else {
-			posible= false;
-			System.out.println("Las coordenadas no estan en el tablero");
+	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Tablero pTablero) {
+		int X = pCoordenada.getX();
+		int Y = pCoordenada.getY();
+		if(pTablero.estaRodeadoAgua(new Coordenada(X,Y))){
+			pTablero.getCasilla(X,Y).cambiarEstado("Barco");
+			super.getCasillasOcupadas().add(pTablero.getCasilla(X, Y));
 		}
-		
-		return (Boolean) null;
-		
+		return pTablero.estaRodeadoAgua(new Coordenada(X,Y));		
 	}
-
 }

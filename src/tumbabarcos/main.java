@@ -1,5 +1,8 @@
 package tumbabarcos;
 
+import packModelo.*;
+import packVista.*;
+
 public class main {
 	//un comentario
 	
@@ -7,6 +10,9 @@ public class main {
 	//otro comment
      // va
 	public static void main(String args[]) {
-		System.out.println("q onda");
+		Modelo modelo= Modelo.getModelo();
+		modelo.inicializar();
+		Vista vista = new Vista();
+		vista.setVisible(true);
 	}
 }

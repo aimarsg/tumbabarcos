@@ -46,7 +46,7 @@ public abstract class Barco {
 		// TODO - implement Barco.esTocado
 		throw new UnsupportedOperationException();
 	}
-	public abstract boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Casilla[][] pTablero);
+	public abstract boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Tablero pTablero);
 	
 	protected ArrayList<Casilla> getCasillasOcupadas(){
 		return this.casillasOcupadas;
