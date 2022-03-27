@@ -11,15 +11,15 @@ public class Fragata extends Barco {
 		boolean posible=true;
 		Casilla casilla= pTablero[x][y];
 		if((x>-1 && x<10) && (y>-1 && y<10)) {
-			if(casilla.combrobarEstado()!="Agua") {
-				if(pTablero[x+1][y].combrobarEstado()!="Agua"&&
-					pTablero[x][y+1].combrobarEstado()!="Agua"&&
-					pTablero[x-1][y].combrobarEstado()!="Agua"&&
-					pTablero[x][y-1].combrobarEstado()!="Agua"&&
-					pTablero[x+1][y+1].combrobarEstado()!="Agua"&&
-					pTablero[x-1][y+1].combrobarEstado()!="Agua"&&
-					pTablero[x-1][y-1].combrobarEstado()!="Agua"&&
-					pTablero[x+1][y-1].combrobarEstado()!="Agua") {
+			if(casilla.combrobarEstado().equals("Agua")) {
+				if(pTablero[x+1][y].combrobarEstado().equals("Agua")&&
+					pTablero[x][y+1].combrobarEstado().equals("Agua")&&
+					pTablero[x-1][y].combrobarEstado().equals("Agua")&&
+					pTablero[x][y-1].combrobarEstado().equals("Agua")&&
+					pTablero[x+1][y+1].combrobarEstado().equals("Agua")&&
+					pTablero[x-1][y+1].combrobarEstado().equals("Agua")&&
+					pTablero[x-1][y-1].combrobarEstado().equals("Agua")&&
+					pTablero[x+1][y-1].combrobarEstado().equals("Agua")) {
 					pTablero[x][y].cambiarEstado("Barco");
 				}else {
 					posible= false;
