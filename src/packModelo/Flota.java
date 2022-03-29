@@ -20,7 +20,7 @@ public class Flota extends Observable{
 		presupuesto= 500.00;
 		listaBarcos= new ArrayList<Barco>();
 		barcosColocados= new ArrayList<Barco>();
-		this.inicializarFlota();
+		
 	}
 
 	public void jugarTurno() {
@@ -37,10 +37,13 @@ public class Flota extends Observable{
 					//notifyObservers
 					System.out.println("se coloca");
 					setChanged();
-					notifyObservers(nuevo.getCasillas());
+					notifyObservers(new Object[] {nuevo.getCasillas(), true});
+					//notifyObservers(nuevo.getCasillas());
 					
 				}else {
 					System.out.println("El barco no se puede colocar en esa posicion");
+					setChanged();
+					notifyObservers("El barco no se puede colocar en esa posicion");
 				}
 		}else {
 			//no existe el barco 
@@ -53,7 +56,9 @@ public class Flota extends Observable{
 	public boolean disparar(Coordenada pCoordenada){
 		boolean tocado= false;
 		
-		Casilla casillaActual = tablero.getCasilla(pCoordenada.getX(),pCoordenada.getY());
+		int x = pCoordenada.getX();
+		int y = pCoordenada.getY();
+		Casilla casillaActual = tablero.getCasilla(x, y);
 		
 		String estado=casillaActual.comprobarEstado();
 		
@@ -64,11 +69,12 @@ public class Flota extends Observable{
 			
 		if(estado.equals("Barco")){
 			casillaActual.cambiarEstado("Tocado");
-			setChanged();
-			notifyObservers(pCoordenada);
 		}else{
+			System.out.println("Disparado al agua");
 			casillaActual.cambiarEstado("Disparado");
 			}
+			setChanged();
+			notifyObservers(pCoordenada);
 		}
 		
 		return tocado; 
@@ -136,6 +142,7 @@ public class Flota extends Observable{
 		int fil;
 		boolean colocado;
 		boolean horizontal;
+	
 		for (Barco b : this.listaBarcos) {
 			colocado = false;
 			while (!colocado) {
@@ -144,9 +151,17 @@ public class Flota extends Observable{
 				horizontal = randomizer.nextBoolean();
 				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, tablero);
 				colocado = true;
+				
+				//listaBarcos.remove(b);
+				barcosColocados.add(b);
+				
+				System.out.println(b.getNombre()+" colocado en col "+col+", fil "+fil+" ");
+				System.out.println();
 			}
+			listaBarcos = new ArrayList<>();
+		
 			setChanged();
-			notifyObservers(b.getCasillas());
+			notifyObservers(new Object[] {b.getCasillas(), false});
 		}
 	}
 }

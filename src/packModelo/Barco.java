@@ -20,6 +20,9 @@ public abstract class Barco {
 	public ArrayList<Casilla> getCasillas(){
 		return this.casillasOcupadas;
 	}
+	public String getNombre() {
+		return this.nombre;
+	}
 	
 	/**
 	 * 

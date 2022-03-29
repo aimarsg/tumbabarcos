@@ -29,24 +29,20 @@ public class Tablero {
 		else{
 			int x = pCoordenada.getX()-1;
 			int y = pCoordenada.getY()-1;
-			int i=-1;
+			int i=0;
 			int j=0;
-			while(!aguita && i<3 ){
+			while(aguita && i<3 ){
 				j=0;
-                i++;
-				while(!aguita && j<3){
-					if((x+i>0 && x+i<10)&&(y+j>0 && y+j<10)){
+				while(aguita && j<3){
+					if(this.estaEnTablero(new Coordenada(x+i,y+j))){
 						if(!tablero[x+i][y+j].comprobarEstado().equals("Agua")){				
 							aguita=false;
 							System.out.println("esa casilla no se puede seleccionar");
 							}
-					}else{
-						aguita=false;
-						System.out.println("esa casilla no se puede seleccionar");
 					}
 				j++;
 				}
-					
+				i++;	
 			}	
 		}
 		return aguita;
@@ -56,7 +52,7 @@ public class Tablero {
 		int x = pCoordenada.getX();
 		int y = pCoordenada.getY();
 		boolean esta=false;
-		if((x>0 && x<10)&&(y>0 && y<10)){
+		if((x>=0 && x<10)&&(y>=0 && y<10)){
 			esta=true;
 		}
 		return esta;

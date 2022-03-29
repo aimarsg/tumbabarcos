@@ -8,10 +8,12 @@ public class Fragata extends Barco {
 	public boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Tablero pTablero) {
 		int X = pCoordenada.getX();
 		int Y = pCoordenada.getY();
+		boolean puede = false;
 		if(pTablero.estaRodeadoAgua(new Coordenada(X,Y))){
 			pTablero.getCasilla(X,Y).cambiarEstado("Barco");
 			super.getCasillasOcupadas().add(pTablero.getCasilla(X, Y));
+			puede=true;
 		}
-		return pTablero.estaRodeadoAgua(new Coordenada(X,Y));		
+		return puede;		
 	}
 }
