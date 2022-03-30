@@ -150,7 +150,7 @@ public class Flota extends Observable{
 				fil = randomizer.nextInt(9);
 				horizontal = randomizer.nextBoolean();
 				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, tablero);
-				colocado = true;
+				//colocado = true;
 				
 				//listaBarcos.remove(b);
 				barcosColocados.add(b);
@@ -158,10 +158,11 @@ public class Flota extends Observable{
 				System.out.println(b.getNombre()+" colocado en col "+col+", fil "+fil+" ");
 				System.out.println();
 			}
-			listaBarcos = new ArrayList<>();
-		
+			//listaBarcos = new ArrayList<>();
+			
 			setChanged();
 			notifyObservers(new Object[] {b.getCasillas(), false});
+			
 		}
 	}
 }

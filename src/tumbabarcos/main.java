@@ -10,9 +10,10 @@ public class main {
 	//otro comment
      // va
 	public static void main(String args[]) {
-		Modelo modelo= Modelo.getModelo();
-		modelo.inicializar();
 		Vista vista = new Vista();
 		vista.setVisible(true);
+		Modelo modelo= Modelo.getModelo();
+		modelo.inicializar();
+		
 	}
 }

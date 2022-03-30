@@ -81,6 +81,7 @@ public class Vista extends JFrame implements Observer{
 	 */
 	public Vista() {
 		Modelo.getModelo().getFlotaUsuario().addObserver(this);
+		Modelo.getModelo().getFlotaOrdenador().addObserver(this);
 		this.labelsUsuario = new ArrayList<JLabel>();
 		this.labelsIA = new ArrayList<JLabel>();
 
@@ -243,8 +244,9 @@ public class Vista extends JFrame implements Observer{
 			buttonGroup.clearSelection();
 		
 		}*/
+		
 		if(arg1 instanceof Object[]) {
-			System.out.println("--------------index del barco ");
+			
 			//SObject o1 =(Object[])arg1;
 			
 			
@@ -252,18 +254,25 @@ public class Vista extends JFrame implements Observer{
 			Object[] array= (Object[]) arg1;
 			boolean b= (boolean)array[1];
 			
-			if(!b){
+			ArrayList<Casilla> lista = (ArrayList<Casilla>) array[0];
+			//ArrayList<Casilla> lcasilla = lista[0];
 			
-			ArrayList<Casilla>[] lista = (ArrayList<Casilla>[]) arg1;
-			ArrayList<Casilla> lcasilla = lista[0];
-			for (Casilla c : lcasilla) {
+			
+			
+			for (Casilla c : lista) {
 				int x = c.getPosicion().getX();
 				int y = c.getPosicion().getY();
 				int index = x*10+y;
 				System.out.println("--------------index del barco "+index);
-				labelsIA.get(index).setBackground(Color.BLACK);
+				if (b) {
+					labelsUsuario.get(index).setBackground(Color.BLACK);
+				}
+				else {
+					labelsIA.get(index).setBackground(Color.BLACK);
+				}
 			}	
-			}	
+			
+		
 		}
 		
 		//para mostrar texto
