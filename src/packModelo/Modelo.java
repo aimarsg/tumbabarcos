@@ -52,11 +52,6 @@ public class Modelo extends Observable {
 			flotas[i] = new Flota();
 		}
 	}
-
-	private void operation() {
-		// TODO - implement Modelo.operation
-		throw new UnsupportedOperationException();
-	}
 	public Flota getFlotaUsuario() {
 		return flotas[0];
 	}
