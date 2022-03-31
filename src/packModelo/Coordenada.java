@@ -26,5 +26,12 @@ public class Coordenada {
 	public void setY(int pY) {
 		this.coordY = pY;
 	}
+	public boolean equals(Coordenada pCoord) {
+		if (pCoord.getX() == this.coordX && pCoord.getY() == this.coordY) {
+			return true;
+		}else{return false;}
+		
+	}
+	
 
 }

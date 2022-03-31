@@ -14,6 +14,6 @@ public class main {
 		vista.setVisible(true);
 		Modelo modelo= Modelo.getModelo();
 		modelo.inicializar();
-		
+		//modelo.jugar();
 	}
 }

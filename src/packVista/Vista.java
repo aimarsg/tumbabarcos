@@ -251,9 +251,12 @@ public class Vista extends JFrame implements Observer {
 				if (b) {
 					labelsUsuario.get(index).setBackground(Color.BLACK);
 				} else {
-					labelsIA.get(index).setBackground(Color.BLACK);
+					
+					labelsIA.get(index).setBackground(Color.decode("#7e0000"));
 				}
 			}
+			coordClickada = null;
+			buttonGroup.clearSelection();
 
 		}
 
@@ -261,20 +264,25 @@ public class Vista extends JFrame implements Observer {
 		if (arg1 instanceof String) {
 			texto.setText((String) arg1);
 		}
-		if (arg1 instanceof Coordenada) {
-			int x = ((Coordenada) arg1).getX();
-			int y = ((Coordenada) arg1).getY();
+		
+		//disparado
+		if (arg1 instanceof Casilla) {
+			Casilla c = (Casilla) arg1;
+			int x = c.getPosicion().getX();
+			int y = c.getPosicion().getY();
 		
 			int index = x * 10 + y;
-			String estado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(x,y);
-			if (estado.equals("Tocado")){
+			//String estado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(x,y);
+			if (c.comprobarEstado().equals("Tocado")){
 				labelsIA.get(index).setBackground(new Color(160, 60, 210));
 			}
-			else if(estado.equals("Disparado")) {
+			else if(c.comprobarEstado().equals("Disparado")) {
 				labelsIA.get(index).setBackground(Color.GREEN);
 			}
 			
 		}
+		
+		
 
 	}
 
@@ -319,10 +327,11 @@ public class Vista extends JFrame implements Observer {
 					// la coordenada anterior
 					if (coordClickada != null) { // el anterior (la primera vez que se clica va a ser null)
 						estadoClickado = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(coordClickada.getX(),coordClickada.getY());
-					}
+					
 
 					if (labelClicado != null && !estadoClickado.equals("Barco")) { // poner casilla anterior clicada en azul si no se ha convertido en barco
 						labelClicado.setBackground(Color.cyan);
+					}
 					}
 					
 					// el nuevo click
@@ -345,14 +354,15 @@ public class Vista extends JFrame implements Observer {
 		
 					int x = (pos / 10);
 					int y = (pos % 10);
-					
+					//el anterior
 					if (coordClickada != null) {
 						estadoClickado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(coordClickada.getX(), coordClickada.getY());
-					}
-	
-					if (labelClicado != null && estadoClickado.equals("Agua")) {
+						
+						if (labelClicado != null && estadoClickado.equals("Agua")) {
 						labelClicado.setBackground(Color.cyan);
+						}
 					}
+					
 					labelClicado = l;
 					coordClickada = new Coordenada(x, y);
 					
@@ -382,9 +392,10 @@ public class Vista extends JFrame implements Observer {
 						l.setBackground(Color.lightGray);
 						// System.out.println("Posicion entrada: " + pos);
 					}
-				} else {
-					l.setBackground(Color.lightGray);
-					// System.out.println("Posicion entrada: " + pos);
+				} else {//cuando no hay nada clicado
+					if (!estadoCasilla.equals("Barco")) {
+						l.setBackground(Color.lightGray);
+					}
 				}
 			}
 
@@ -396,18 +407,21 @@ public class Vista extends JFrame implements Observer {
 					int Y = pos % 10;
 					String estadoCasilla = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(X, Y);
 					if (coordClickada != null) {
-						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && (coordClickada.getX() != X || coordClickada.getY() != Y)) {
-							l.setBackground(new Color(230, 150, 150));
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")&& !estadoCasilla.equals("Hundido") && (coordClickada.getX() != X || coordClickada.getY() != Y)) {
+						l.setBackground(new Color(230, 150, 150));
 							// System.out.println("Posicion entrada: " + pos);
 						}
 					} else { 
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")&& !estadoCasilla.equals("Hundido")) {
 						l.setBackground(new Color(255, 150, 150));
 						// System.out.println("Posicion entrada: " + pos);
+					
+						}
 					}
-				}
+			
 			}
 		}
-
+		}
 		@Override
 		public void mouseExited(MouseEvent e) {
 			JLabel l = (JLabel) e.getSource();
@@ -424,10 +438,11 @@ public class Vista extends JFrame implements Observer {
 						// System.out.println("Posicion entrada: " + pos);
 					}
 				} else {
-					l.setBackground(Color.cyan);
+					if (!estadoCasilla.equals("Barco")) {
+						l.setBackground(Color.cyan);
+					}
 					// System.out.println("Posicion entrada: " + pos);
 				}
-
 			}
 
 			// Ordenador
@@ -438,15 +453,17 @@ public class Vista extends JFrame implements Observer {
 					int Y = pos % 10;
 					String estadoCasilla = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(X, Y);
 					if (coordClickada != null) {//
-						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && (coordClickada.getX() != X || coordClickada.getY() != Y)) {
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && !estadoCasilla.equals("Hundido") && (coordClickada.getX() != X || coordClickada.getY() != Y)) {
 							l.setBackground(Color.cyan);
 							// System.out.println("Posicion entrada: " + pos);
 						}
 					} else {
+					if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")&& !estadoCasilla.equals("Hundido")) {
 						l.setBackground(Color.cyan);
 						// System.out.println("Posicion entrada: " + pos);
 					}
 				}
+			}
 			}
 		}
 
@@ -463,6 +480,7 @@ public class Vista extends JFrame implements Observer {
 		}
 
 	}
+
 
 	private class Controler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
@@ -488,8 +506,9 @@ public class Vista extends JFrame implements Observer {
 				flotaU.colocarBarcos(coordClickada, "Fragata", enHorizontal);
 			}
 			if (e.getSource().equals(Disparar)) {
-				System.out.println("Se ha añadidio Disparado");
+				System.out.println("SE llama a disparar con la coordenada x "+coordClickada.getX()+ " y "+coordClickada.getY());
 				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
+				
 				flotaO.disparar(coordClickada);
 
 			}

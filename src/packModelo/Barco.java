@@ -1,6 +1,9 @@
 package packModelo;
 
+
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 public abstract class Barco {
 
@@ -16,6 +19,7 @@ public abstract class Barco {
 		this.nombre = pNom;
 		this.casillasOcupadas = new ArrayList<>();
 		
+		
 	}
 	public ArrayList<Casilla> getCasillas(){
 		return this.casillasOcupadas;
@@ -29,8 +33,11 @@ public abstract class Barco {
 	 * @param Coordenada
 	 */
 	public boolean tieneCordenada(Coordenada pCord) {
-		// TODO - implement Barco.tieneCordenada
-		throw new UnsupportedOperationException();
+		return this.casillasOcupadas.stream().anyMatch(c -> c.getPosicion().equals(pCord));
+	}
+	public ArrayList<Casilla> cambiarAHundido() {
+		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Hundido"));
+		return this.casillasOcupadas;
 	}
 
 	/**
@@ -53,6 +60,10 @@ public abstract class Barco {
 	
 	protected ArrayList<Casilla> getCasillasOcupadas(){
 		return this.casillasOcupadas;
+	}
+	public boolean restarCasilla() {
+		this.contLibres--;
+		return this.contLibres==0;
 	}
 	
 }

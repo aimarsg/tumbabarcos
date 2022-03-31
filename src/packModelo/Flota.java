@@ -23,14 +23,20 @@ public class Flota extends Observable{
 		
 	}
 
-	public void jugarTurno() {
-		// TODO - implement Flota.jugarTurno
-		throw new UnsupportedOperationException();
+	public boolean jugarTurno() {
+	
+		return numBarcos==0;
+	}
+	
+	public boolean jugarTurnoIA() {
+	
+		return numBarcos==0;
 	}
 
 	public void colocarBarcos(Coordenada pCord, String pTipo, boolean horizontal) {	
 		Barco nuevo =this.obtenerBarco(pTipo);
-		if (nuevo!=null) {
+		if (pCord!=null) {
+			if (nuevo!=null) {
 				if (nuevo.colocarBarco(pCord, !horizontal, tablero)){ //horizontal invertido porque la x y la y van al reves
 					listaBarcos.remove(nuevo);
 					barcosColocados.add(nuevo);
@@ -38,6 +44,8 @@ public class Flota extends Observable{
 					System.out.println("se coloca");
 					setChanged();
 					notifyObservers(new Object[] {nuevo.getCasillas(), true});
+					setChanged();
+					notifyObservers("Barco "+pTipo+" colocado.");
 					//notifyObservers(nuevo.getCasillas());
 					
 				}else {
@@ -45,38 +53,63 @@ public class Flota extends Observable{
 					setChanged();
 					notifyObservers("El barco no se puede colocar en esa posicion");
 				}
-		}else {
-			//no existe el barco 
-			System.out.println("No existe el barco");
+			}else {//no existe el barco 
+				System.out.println("No existe el barco");
+				setChanged();
+				notifyObservers("No queda ningun barco del tipo "+pTipo+" por colocar. Selecciona otro.");
+			}
+		}else {//no se ha seleccionado ninguna casilla
+			System.out.println("No se ha seleccionado ninguna casilla");
 			setChanged();
-			notifyObservers("No queda ningun barco del tipo "+pTipo+" por colocar. Selecciona otro.");
+			notifyObservers("No se ha seleccionado ninguna casilla.");
+			
 		}
 	}
 
 	public boolean disparar(Coordenada pCoordenada){
 		boolean tocado= false;
-		
-		int x = pCoordenada.getX();
-		int y = pCoordenada.getY();
-		Casilla casillaActual = tablero.getCasilla(x, y);
-		
-		String estado=casillaActual.comprobarEstado();
-		
-		if (estado.equals("Disparado")||estado.equals("Tocado")) {
-			setChanged();
-			notifyObservers("Has disparado a una casilla ya disparada");
-		}else{
+		if (pCoordenada!=null) {
+			int x = pCoordenada.getX();
+			int y = pCoordenada.getY();
+			Casilla casillaActual = tablero.getCasilla(x, y);
 			
-		if(estado.equals("Barco")){
-			casillaActual.cambiarEstado("Tocado");
-		}else{
-			System.out.println("Disparado al agua");
-			casillaActual.cambiarEstado("Disparado");
+			String estado=casillaActual.comprobarEstado();
+			
+			if (estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) {
+				setChanged();
+				notifyObservers("Has disparado a una casilla ya disparada");
+			}else{
+				
+				if(estado.equals("Barco")){
+					casillaActual.cambiarEstado("Tocado");
+					setChanged();
+					notifyObservers("Tocado!");
+					System.out.println("se esta buscando el barco de coordenadas x" + x+ " y "+y);
+					Barco b = buscarBarco(pCoordenada);
+					System.out.println(b.getNombre());
+					System.out.println(b.tieneCordenada(pCoordenada));
+					boolean hundido = b.restarCasilla();
+					if (hundido){
+						ArrayList<Casilla> hundidos=b.cambiarAHundido();
+						setChanged();
+						notifyObservers(new Object[] {hundidos, false});
+						setChanged();
+						notifyObservers("El barco "+b.getNombre()+" se ha hundido!!");
+					}
+				}else{
+					System.out.println("Disparado al agua");
+					casillaActual.cambiarEstado("Disparado");
+					setChanged();
+					notifyObservers("agua :(");
+				}
+				setChanged();
+				notifyObservers(casillaActual);				
 			}
-			setChanged();
-			notifyObservers(pCoordenada);
 		}
-		
+		else{
+			setChanged();
+			notifyObservers("Selecciona una casilla");
+		}
 		return tocado; 
 	}
 	public void inicializarFlota() {
@@ -100,13 +133,21 @@ public class Flota extends Observable{
 	 * @param Coordenada
 	 */
 	private Barco buscarBarco(Coordenada pcord ) {
-		int x = pcord.getX();
-		int y = pcord.getY();
 		
-		return null;
+		boolean enc = false;
+		Barco b=null;
+		Iterator<Barco> it = this.getIteradorColocados();
+		//barcosColocados.stream().allMatch(b -> b.tieneCordenada(pcord));
+		
+		while (!enc && it.hasNext()){
+			b=it.next();
+			enc=b.tieneCordenada(pcord);
+		}
+		if (!enc) {return null;}
+		return b;
 	}
 	public Barco obtenerBarco(String pTipo){
-		Iterator<Barco> it= this.obtIterador();
+		Iterator<Barco> it= this.obtIteradorBarcos();
 		Barco nuevo= null;
 		boolean enc=false;
 		while(it.hasNext()&& !enc){
@@ -126,10 +167,12 @@ public class Flota extends Observable{
 	 }
 	
 	
-	private Iterator<Barco> obtIterador() {
+	private Iterator<Barco> obtIteradorBarcos() {
 		return this.listaBarcos.iterator();
 	}
-
+	private Iterator<Barco> getIteradorColocados(){
+		return this.barcosColocados.iterator();
+	}
 	
 	
 	
@@ -138,8 +181,8 @@ public class Flota extends Observable{
 	public void colocarBarcosOrdenador() {
 		this.inicializarFlota();
 		Random randomizer = new Random();
-		int col;
-		int fil;
+		int col = 0;
+		int fil = 0;
 		boolean colocado;
 		boolean horizontal;
 	
@@ -150,19 +193,15 @@ public class Flota extends Observable{
 				fil = randomizer.nextInt(9);
 				horizontal = randomizer.nextBoolean();
 				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, tablero);
-				//colocado = true;
-				
-				//listaBarcos.remove(b);
-				barcosColocados.add(b);
-				
-				System.out.println(b.getNombre()+" colocado en col "+col+", fil "+fil+" ");
-				System.out.println();
+				barcosColocados.add(b);				
 			}
 			//listaBarcos = new ArrayList<>();
-			
-			setChanged();
-			notifyObservers(new Object[] {b.getCasillas(), false});
+			System.out.println(b.getNombre()+" colocado en fila "+(col +1)+", col "+(1+fil)+" ");
+			System.out.println();
+			//setChanged();
+			//notifyObservers(new Object[] {b.getCasillas(), false});
 			
 		}
 	}
+	
 }
