@@ -328,10 +328,9 @@ public class Vista extends JFrame implements Observer {
 					if (coordClickada != null) { // el anterior (la primera vez que se clica va a ser null)
 						estadoClickado = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(coordClickada.getX(),coordClickada.getY());
 					
-
-					if (labelClicado != null && !estadoClickado.equals("Barco")) { // poner casilla anterior clicada en azul si no se ha convertido en barco
-						labelClicado.setBackground(Color.cyan);
-					}
+						if (labelClicado != null && !estadoClickado.equals("Barco")) { // poner casilla anterior clicada en azul si no se ha convertido en barco
+							labelClicado.setBackground(Color.cyan);
+						}
 					}
 					
 					// el nuevo click
@@ -344,34 +343,31 @@ public class Vista extends JFrame implements Observer {
 					if (!estadoClickado.equals("Barco")) {
 						l.setBackground(Color.darkGray);
 					}
-
-
 			}
 
 			// Ordenador
 			else {
 					pos = labelsIA.indexOf(l);
-		
 					int x = (pos / 10);
 					int y = (pos % 10);
 					//el anterior
 					if (coordClickada != null) {
 						estadoClickado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(coordClickada.getX(), coordClickada.getY());
-						
-						if (labelClicado != null && estadoClickado.equals("Agua")) {
-						labelClicado.setBackground(Color.cyan);
+						//
+						if (labelClicado != null &&!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido")) {
+							labelClicado.setBackground(Color.cyan);
 						}
 					}
 					
 					labelClicado = l;
 					coordClickada = new Coordenada(x, y);
-					
 					estadoClickado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(coordClickada.getX(),coordClickada.getY());
 					
 					System.out.println("X:" + y);
 					System.out.println("Y:" + x);
 					System.out.println("Posicion clicada: " + pos);
-					if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado")) { //cuando solo sea agua se puede seleccionar
+					//
+					if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido")) { //cuando solo sea agua se puede seleccionar
 						l.setBackground(new Color(255, 70, 70));
 					}					
 			}
