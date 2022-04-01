@@ -14,6 +14,16 @@ public class main {
 		vista.setVisible(true);
 		Modelo modelo= Modelo.getModelo();
 		modelo.inicializar();
-		//modelo.jugar();
+		
+		while (!modelo.getFlotaUsuario().todosColocados()) {try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		} //para que espere hasta que esten todos colocados
+		System.out.println(" Todos los barcos del usuario han sido colocados. FIGHT!");
+		
+		modelo.jugar();
 	}
 }

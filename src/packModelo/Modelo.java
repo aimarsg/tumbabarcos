@@ -8,16 +8,18 @@ public class Modelo extends Observable {
 	private Flota[] flotas;
 	private static Modelo miModelo;
 
-	public void jugar() {;
+	public void jugar() {
+		System.out.println("JUGANDO------------------------");
 		boolean acabarO = false;
 		boolean acabarU = false;
-		int turno = 0;
-		while(!acabarO|| !acabarU){
-			if(this.getFlotaUsuario().jugarTurno()){
+		
+		while(!acabarO && !acabarU){
+			if(!this.getFlotaUsuario().jugarTurno()){
+				
 				acabarU=true;
 			}
 			if(!acabarU){
-				if(this.getFlotaOrdenador().jugarTurno()){
+				if(!this.getFlotaOrdenador().jugarTurnoIA()){
 				acabarO=true;
 				}
 			}
@@ -26,17 +28,20 @@ public class Modelo extends Observable {
 		if(acabarO){
 			System.out.println("Usuario has ganado ");
 			setChanged();
-			notifyObservers("¡¡¡Has ganadoooo!!!");
+			notifyObservers("Has ganadoooo!!!");
 		}else{
 			System.out.println("Ordenador has ganado ");
 			setChanged();
-			notifyObservers("¡¡¡El ordenador ha ganadoooo!!");
+			notifyObservers("El ordenador ha ganadoooo!!");
 		}
 	}
 
 	public void inicializar() {
 		this.getFlotaOrdenador().colocarBarcosOrdenador();
 		this.getFlotaUsuario().inicializarFlota();
+		//para hacer pruebas
+		//this.getFlotaUsuario().colocarBarcosOrdenador();
+		
 	}
 
 	public static Modelo getModelo() {
