@@ -256,8 +256,8 @@ public class Flota extends Observable{
 		for (Barco b : this.listaBarcos) {
 			colocado = false;
 			while (!colocado) {
-				col= randomizer.nextInt(9);
-				fil = randomizer.nextInt(9);
+				col= randomizer.nextInt(10);
+				fil = randomizer.nextInt(10);
 				horizontal = randomizer.nextBoolean();
 				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, tablero);
 				barcosColocados.add(b);				
