@@ -12,6 +12,10 @@ public class Modelo extends Observable {
 		System.out.println("JUGANDO------------------------");
 		boolean acabarO = false;
 		boolean acabarU = false;
+		//activar los labels del marcador
+		setChanged();
+		notifyObservers("ActivarMarcador");
+		
 		
 		while(!acabarO && !acabarU){
 			if(!this.getFlotaUsuario().jugarTurno()){

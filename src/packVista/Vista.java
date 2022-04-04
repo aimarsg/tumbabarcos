@@ -29,6 +29,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.sound.sampled.Line;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -49,15 +50,19 @@ public class Vista extends JFrame implements Observer {
 	private JButton Disparar;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JLabel texto;
+	private JLabel marcadorU;
+	private JLabel marcadorO;
+	//private JLabel texto2;
 	private ArrayList<JLabel> labelsUsuario;
 	private ArrayList<JLabel> labelsIA;
 	private JRadioButton Seleccion;
 	private JCheckBox horizontal;
 	private JCheckBox vertical;
-
+	private int barcosU, barcosO;
 	private static Coordenada coordClickada;
 	private static JLabel labelClicado;
 	private boolean enHorizontal = true;
+	
 
 	/**
 	 * Launch the application.
@@ -136,7 +141,7 @@ public class Vista extends JFrame implements Observer {
 
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(3, 1, 0, 0));
+		panel_3.setLayout(new GridLayout(4, 1, 0, 0));
 
 		Disparar = new JButton("Disparar");
 		panel_3.add(Disparar);
@@ -146,6 +151,15 @@ public class Vista extends JFrame implements Observer {
 		texto = new JLabel();
 		panel_3.add(texto);
 
+		barcosO=10;
+		barcosU=10;		
+		
+		marcadorO = new JLabel("Barcos restantes del ordenador: "+barcosO);
+		marcadorO.setVisible(false);
+		panel_3.add(marcadorO);
+		marcadorU = new JLabel("Barcos restantes del ordenador: "+barcosU);
+		marcadorU.setVisible(false);
+		panel_3.add(marcadorU);
 		crearButtons();
 	}
 
@@ -258,14 +272,13 @@ public class Vista extends JFrame implements Observer {
 					labelsIA.get(index).setBackground(Color.decode("#7e0000"));
 				}else if(b.equals("HundirUsuario")) {
 					labelsUsuario.get(index).setBackground(Color.decode("#7e0000"));
-				
 				//DISPARAR 
 				} else if (b.equals("DispararAOrdenador")) {
 					if (c.comprobarEstado().equals("Tocado")){
 						labelsIA.get(index).setBackground(new Color(160, 60, 210));
 					}
 					else if(c.comprobarEstado().equals("Disparado")) {
-						labelsIA.get(index).setBackground(Color.GREEN);
+						labelsIA.get(index).setBackground(Color.BLUE);
 					}
 				}else if (b.equals("DispararAUsuario")) {
 					if (c.comprobarEstado().equals("Tocado")){
@@ -277,6 +290,16 @@ public class Vista extends JFrame implements Observer {
 				}
 				
 			}
+			// actualizacion del marcador cuadno se hunden los barcos
+			
+			if (b.equals("HundirOrdenador")) {
+				barcosO--;
+				marcadorO.setText("Barcos restantes del ordenador: "+barcosO);
+			}else if(b.equals("HundirUsuario")) {
+				barcosU--;
+				marcadorU.setText("Barcos restantes del usuario: "+barcosU);
+			}
+		
 			coordClickada = null;
 			buttonGroup.clearSelection();
 
@@ -286,12 +309,12 @@ public class Vista extends JFrame implements Observer {
 		if (arg1 instanceof String) {
 			if (((String)arg1).equals("ActivarDisparar")){
 				Disparar.setVisible(true);
+			}else if(((String)arg1).equals("ActivarMarcador")){
+				marcadorO.setVisible(true);
+				marcadorU.setVisible(true);
 			}else{
 				texto.setText((String) arg1);
 			}
-			/*if (arg1.equals("DesactivarDisparar")){
-				Disparar.setVisible(false);
-			}*/
 			
 		}
 		
@@ -299,7 +322,7 @@ public class Vista extends JFrame implements Observer {
 		/*if (arg1 instanceof Casilla) {
 			Casilla c = (Casilla) arg1;
 			int x = c.getPosicion().getX();
-			int y = c.getPosicion().getY();
+			int y = c).getPosicion().getY();
 		
 			int index = x * 10 + y;
 			//String estado = Modelo.getModelo().getFlotaOrdenador().obtenerEstadoCasilla(x,y);
@@ -362,7 +385,7 @@ public class Vista extends JFrame implements Observer {
 					if (coordClickada != null) { // el anterior (la primera vez que se clica va a ser null)
 						estadoClickado = Modelo.getModelo().getFlotaUsuario().obtenerEstadoCasilla(coordClickada.getX(),coordClickada.getY());
 					
-						if (labelClicado != null && !estadoClickado.equals("Barco")) { // poner casilla anterior clicada en azul si no se ha convertido en barco
+						if (labelClicado != null && !estadoClickado.equals("Barco") && !estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido")) { // poner casilla anterior clicada en azul si no se ha convertido en barco
 							labelClicado.setBackground(Color.cyan);
 						}
 					}
@@ -374,7 +397,7 @@ public class Vista extends JFrame implements Observer {
 					System.out.println("X:" + y);
 					System.out.println("Y:" + x);
 					//System.out.println("Posicion clicada: " + pos);
-					if (!estadoClickado.equals("Barco")) {
+					if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido") && !estadoClickado.equals("Barco")) {
 						l.setBackground(Color.darkGray);
 					}
 			}

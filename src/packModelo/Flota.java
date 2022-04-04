@@ -30,6 +30,8 @@ public class Flota extends Observable{
 		if(numBarcos!=0){
 			//System.out.println("TURNO DEL USUARIO---------------------");
 			setChanged();
+			notifyObservers(" --- TURNO DEL USUARIO --- ");
+			setChanged();
 			notifyObservers("ActivarDisparar");//activar el boton
 			
 			while (!disparado) {
@@ -52,18 +54,26 @@ public class Flota extends Observable{
 		Random randomizer = new Random();
 		boolean jugado=false;
 		if (numBarcos!=0){
+			setChanged();
+			notifyObservers(" --- TURNO DEL ORDENADOR --- ");
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			int col, fil;
 			while(!jugado) {
 				//System.out.println("TURNO DEL ORDENADOR---------------------");
-				col= randomizer.nextInt(9);
-				fil = randomizer.nextInt(9);
+				col= randomizer.nextInt(10);
+				fil = randomizer.nextInt(10);
 				//
 				System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil)+" ");
 				jugado = Modelo.getModelo().getFlotaUsuario().disparar(new Coordenada(col, fil), false);
 				System.out.println(jugado);
 			}
 			try {
-				Thread.sleep(1000);
+				Thread.sleep(750);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
