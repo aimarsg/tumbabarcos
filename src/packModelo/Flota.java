@@ -67,9 +67,10 @@ public class Flota extends Observable{
 				//System.out.println("TURNO DEL ORDENADOR---------------------");
 				col= randomizer.nextInt(10);
 				fil = randomizer.nextInt(10);
-				//
-				System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil)+" ");
-				jugado = Modelo.getModelo().getFlotaUsuario().disparar(new Coordenada(col, fil), false);
+				int armaAleatoria = randomizer.nextInt(2);
+				String[] armas = {"bomba","misil"};
+				System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
+				jugado = Modelo.getModelo().getFlotaUsuario().disparar(new Coordenada(col, fil), false,armas[armaAleatoria]);
 				System.out.println(jugado);
 			}
 			try {
@@ -128,7 +129,7 @@ public class Flota extends Observable{
 		return (listaBarcos.isEmpty());
 	}
 
-	public boolean disparar(Coordenada pCoordenada,boolean ordenador){
+	public boolean disparar(Coordenada pCoordenada,boolean ordenador, String arma){
 		boolean disparado= true;
 		if (pCoordenada!=null) {
 			int x = pCoordenada.getX();
@@ -137,21 +138,30 @@ public class Flota extends Observable{
 			
 			String estado=casillaActual.comprobarEstado();
 			
-			if (estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) {
+			if ((estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) && arma.equals("bomba")) {
 				disparado=false;
 				setChanged();
 				notifyObservers("Has disparado a una casilla ya disparada");
 			}else{
 				
 				if(estado.equals("Barco")){
-					casillaActual.cambiarEstado("Tocado");
-					System.out.println("se esta buscando el barco de coordenadas x" + x+ " y "+y);
+					boolean hundido;
 					Barco b = buscarBarco(pCoordenada);
-					setChanged();
-					notifyObservers("El barco "+b.getNombre()+" ha sido tocado!");
-					System.out.println(b.getNombre());
-					System.out.println(b.tieneCordenada(pCoordenada));
-					boolean hundido = b.restarCasilla();
+					if (arma.equals("bomba")) {
+						casillaActual.cambiarEstado("Tocado");
+						System.out.println("se esta buscando el barco de coordenadas x" + x+ " y "+y);
+						
+						setChanged();
+						notifyObservers("El barco "+b.getNombre()+" ha sido tocado!");
+						
+						System.out.println(b.getNombre());
+						System.out.println(b.tieneCordenada(pCoordenada));
+						hundido = b.restarCasilla();
+					}else { //el arma es un misil -> lo hunde entero
+						hundido = true;
+
+					}
+					
 					if (hundido){
 						numBarcos--;
 						ArrayList<Casilla> hundidos=b.cambiarAHundido();

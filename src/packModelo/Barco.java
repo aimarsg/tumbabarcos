@@ -36,6 +36,7 @@ public abstract class Barco {
 		return this.casillasOcupadas.stream().anyMatch(c -> c.getPosicion().equals(pCord));
 	}
 	public ArrayList<Casilla> cambiarAHundido() {
+		this.contLibres = 0;
 		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Hundido"));
 		return this.casillasOcupadas;
 	}
