@@ -24,6 +24,8 @@ import packModelo.Modelo;
 
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -64,6 +66,8 @@ public class Vista extends JFrame implements Observer {
 	private static JLabel labelClicadoUsuario;
 	private static JLabel labelClicadoOrdenador;
 	private boolean enHorizontal = true;
+	private JPanel panel;
+	private JButton misilBt; 
 	
 
 	/**
@@ -106,21 +110,25 @@ public class Vista extends JFrame implements Observer {
 		PanelBarcos.setLayout(new GridLayout(3, 2, 0, 0));
 
 		PortaAviones = new JRadioButton("PortaAviones");
+		PortaAviones.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(PortaAviones);
 		PanelBarcos.add(PortaAviones);
 		PortaAviones.addActionListener(getControler());
 
 		Submarinos = new JRadioButton("Submarino");
+		Submarinos.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Submarinos);
 		PanelBarcos.add(Submarinos);
 		Submarinos.addActionListener(getControler());
 
 		Destructores = new JRadioButton("Destructores");
+		Destructores.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Destructores);
 		PanelBarcos.add(Destructores);
 		Destructores.addActionListener(getControler());
 
 		Fragatas = new JRadioButton("Fragatas");
+		Fragatas.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Fragatas);
 		PanelBarcos.add(Fragatas);
 		Fragatas.addActionListener(getControler());
@@ -131,11 +139,13 @@ public class Vista extends JFrame implements Observer {
 		 */
 
 		vertical = new JCheckBox("Vertical");
+		vertical.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		PanelBarcos.add(vertical);
 		buttonGroup_1.add(vertical);
 		vertical.addActionListener(getControler());
 
 		horizontal = new JCheckBox("horizontal");
+		horizontal.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		PanelBarcos.add(horizontal);
 		horizontal.setSelected(true);
 		buttonGroup_1.add(horizontal);
@@ -144,22 +154,41 @@ public class Vista extends JFrame implements Observer {
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(4, 1, 0, 0));
+		
+		panel = new JPanel();
+		panel_3.add(panel);
+		panel.setLayout(new GridLayout(1, 2, 0, 0));
 
-		Disparar = new JButton("Disparar");
-		panel_3.add(Disparar);
+		Disparar = new JButton("Disparar Bomba ");
+		Disparar.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		Disparar.setBackground(Color.WHITE);
+		Disparar.setForeground(new Color(255, 0, 0));
 		Disparar.addActionListener(getControler());
 		Disparar.setVisible(false);
+		
+		panel.add(Disparar);
+		
+		misilBt = new JButton("Disparar Misil");
+		misilBt.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		misilBt.setForeground(Color.RED);
+		misilBt.setBackground(Color.WHITE);
+		panel.add(misilBt);
+		misilBt.addActionListener(getControler());
+		misilBt.setVisible(false);
 
 		texto = new JLabel();
+		texto.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		panel_3.add(texto);
 
 		barcosO=10;
 		barcosU=10;		
 		
 		marcadorO = new JLabel("Barcos restantes del Ordenador: "+barcosO);
+		marcadorO.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		marcadorO.setVisible(false);
 		panel_3.add(marcadorO);
 		marcadorU = new JLabel("Barcos restantes del Usuario: "+barcosU);
+		marcadorU.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		marcadorU.setVisible(false);
 		panel_3.add(marcadorU);
 		crearButtons();
@@ -302,6 +331,7 @@ public class Vista extends JFrame implements Observer {
 		if (arg1 instanceof String) {
 			if (((String)arg1).equals("ActivarDisparar")){
 				Disparar.setVisible(true);
+				misilBt.setVisible(true);
 			}else if(((String)arg1).equals("ActivarMarcador")){
 				marcadorO.setVisible(true);
 				marcadorU.setVisible(true);
