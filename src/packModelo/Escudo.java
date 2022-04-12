@@ -5,10 +5,10 @@ public class Escudo extends Arma {
 	private Coordenada ubicacion;
 	private int numImpactos;
 
-	public Escudo(double pPrecio, Coordenada pUbicacion, int pImpactos) {
+	public Escudo(double pPrecio, int pImpactos) {
 		super(pPrecio);
-		ubicacion= pUbicacion;
 		numImpactos= pImpactos;
+		arma = new ColocarEscudo();
 	}
 
 	public void esAlcanzado() {

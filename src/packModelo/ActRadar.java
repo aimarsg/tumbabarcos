@@ -1,6 +1,6 @@
 package packModelo;
 
-public class ActRadar {
+public class ActRadar implements ArmaStrategy{
 	public ActRadar(){}
 	public void utilizar(){
 		

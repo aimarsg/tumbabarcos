@@ -5,10 +5,11 @@ public class Radar extends Arma {
 	private int numConsultas;
 	private Coordenada ubicacion;
 
-	public Radar(double pPrecio, Coordenada pUbicacion, int pConsultas) {
+	public Radar(double pPrecio, int pConsultas) {
 		super(pPrecio);
 		ubicacion= pUbicacion;
 		numConsultas= pConsultas;
+		arma= new ActRadar();
 	}
 
 	public void mover() {

@@ -1,9 +1,10 @@
 package packModelo;
 
-public class Misil extends Arma {
+public class Misil extends Arma{
 
 	public Misil(double pPrecio) {
 		super(pPrecio);
+		arma = new MisilDisp();
 	}
 
 	/**

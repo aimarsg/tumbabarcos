@@ -2,7 +2,7 @@ package packModelo;
 public abstract class Arma {
 
 	protected Double precio;
-	private ArmaStrategy arma;
+	protected ArmaStrategy arma;
 
 	public Arma(Double pPrec) {
 		precio= pPrec;
