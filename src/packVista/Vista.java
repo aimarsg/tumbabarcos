@@ -68,6 +68,12 @@ public class Vista extends JFrame implements Observer {
 	private boolean enHorizontal = true;
 	private JPanel panel;
 	private JButton misilBt; 
+	private JPanel panel_1;
+	private JRadioButton BombaBtn;
+	private JRadioButton misilBtn;
+	private JRadioButton escudoBtn;
+	private JRadioButton radarBtn;
+	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
 	
 
 	/**
@@ -153,13 +159,13 @@ public class Vista extends JFrame implements Observer {
 
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
-		panel_3.setLayout(new GridLayout(4, 1, 0, 0));
+		panel_3.setLayout(new GridLayout(5, 1, 0, 0));
 		
 		panel = new JPanel();
 		panel_3.add(panel);
 		panel.setLayout(new GridLayout(1, 2, 0, 0));
 
-		Disparar = new JButton("Disparar Bomba ");
+		Disparar = new JButton("Disparar");
 		Disparar.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
 		Disparar.setBackground(Color.WHITE);
 		Disparar.setForeground(new Color(255, 0, 0));
@@ -168,13 +174,33 @@ public class Vista extends JFrame implements Observer {
 		
 		panel.add(Disparar);
 		
-		misilBt = new JButton("Disparar Misil");
+		misilBt = new JButton("Comprar");
 		misilBt.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
 		misilBt.setForeground(Color.RED);
 		misilBt.setBackground(Color.WHITE);
 		panel.add(misilBt);
 		misilBt.addActionListener(getControler());
 		misilBt.setVisible(false);
+		
+		panel_1 = new JPanel();
+		panel_3.add(panel_1);
+		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
+		
+		BombaBtn = new JRadioButton("BOMBA");
+		buttonGroup_2.add(BombaBtn);
+		panel_1.add(BombaBtn);
+		
+		misilBtn = new JRadioButton("MISIL");
+		buttonGroup_2.add(misilBtn);
+		panel_1.add(misilBtn);
+		
+		escudoBtn = new JRadioButton("ESCUDO");
+		buttonGroup_2.add(escudoBtn);
+		panel_1.add(escudoBtn);
+		
+		radarBtn = new JRadioButton("RADAR");
+		buttonGroup_2.add(radarBtn);
+		panel_1.add(radarBtn);
 
 		texto = new JLabel();
 		texto.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
