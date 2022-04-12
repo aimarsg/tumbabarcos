@@ -586,8 +586,19 @@ public class Vista extends JFrame implements Observer {
 				//System.out.println("SE llama a disparar con la coordenada x "+coordClickada.getX()+ " y "+coordClickada.getY());
 				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
 				
-				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true);
+				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true, "bomba");
 				if (disparado){
+					Disparar.setVisible(false);
+					misilBt.setVisible(false);
+					Modelo.getModelo().getFlotaUsuario().setDisparadoUsuario();
+				}
+
+			}
+			if (e.getSource().equals(misilBt)) {
+				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
+				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true, "misil");
+				if (disparado){
+					misilBt.setVisible(false);
 					Disparar.setVisible(false);
 					Modelo.getModelo().getFlotaUsuario().setDisparadoUsuario();
 				}

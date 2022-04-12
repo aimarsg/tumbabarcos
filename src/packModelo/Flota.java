@@ -138,7 +138,8 @@ public class Flota extends Observable{
 			
 			String estado=casillaActual.comprobarEstado();
 			
-			if ((estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) && arma.equals("bomba")) {
+			if (((estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) && arma.equals("bomba")) ||
+					((estado.equals("Disparado") || estado.equals("Tocado")) && arma.equals("misil"))) {
 				disparado=false;
 				setChanged();
 				notifyObservers("Has disparado a una casilla ya disparada");
@@ -159,7 +160,6 @@ public class Flota extends Observable{
 						hundido = b.restarCasilla();
 					}else { //el arma es un misil -> lo hunde entero
 						hundido = true;
-
 					}
 					
 					if (hundido){
