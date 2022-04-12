@@ -49,7 +49,7 @@ public class Vista extends JFrame implements Observer {
 	private JRadioButton Submarinos;
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
-	private JButton Disparar;
+	private JButton dispararBtn;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JLabel texto;
 	private JLabel marcadorU;
@@ -67,7 +67,7 @@ public class Vista extends JFrame implements Observer {
 	private static JLabel labelClicadoOrdenador;
 	private boolean enHorizontal = true;
 	private JPanel panel;
-	private JButton misilBt; 
+	private JButton comprarBtn; 
 	private JPanel panel_1;
 	private JRadioButton BombaBtn;
 	private JRadioButton misilBtn;
@@ -165,22 +165,22 @@ public class Vista extends JFrame implements Observer {
 		panel_3.add(panel);
 		panel.setLayout(new GridLayout(1, 2, 0, 0));
 
-		Disparar = new JButton("Disparar");
-		Disparar.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
-		Disparar.setBackground(Color.WHITE);
-		Disparar.setForeground(new Color(255, 0, 0));
-		Disparar.addActionListener(getControler());
-		Disparar.setVisible(false);
+		dispararBtn = new JButton("Disparar");
+		dispararBtn.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		dispararBtn.setBackground(Color.WHITE);
+		dispararBtn.setForeground(new Color(255, 0, 0));
+		dispararBtn.addActionListener(getControler());
+		dispararBtn.setVisible(false);
 		
-		panel.add(Disparar);
+		panel.add(dispararBtn);
 		
-		misilBt = new JButton("Comprar");
-		misilBt.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
-		misilBt.setForeground(Color.RED);
-		misilBt.setBackground(Color.WHITE);
-		panel.add(misilBt);
-		misilBt.addActionListener(getControler());
-		misilBt.setVisible(false);
+		comprarBtn = new JButton("Comprar");
+		comprarBtn.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		comprarBtn.setForeground(Color.RED);
+		comprarBtn.setBackground(Color.WHITE);
+		panel.add(comprarBtn);
+		comprarBtn.addActionListener(getControler());
+		comprarBtn.setVisible(false);
 		
 		panel_1 = new JPanel();
 		panel_3.add(panel_1);
@@ -356,8 +356,8 @@ public class Vista extends JFrame implements Observer {
 		// para mostrar texto
 		if (arg1 instanceof String) {
 			if (((String)arg1).equals("ActivarDisparar")){
-				Disparar.setVisible(true);
-				misilBt.setVisible(true);
+				dispararBtn.setVisible(true);
+				comprarBtn.setVisible(true);
 			}else if(((String)arg1).equals("ActivarMarcador")){
 				marcadorO.setVisible(true);
 				marcadorU.setVisible(true);
@@ -389,7 +389,7 @@ public class Vista extends JFrame implements Observer {
 	}
 
 	public void activarDisparar(){
-		Disparar.setVisible(true);
+		dispararBtn.setVisible(true);
 	}
 
 	private class SwingAction extends AbstractAction {
@@ -608,24 +608,24 @@ public class Vista extends JFrame implements Observer {
 				Flota flotaU = Modelo.getModelo().getFlotaUsuario();
 				flotaU.colocarBarcos(coordClickadaUsuario, "Fragata", enHorizontal);
 			}
-			if (e.getSource().equals(Disparar)) {
+			if (e.getSource().equals(dispararBtn)) {
 				//System.out.println("SE llama a disparar con la coordenada x "+coordClickada.getX()+ " y "+coordClickada.getY());
 				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
 				
 				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true, "bomba");
 				if (disparado){
-					Disparar.setVisible(false);
-					misilBt.setVisible(false);
+					dispararBtn.setVisible(false);
+					comprarBtn.setVisible(false);
 					Modelo.getModelo().getFlotaUsuario().setDisparadoUsuario();
 				}
 
 			}
-			if (e.getSource().equals(misilBt)) {
+			if (e.getSource().equals(comprarBtn)) {
 				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
 				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true, "misil");
 				if (disparado){
-					misilBt.setVisible(false);
-					Disparar.setVisible(false);
+					comprarBtn.setVisible(false);
+					dispararBtn.setVisible(false);
 					Modelo.getModelo().getFlotaUsuario().setDisparadoUsuario();
 				}
 
