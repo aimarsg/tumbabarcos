@@ -1,6 +1,6 @@
 package packModelo;
 public interface ArmaStrategy {
 
-	void utilizar();
+	public void utilizar();
 
 }
