@@ -11,37 +11,43 @@ public class ListaArmas {
 		listaArmas=new ArrayList<Arma>();
 	}
 
-	/**
-	 * 
-	 * @param Arma
-	 */
+	public ArrayList<Arma> getListaArmas(){
+		return listaArmas;
+	}
 	public void anadirArma( Arma pArma) {
-		// TODO - implement ListaArmas.anadirArma
-		throw new UnsupportedOperationException();
+		listaArmas.add(pArma);
 	}
 
-	private Iterator<Arma> obtIterador() {
-		// TODO - implement ListaArmas.obtIterador
+	private Iterator<Arma> getIterador() {
 		return this.listaArmas.iterator();
 		}
 
-	/**
-	 * 
-	 * @param Double
-	 * @param String
-	 */
-	public double comprar( Double pSaldo,  String arma) {
-		// TODO - implement ListaArmas.comprar
-		throw new UnsupportedOperationException();
-	}
+	
 
 	/**
 	 * 
 	 * @param String
 	 */
-	private Arma buscarArma( String nombre) {
-		// TODO - implement ListaArmas.buscarArma
-		throw new UnsupportedOperationException();
+	public Arma buscarArma(String pTipo) {
+		Arma arma=null;
+		boolean enc=false;
+		Iterator<Arma> it= getIterador();
+		while(it.hasNext() && !enc){
+			arma=it.next();
+			if (arma.getClass().getSimpleName().equals(pTipo)){
+					enc=true;
+				}
+			}
+		
+		if (enc){
+			return arma;
+		}
+		else{
+			System.out.println("No quedan armas del tipo " + pTipo + " para comprar.");
+			return null;
+		}
 	}
+	
+
 
 }

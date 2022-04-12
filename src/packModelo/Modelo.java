@@ -5,7 +5,7 @@ import java.util.Observable;
 
 public class Modelo extends Observable {
 
-	private Flota[] flotas;
+	private Jugador[] jugadores;
 	private static Modelo miModelo;
 
 	public void jugar() {
@@ -18,12 +18,12 @@ public class Modelo extends Observable {
 		
 		
 		while(!acabarO && !acabarU){
-			if(!this.getFlotaUsuario().jugarTurno()){
+			if(!this.getUsuario().jugarTurno()){
 				
 				acabarU=true;
 			}
 			if(!acabarU){
-				if(!this.getFlotaOrdenador().jugarTurnoIA()){
+				if(!this.getOrdenador().jugarTurno()){
 				acabarO=true;
 				}
 			}
@@ -41,8 +41,8 @@ public class Modelo extends Observable {
 	}
 
 	public void inicializar() {
-		this.getFlotaOrdenador().colocarBarcosOrdenador();
-		this.getFlotaUsuario().inicializarFlota();
+		((Ordenador)this.getOrdenador()).colocarBarcosOrdenador();
+		this.getUsuario().inicializarFlota();
 		//para hacer pruebas
 		//this.getFlotaUsuario().colocarBarcosOrdenador();
 		
@@ -56,15 +56,14 @@ public class Modelo extends Observable {
 	}
 
 	private Modelo() {
-		this.flotas = new Flota[2];
-		for (int i=0; i<2; i++) {
-			flotas[i] = new Flota();
-		}
+		this.jugadores = new Jugador[2];
+		jugadores[0] = new Usuario();
+		jugadores[1] = new Ordenador();
 	}
-	public Flota getFlotaUsuario() {
-		return flotas[0];
+	public Jugador getUsuario() {
+		return jugadores[0];
 	}
-	public Flota getFlotaOrdenador() {
-		return flotas[1];
+	public Jugador getOrdenador() {
+		return jugadores[1];
 	}
 }

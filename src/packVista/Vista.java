@@ -73,7 +73,7 @@ public class Vista extends JFrame implements Observer {
 	private JRadioButton misilBtn;
 	private JRadioButton escudoBtn;
 	private JRadioButton radarBtn;
-	private final ButtonGroup buttonGroup_2 = new ButtonGroup();
+	private final ButtonGroup grupoDispararComprar = new ButtonGroup();
 	
 
 	/**
@@ -178,28 +178,29 @@ public class Vista extends JFrame implements Observer {
 		comprarBtn.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
 		comprarBtn.setForeground(Color.RED);
 		comprarBtn.setBackground(Color.WHITE);
-		panel.add(comprarBtn);
 		comprarBtn.addActionListener(getControler());
 		comprarBtn.setVisible(false);
-		
+
+		panel.add(comprarBtn);
+
 		panel_1 = new JPanel();
 		panel_3.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
 		
 		BombaBtn = new JRadioButton("BOMBA");
-		buttonGroup_2.add(BombaBtn);
+		grupoDispararComprar.add(BombaBtn);
 		panel_1.add(BombaBtn);
 		
 		misilBtn = new JRadioButton("MISIL");
-		buttonGroup_2.add(misilBtn);
+		grupoDispararComprar.add(misilBtn);
 		panel_1.add(misilBtn);
 		
 		escudoBtn = new JRadioButton("ESCUDO");
-		buttonGroup_2.add(escudoBtn);
+		grupoDispararComprar.add(escudoBtn);
 		panel_1.add(escudoBtn);
 		
 		radarBtn = new JRadioButton("RADAR");
-		buttonGroup_2.add(radarBtn);
+		grupoDispararComprar.add(radarBtn);
 		panel_1.add(radarBtn);
 
 		texto = new JLabel();
@@ -610,6 +611,18 @@ public class Vista extends JFrame implements Observer {
 			}
 			if (e.getSource().equals(dispararBtn)) {
 				//System.out.println("SE llama a disparar con la coordenada x "+coordClickada.getX()+ " y "+coordClickada.getY());
+				if (BombaBtn.isSelected()) {
+					Modelo.getModelo().getUsuario().disparar("Bomba", coordClickadaOrdenador);
+				}
+				else if (misilBtn.isSelected()) {
+					Modelo.getModelo().getUsuario().disparar("Misil", coordClickadaOrdenador);
+				}
+				else if (escudoBtn.isSelected()) {
+					//utilizar escudo
+				}
+				else {
+					//utilizar radar
+				}
 				Flota flotaO = Modelo.getModelo().getFlotaOrdenador();
 				
 				boolean disparado=flotaO.disparar(coordClickadaOrdenador, true, "bomba");

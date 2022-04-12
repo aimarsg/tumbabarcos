@@ -1,12 +1,12 @@
 package packModelo;
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 
 public class Almacen {
 
 	private static Almacen miAlmacen;
-	private ArrayList<Arma> armas;
+	private ListaArmas armas;
 
 	public static Almacen getAlmacen() {
 		if(miAlmacen==null) {
@@ -16,66 +16,41 @@ public class Almacen {
 	}
 
 	private Almacen() {
-		armas = new ArrayList<Arma>();
+		armas = new ListaArmas();
 		this.inicializarAlmacen();
 	}
-	private Iterator<Arma> getIterador(){
-		return this.armas.iterator();
-	}
+
 	
-	public double Comprar(Double pSaldo,String pArma) {
-		Arma arma = this.buscarArma(pArma);
+	public double comprar(Double pSaldo,String pArma) {
+		Arma arma = armas.buscarArma(pArma);
 		if(arma!=null){
 			Double precio = arma.getPrecio();
 			if (pSaldo>=precio){
 				
-				this.armas.remove(pArma);
+				this.armas.getListaArmas().remove(pArma);
 				return (pSaldo-precio);
 			
 			}else return pSaldo; // la resta, sino, si es mismo saldo, no habia saldo suficiente	
-		}else return -1; //no hay armas de ese tipo
-		
-			
-			
+		}else return -1; //no hay armas de ese tipo			
 	}
-	public void anadirArma(Arma pArma) {
-		armas.add(pArma);
-	}
+	
 	public Arma generarArma(String pTipo) {
 		return ArmaFactory.getArmaFactory().crearArma(pTipo);
 	}
 
 	public void inicializarAlmacen(){
-		for(int i=0; i<6; i++){
-			this.generarArma("Misil");
+		for(int i=0; i<6; i++){		
+			armas.getListaArmas().add(this.generarArma("Misil"));
 		}
 		for(int i=0; i<2; i++){
-			this.generarArma("Escudo");
+			armas.getListaArmas().add(this.generarArma("Escudo"));
 		}
 		for(int i=0; i<3; i++){
-			this.generarArma("Radar");
+			armas.getListaArmas().add(this.generarArma("Radar"));
 		}
 	}
 	
-	public Arma buscarArma(String pTipo){
-		Arma arma=null;
-		boolean enc=false;
-		Iterator<Arma> it= getIterador();
-		while(it.hasNext() && !enc){
-			arma=it.next();
-			if (arma.getClass().getSimpleName().equals(pTipo)){
-					enc=true;
-				}
-			}
-		
-		if (enc){
-			return arma;
-		}
-		else{
-			System.out.println("No quedan armas del tipo " + pTipo + " para comprar.");
-			return null;
-		}
-		
-	}
+	
+	
 
 }

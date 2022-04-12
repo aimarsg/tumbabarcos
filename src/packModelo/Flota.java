@@ -32,6 +32,9 @@ public class Flota {
 	public void anadirBarcoColocado(Barco pBarco) {
 		this.barcosColocados.add(pBarco);
 	}
+	public void reducirNumBarcos(){
+		numBarcos--;
+	}
 	
 	public Barco obtenerBarcoInicial(String pTipo) {
 		Iterator<Barco> it = iteradorIniciales();
@@ -52,4 +55,20 @@ public class Flota {
 	public int getNumBarcos() {
 		return this.numBarcos;
 	}
+
+	public Barco buscarBarco(Coordenada pcord ) {
+		
+		boolean enc = false;
+		Barco b=null;
+		Iterator<Barco> it = this.iteradorColocados();
+		//barcosColocados.stream().allMatch(b -> b.tieneCordenada(pcord))S;
+		
+		while (!enc && it.hasNext()){
+			b=it.next();
+			enc=b.tieneCordenada(pcord);
+		}
+		if (!enc) {return null;}
+		return b;
+	}	
+
 }
