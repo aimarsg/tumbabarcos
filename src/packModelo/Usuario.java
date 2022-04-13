@@ -146,5 +146,7 @@ public class Usuario extends Jugador {
 		}
 		return disparado;
 	}
-
+	public boolean todosColocados() {
+		return flota.todosColocados();
+	}
 }

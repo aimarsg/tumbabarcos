@@ -81,6 +81,7 @@ public class Ordenador extends Jugador {
 			return (Modelo.getModelo().getUsuario().recibirDisparo(coord,arma));
 			
 		}
+	
 
 	public boolean recibirDisparo(Coordenada pCoordenada, String arma){
 		boolean disparado= true;

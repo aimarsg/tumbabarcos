@@ -18,6 +18,8 @@ public abstract class Jugador extends Observable{
 		armamento= new ListaArmas();
 		presupuesto= 500.00;
 		flota = new Flota();
+		//
+		tablero.inicializarTablero();
 	}
 	
 	
@@ -26,7 +28,7 @@ public abstract class Jugador extends Observable{
 	public abstract boolean jugarTurno();
 	
 	public  void inicializarFlota() {
-		this.inicializarFlota();
+		
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("PortaAviones"));
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
@@ -48,8 +50,13 @@ public abstract class Jugador extends Observable{
 	public abstract boolean disparar(String arma, Coordenada coord);
 	
 	public abstract boolean recibirDisparo(Coordenada pCoordenada, String arma);
+	
+	public void colocarEscudo(Coordenada pCoordenada) {
+		
+	}
 		/*
 		
+	
 	private Barco buscarBarco(Coordenada pcord ) {
 		
 		boolean enc = false;

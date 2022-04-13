@@ -71,4 +71,7 @@ public class Flota {
 		return b;
 	}	
 
+	public boolean todosColocados() {
+		return listaBarcosIniciales.isEmpty();
+	}
 }

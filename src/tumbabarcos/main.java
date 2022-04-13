@@ -15,7 +15,7 @@ public class main {
 		Modelo modelo= Modelo.getModelo();
 		modelo.inicializar();
 		
-		while (!modelo.getFlotaUsuario().todosColocados()) {try {
+		while (!((Usuario)modelo.getUsuario()).todosColocados()) {try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
