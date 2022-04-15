@@ -12,6 +12,7 @@ public abstract class Barco {
 							// inicialmente su valor sera la longitud del barco
 	private boolean hundido;
 	private String nombre;
+	private Escudo escudo = null;
 
 	public Barco(int numLibres, boolean hundido, String pNom) {
 		this.contLibres = numLibres;
@@ -65,6 +66,24 @@ public abstract class Barco {
 	public boolean restarCasilla() {
 		this.contLibres--;
 		return this.contLibres==0;
+	}
+	
+	public void colocarEscudo(Escudo pEscudo) {
+		this.escudo = pEscudo;
+		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Escudo"));
+	}
+	
+	public boolean tieneEscudo() {
+		return this.escudo != null;
+	}
+	
+
+	public void danarEscudo(String pArma) {
+		int imp = this.escudo.danarEscudo(pArma);
+		if (imp == 0) {
+			this.escudo = null;
+			this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Barco"));
+		}
 	}
 	
 }

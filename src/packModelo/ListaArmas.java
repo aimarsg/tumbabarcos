@@ -43,9 +43,14 @@ public class ListaArmas {
 			return arma;
 		}
 		else{
-			System.out.println("No quedan armas del tipo " + pTipo + " para comprar.");
+			System.out.println("No quedan armas del tipo " + pTipo);
 			return null;
 		}
+	}
+	public Arma eliminarArma(String pArma){
+		Arma arma=buscarArma(pArma);
+		if (arma!=null) {listaArmas.remove(arma);}
+		return arma;
 	}
 	
 

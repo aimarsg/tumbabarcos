@@ -15,5 +15,14 @@ public class Escudo extends Arma {
 		// TODO - implement Escudo.esAlcanzado
 		throw new UnsupportedOperationException();
 	}
+	public int danarEscudo(String pArma){
+		if (pArma.equals("Bomba")){
+			numImpactos--;
+		}else{
+			numImpactos=0;
+		}
+		
+		return numImpactos;
+	}
 
 }

@@ -32,10 +32,30 @@ public class Ordenador extends Jugador {
 				String[] armas = {"Bomba","Misil","Escudo","Radar"};
 				String eleccion=armas[armaAleatoria];
 				if (!eleccion.equals("Bomba")){
-					super.armamento.buscarArma(armas[armaAleatoria]);}
+					if (null!=super.armamento.buscarArma(armas[armaAleatoria])){
+						if (eleccion.equals("Misil")) {
+							jugado = this.disparar(eleccion, new Coordenada(col, fil));
+
+						}else{
+							if(eleccion.equals("Escudo")){
+								boolean usado = false;
+								
+								while (!usado) {
+									col= randomizer.nextInt(10);
+									fil = randomizer.nextInt(10);
+									usado=super.colocarEscudo(new Coordenada(col, fil), (Escudo)super.armamento.eliminarArma(eleccion));
+								}
+								jugado = true;
+							}else { //radar
+								
+							}
+						}
+					}
+				}else {//el arma seleccionada es una bomba
 				System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
-				jugado = this.disparar(armas[armaAleatoria], new Coordenada(col, fil));
+				jugado = this.disparar(eleccion, new Coordenada(col, fil));
 				System.out.println(jugado);
+				}
 			}
 			try {
 				Thread.sleep(750);
@@ -50,7 +70,7 @@ public class Ordenador extends Jugador {
 	}
 
 	public void colocarBarcosOrdenador() {
-		//this.inicializarFlota();
+		this.inicializarFlota();
 		Random randomizer = new Random();
 		int col = 0;
 		int fil = 0;
@@ -77,10 +97,16 @@ public class Ordenador extends Jugador {
 	}
 	
 	public boolean disparar(String arma, Coordenada coord){
-		
-			return (Modelo.getModelo().getUsuario().recibirDisparo(coord,arma));
+			if (arma.equals("Misil")) {this.eliminarArma(arma);}
+			//System.out.println("en la llamada de ordenador el arma es "+arma);
+			return Modelo.getModelo().getUsuario().recibirDisparo(coord,arma);
 			
 		}
+	/*
+	public boolean activarRadar(){
+		return Modelo.getModelo().getUsuario().recibirRadar();
+	}
+	*/
 	
 
 	public boolean recibirDisparo(Coordenada pCoordenada, String arma){
@@ -92,8 +118,8 @@ public class Ordenador extends Jugador {
 			
 			String estado=casillaActual.comprobarEstado();
 			
-			if (((estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) && arma.equals("bomba")) ||
-					((estado.equals("Disparado") || estado.equals("Tocado")) && arma.equals("misil"))) {
+			if (((estado.equals("Disparado")||estado.equals("Tocado")||estado.equals("Hundido")) && arma.equals("Bomba")) ||
+					((estado.equals("Disparado") || estado.equals("Tocado")) && arma.equals("Misil"))) {
 				disparado=false;
 				setChanged();
 				notifyObservers("Has disparado a una casilla ya disparada");
@@ -102,7 +128,7 @@ public class Ordenador extends Jugador {
 				if(estado.equals("Barco")){
 					boolean hundido;
 					Barco b = super.flota.buscarBarco(pCoordenada);
-					if (arma.equals("bomba")) {
+					if (arma.equals("Bomba")) {
 						casillaActual.cambiarEstado("Tocado");
 						System.out.println("se esta buscando el barco de coordenadas x" + x+ " y "+y);
 						
@@ -124,7 +150,20 @@ public class Ordenador extends Jugador {
 						setChanged();
 						notifyObservers("El barco "+b.getNombre()+" se ha hundido!!");
 					}
-				}else{
+				}else if (estado.equals("Escudo")){
+					Barco b = super.flota.buscarBarco(pCoordenada);
+					b.danarEscudo(arma);
+					System.out.println("Escudo");
+					setChanged();
+					notifyObservers("Escudo :(");
+					
+					setChanged();
+					ArrayList<Casilla> casiLista = new ArrayList<>();
+					casiLista.add(casillaActual);
+					notifyObservers(new Object[] {casiLista, "EscudoOrdenador"});
+					
+				}else {
+					
 					System.out.println("Disparado al agua");
 					casillaActual.cambiarEstado("Disparado");
 					setChanged();
@@ -143,5 +182,11 @@ public class Ordenador extends Jugador {
 			notifyObservers("Selecciona una casilla");
 			}
 			return disparado;
-	}		
+	}	
+	@Override
+	public void mostrarEscudoColocado(Coordenada pCoordenada) {
+	//ESTE METODO NO TIENE QUE HACER NADA, ES SOLO PARA EL USUARIO
+		// TODO Auto-generated method stub
+		
+	}
 }

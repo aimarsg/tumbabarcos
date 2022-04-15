@@ -333,6 +333,19 @@ public class Vista extends JFrame implements Observer {
 						labelsUsuario.get(index).setBackground(Color.BLUE);
 					}
 				}
+				else if (b.equals("EscudoUsuario")) {
+				
+						labelsUsuario.get(index).setBackground(Color.orange);
+				}
+				else if (b.equals("EscudoOrdenador")) {
+				
+						labelsIA.get(index).setBackground(Color.orange);
+						
+				}
+				else if (b.equals("PintarEscudo")) {
+				
+						labelsUsuario.get(index).setBackground(Color.yellow);
+				}
 
 			}
 			// actualizacion del marcador cuadno se hunden los barcos
@@ -346,6 +359,8 @@ public class Vista extends JFrame implements Observer {
 			}
 
 			buttonGroup.clearSelection();
+			//buttonGroup_1.clearSelection();
+			//BombaBtn.isSelected();
 
 		}
 
@@ -428,7 +443,7 @@ public class Vista extends JFrame implements Observer {
 
 					if (labelClicadoUsuario != null && !estadoClickado.equals("Barco")
 							&& !estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado")
-							&& !estadoClickado.equals("Hundido")) { // poner casilla anterior clicada en azul si no se
+							&& !estadoClickado.equals("Hundido") && !estadoClickado.equals("Escudo")) { // poner casilla anterior clicada en azul si no se
 																	// ha convertido en barco
 						labelClicadoUsuario.setBackground(Color.cyan);
 					}
@@ -443,7 +458,7 @@ public class Vista extends JFrame implements Observer {
 				System.out.println("Y:" + x);
 				// System.out.println("Posicion clicada: " + pos);
 				if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado")
-						&& !estadoClickado.equals("Hundido") && !estadoClickado.equals("Barco")) {
+						&& !estadoClickado.equals("Hundido") && !estadoClickado.equals("Barco") && !estadoClickado.equals("Escudo")) {
 					l.setBackground(new Color(48, 225, 80));
 				}
 			}
@@ -598,7 +613,8 @@ public class Vista extends JFrame implements Observer {
 		public void actionPerformed(ActionEvent e) {
 			Usuario usuario = (Usuario)Modelo.getModelo().getUsuario();
 			Ordenador ordenador = (Ordenador)Modelo.getModelo().getOrdenador();
-
+			boolean finTurno = false;
+			
 			if (e.getSource().equals(PortaAviones)) {
 				System.out.println("Se ha pulsado un portaAviones ");
 				// anadir if para que cuando no haya nada clicado no se ejecute
@@ -621,22 +637,50 @@ public class Vista extends JFrame implements Observer {
 				// System.out.println("SE llama a disparar con la coordenada x
 				// "+coordClickada.getX()+ " y "+coordClickada.getY());
 				if (BombaBtn.isSelected()) {
-					Modelo.getModelo().getUsuario().disparar("Bomba", coordClickadaOrdenador);
+					finTurno = usuario.disparar("Bomba", coordClickadaOrdenador);
 				} else if (misilBtn.isSelected()) {
-					Modelo.getModelo().getUsuario().disparar("Misil", coordClickadaOrdenador);
+					finTurno = usuario.disparar("Misil", coordClickadaOrdenador);
 				} else if (escudoBtn.isSelected()) {
+					Escudo escudo=(Escudo)usuario.buscarArma("Escudo");
+					if (coordClickadaUsuario != null) {
+						if (escudo!=null){
+							if (usuario.colocarEscudo(coordClickadaUsuario,escudo)) {
+								texto.setText("Escudo colocado protegiendo tu barco ;)");
+								((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
+								System.out.println("se ha utilizado un escudo");
+								finTurno = true;
+								usuario.eliminarArma("Escudo");
+							}else {
+								//NO SE HA UTILIZADO EL ESCUDO 					
+							}
+						}else {
+						//no hay armas de tipo escudo
+						}
+					}else {
+						System.out.println("no hay nada clickado");		
+						texto.setText("no hay ninguna casilla clicada ");
+
+					}
+						
+						texto.setText("No te quedan escudos, utiliza otra arma o compra uno!");
+						System.out.println("no quedan escudos");
+
+					}
+						
 					// utilizar escudo
 				} else {
 					// utilizar radar
 				}
 
-				boolean disparado = ordenador.recibirDisparo(coordClickadaOrdenador, "bomba");
-				if (disparado) {
+				//boolean disparado = ordenador.recibirDisparo(coordClickadaOrdenador, "bomba");
+				if (finTurno) {
 					dispararBtn.setVisible(false);
 					comprarBtn.setVisible(false);
 					
 					//ARREGLAR ESTO
 					//Modelo.getModelo().getUsuario().setDisparadoUsuario();
+					((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
+
 				}
 
 			}
@@ -646,7 +690,7 @@ public class Vista extends JFrame implements Observer {
 					comprarBtn.setVisible(false);
 					dispararBtn.setVisible(false);
 					//ARREGLAR ESTO
-					//Modelo.getModelo().getUsuario().setDisparadoUsuario();
+					((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
 				}
 
 			}

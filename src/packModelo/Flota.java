@@ -47,11 +47,16 @@ public class Flota {
 			}
 		}
 		if (enc) {
-			this.listaBarcosIniciales.remove(b);
+			
 			return b;
 		}
 		return null;
 	}
+
+	public void eliminarBarco(Barco pBarco){
+		this.listaBarcosIniciales.remove(pBarco);
+	}
+
 	public int getNumBarcos() {
 		return this.numBarcos;
 	}
