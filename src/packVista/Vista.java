@@ -683,7 +683,7 @@ public class Vista extends JFrame implements Observer {
 
 				}
 
-			}
+	
 			if (e.getSource().equals(comprarBtn)) {
 				boolean disparado = ordenador.recibirDisparo(coordClickadaOrdenador, "misil");
 				if (disparado) {
@@ -702,6 +702,6 @@ public class Vista extends JFrame implements Observer {
 				enHorizontal = false;
 			}
 		}
-
+		
 	}
 }

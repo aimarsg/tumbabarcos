@@ -32,7 +32,19 @@ public class Usuario extends Jugador {
 		return sigue;
 	}
 
-
+	public void pruebasColocarBarcos() {
+		this.colocarBarco(new Coordenada(1,1), "PortaAviones", true);
+		this.colocarBarco(new Coordenada(3,1), "Submarino", true);
+		this.colocarBarco(new Coordenada(5,1), "Submarino", true);
+		this.colocarBarco(new Coordenada(7,1), "Destructor", true);
+		this.colocarBarco(new Coordenada(9,1), "Destructor", true);
+		this.colocarBarco(new Coordenada(1,7), "Destructor", true);
+		this.colocarBarco(new Coordenada(3,7), "Fragata", true);
+		this.colocarBarco(new Coordenada(5,7), "Fragata", true);
+		this.colocarBarco(new Coordenada(7,7), "Fragata", true);
+		this.colocarBarco(new Coordenada(9,7), "Fragata", true);
+		
+	}
 		
 	public void colocarBarco(Coordenada pCord, String pTipo, boolean horizontal){
 		Barco nuevo =super.flota.obtenerBarcoInicial(pTipo);
@@ -175,4 +187,6 @@ public class Usuario extends Jugador {
 		notifyObservers(new Object[] {c, "PintarEscudo"});
 		
 	}
+	
+	
 }
