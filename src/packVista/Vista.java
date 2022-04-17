@@ -18,10 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import packModelo.Coordenada;
-import packModelo.Flota;
-import packModelo.Modelo;
-
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -50,6 +46,7 @@ public class Vista extends JFrame implements Observer {
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton dispararBtn;
+	private JButton colocarAut;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JLabel texto;
 	private JLabel marcadorU;
@@ -67,6 +64,7 @@ public class Vista extends JFrame implements Observer {
 	private static JLabel labelClicadoOrdenador;
 	private boolean enHorizontal = true;
 	private JPanel panel;
+	private JPanel panel_colocar;
 	private JButton comprarBtn;
 	private JPanel panel_1;
 	private JRadioButton BombaBtn;
@@ -112,7 +110,7 @@ public class Vista extends JFrame implements Observer {
 
 		JPanel PanelBarcos = new JPanel();
 		contentPane.add(PanelBarcos);
-		PanelBarcos.setLayout(new GridLayout(3, 2, 0, 0));
+		PanelBarcos.setLayout(new GridLayout(4, 2, 0, 0));
 
 		PortaAviones = new JRadioButton("PortaAviones");
 		PortaAviones.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
@@ -156,6 +154,17 @@ public class Vista extends JFrame implements Observer {
 		buttonGroup_1.add(horizontal);
 		horizontal.addActionListener(getControler());
 
+		/*panel_colocar = new JPanel();
+		PanelBarcos.add(panel_colocar);
+		panel_colocar.setLayout(new GridLayout(1, 1, 0, 0));*/
+		
+		colocarAut = new JButton("Colocar automaticamente");
+		colocarAut.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		colocarAut.setBackground(Color.WHITE);
+		colocarAut.setForeground(Color.BLACK);
+		colocarAut.addActionListener(getControler());
+		PanelBarcos.add(colocarAut);
+		
 		JPanel panel_3 = new JPanel();
 		contentPane.add(panel_3);
 		panel_3.setLayout(new GridLayout(5, 1, 0, 0));
@@ -201,6 +210,7 @@ public class Vista extends JFrame implements Observer {
 		radarBtn = new JRadioButton("RADAR");
 		grupoDispararComprar.add(radarBtn);
 		panel_1.add(radarBtn);
+		panel_1.setVisible(false);
 
 		texto = new JLabel();
 		texto.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
@@ -333,11 +343,11 @@ public class Vista extends JFrame implements Observer {
 						labelsUsuario.get(index).setBackground(Color.BLUE);
 					}
 				}
-				else if (b.equals("EscudoUsuario")) {
+				else if (b.equals("EscudoUsuario")) {// cuando se dispara
 				
 						labelsUsuario.get(index).setBackground(Color.orange);
 				}
-				else if (b.equals("EscudoOrdenador")) {
+				else if (b.equals("EscudoOrdenador")) {//cuando se dispara
 				
 						labelsIA.get(index).setBackground(Color.orange);
 						
@@ -369,9 +379,11 @@ public class Vista extends JFrame implements Observer {
 			if (((String) arg1).equals("ActivarDisparar")) {
 				dispararBtn.setVisible(true);
 				comprarBtn.setVisible(true);
+				panel_1.setVisible(true);
 			} else if (((String) arg1).equals("ActivarMarcador")) {
 				marcadorO.setVisible(true);
 				marcadorU.setVisible(true);
+				colocarAut.setVisible(false);
 			} else {
 				texto.setText((String) arg1);
 			}
@@ -470,11 +482,9 @@ public class Vista extends JFrame implements Observer {
 				int y = (pos % 10);
 				// el anterior
 				if (coordClickadaOrdenador != null) {
-					estadoClickado = Modelo.getModelo().getOrdenador()
-							.obtenerEstadoCasilla(coordClickadaOrdenador.getX(), coordClickadaOrdenador.getY());
-					//
+					estadoClickado = Modelo.getModelo().getOrdenador().obtenerEstadoCasilla(coordClickadaOrdenador.getX(), coordClickadaOrdenador.getY());
 					if (labelClicadoOrdenador != null && !estadoClickado.equals("Tocado")
-							&& !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido")) {
+							&& !estadoClickado.equals("Disparado") && !estadoClickado.equals("Hundido") && !labelClicadoOrdenador.getBackground().equals(Color.orange)) {
 						labelClicadoOrdenador.setBackground(Color.cyan);
 					}
 				}
@@ -488,7 +498,7 @@ public class Vista extends JFrame implements Observer {
 				System.out.println("Y:" + x);
 				// System.out.println("Posicion clicada: " + pos);
 				//
-				if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado")
+				if (!estadoClickado.equals("Tocado") && !estadoClickado.equals("Disparado") && !l.getBackground().equals(Color.orange)
 						&& !estadoClickado.equals("Hundido")) { // cuando solo sea agua se puede seleccionar
 					l.setBackground(new Color(255, 70, 70));
 				}
@@ -528,13 +538,14 @@ public class Vista extends JFrame implements Observer {
 					String estadoCasilla = Modelo.getModelo().getOrdenador().obtenerEstadoCasilla(X, Y);
 					if (coordClickadaOrdenador != null) {
 						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")
-								&& !estadoCasilla.equals("Hundido")
+								&& !estadoCasilla.equals("Hundido") && !l.getBackground().equals(Color.orange)
+								
 								&& (coordClickadaOrdenador.getX() != X || coordClickadaOrdenador.getY() != Y)) {
 							l.setBackground(new Color(230, 150, 150));
 							// System.out.println("Posicion entrada: " + pos);
 						}
 					} else {
-						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && !l.getBackground().equals(Color.orange)
 								&& !estadoCasilla.equals("Hundido")) {
 							l.setBackground(new Color(255, 150, 150));
 							// System.out.println("Posicion entrada: " + pos);
@@ -557,7 +568,7 @@ public class Vista extends JFrame implements Observer {
 				int Y = pos % 10;
 				String estadoCasilla = Modelo.getModelo().getUsuario().obtenerEstadoCasilla(X, Y);
 				if (coordClickadaUsuario != null) {
-					if (estadoCasilla.equals("Agua")
+					if (estadoCasilla.equals("Agua") 
 							&& (coordClickadaUsuario.getX() != X || coordClickadaUsuario.getY() != Y)) {
 						l.setBackground(Color.cyan);
 						// System.out.println("Posicion entrada: " + pos);
@@ -578,14 +589,14 @@ public class Vista extends JFrame implements Observer {
 					int Y = pos % 10;
 					String estadoCasilla = Modelo.getModelo().getOrdenador().obtenerEstadoCasilla(X, Y);
 					if (coordClickadaOrdenador != null) {//
-						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && !l.getBackground().equals(Color.orange)
 								&& !estadoCasilla.equals("Hundido")
 								&& (coordClickadaOrdenador.getX() != X || coordClickadaOrdenador.getY() != Y)) {
 							l.setBackground(Color.cyan);
 							// System.out.println("Posicion entrada: " + pos);
 						}
 					} else {
-						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado")
+						if (!estadoCasilla.equals("Tocado") && !estadoCasilla.equals("Disparado") && !l.getBackground().equals(Color.orange)
 								&& !estadoCasilla.equals("Hundido")) {
 							l.setBackground(Color.cyan);
 							// System.out.println("Posicion entrada: " + pos);
@@ -615,6 +626,7 @@ public class Vista extends JFrame implements Observer {
 			Ordenador ordenador = (Ordenador)Modelo.getModelo().getOrdenador();
 			boolean finTurno = false;
 			
+			//PARA COLOCAR LOS BARCOS
 			if (e.getSource().equals(PortaAviones)) {
 				System.out.println("Se ha pulsado un portaAviones ");
 				// anadir if para que cuando no haya nada clicado no se ejecute
@@ -633,13 +645,26 @@ public class Vista extends JFrame implements Observer {
 				System.out.println("Se ha pulsado una fragata");
 				usuario.colocarBarco(coordClickadaUsuario, "Fragata", enHorizontal);
 			}
+			if (e.getSource().equals(horizontal)) {
+				enHorizontal = true;
+			}
+			if (e.getSource().equals(vertical)) {
+				enHorizontal = false;
+			}
+			if (e.getSource().equals(colocarAut)) {
+				((Usuario)Modelo.getModelo().getUsuario()).pruebasColocarBarcos();
+			}
+			
+			//PARA DISPARAR
 			if (e.getSource().equals(dispararBtn)) {
 				// System.out.println("SE llama a disparar con la coordenada x
 				// "+coordClickada.getX()+ " y "+coordClickada.getY());
 				if (BombaBtn.isSelected()) {
 					finTurno = usuario.disparar("Bomba", coordClickadaOrdenador);
+					
 				} else if (misilBtn.isSelected()) {
 					finTurno = usuario.disparar("Misil", coordClickadaOrdenador);
+					
 				} else if (escudoBtn.isSelected()) {
 					Escudo escudo=(Escudo)usuario.buscarArma("Escudo");
 					if (coordClickadaUsuario != null) {
@@ -655,52 +680,28 @@ public class Vista extends JFrame implements Observer {
 							}
 						}else {
 						//no hay armas de tipo escudo
+						texto.setText("No te quedan escudos, utiliza otra arma o compra uno!");
+						System.out.println("no quedan escudos");
 						}
 					}else {
 						System.out.println("no hay nada clickado");		
 						texto.setText("no hay ninguna casilla clicada ");
-
 					}
-						
-						texto.setText("No te quedan escudos, utiliza otra arma o compra uno!");
-						System.out.println("no quedan escudos");
-
-					}
-						
-					// utilizar escudo
-				} else {
-					// utilizar radar
 				}
-
-				//boolean disparado = ordenador.recibirDisparo(coordClickadaOrdenador, "bomba");
-				if (finTurno) {
-					dispararBtn.setVisible(false);
-					comprarBtn.setVisible(false);
-					
-					//ARREGLAR ESTO
-					//Modelo.getModelo().getUsuario().setDisparadoUsuario();
-					((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
-
-				}
-
-	
+			}
+			//PARA COMPRAR
 			if (e.getSource().equals(comprarBtn)) {
-				boolean disparado = ordenador.recibirDisparo(coordClickadaOrdenador, "misil");
-				if (disparado) {
-					comprarBtn.setVisible(false);
-					dispararBtn.setVisible(false);
-					//ARREGLAR ESTO
-					((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
-				}
+				//TODO HACER ESTO
+			}
+			//cuando se ha disparado / comprado ya para que se detecte que se ha acabado el turno
+			if (finTurno) {
+				dispararBtn.setVisible(false);
+				comprarBtn.setVisible(false);
+				panel_1.setVisible(false);
+				//
+				((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
 
-			}
-
-			if (e.getSource().equals(horizontal)) {
-				enHorizontal = true;
-			}
-			if (e.getSource().equals(vertical)) {
-				enHorizontal = false;
-			}
+			}	
 		}
 		
 	}

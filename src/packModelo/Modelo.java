@@ -44,7 +44,7 @@ public class Modelo extends Observable {
 		((Ordenador)this.getOrdenador()).colocarBarcosOrdenador();
 		this.getUsuario().inicializarFlota();
 		//para hacer pruebas
-		((Usuario)this.getUsuario()).pruebasColocarBarcos();
+		//((Usuario)this.getUsuario()).pruebasColocarBarcos();
 		//this.getFlotaUsuario().colocarBarcosOrdenador();
 		
 	}

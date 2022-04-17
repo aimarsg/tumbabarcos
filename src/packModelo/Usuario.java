@@ -1,6 +1,7 @@
 package packModelo;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.Random;
 
 public class Usuario extends Jugador {
 
@@ -33,6 +34,7 @@ public class Usuario extends Jugador {
 	}
 
 	public void pruebasColocarBarcos() {
+		/*
 		this.colocarBarco(new Coordenada(1,1), "PortaAviones", true);
 		this.colocarBarco(new Coordenada(3,1), "Submarino", true);
 		this.colocarBarco(new Coordenada(5,1), "Submarino", true);
@@ -43,7 +45,32 @@ public class Usuario extends Jugador {
 		this.colocarBarco(new Coordenada(5,7), "Fragata", true);
 		this.colocarBarco(new Coordenada(7,7), "Fragata", true);
 		this.colocarBarco(new Coordenada(9,7), "Fragata", true);
+		*/
+		Random randomizer = new Random();
+		int col = 0;
+		int fil = 0;
+		boolean colocado;
+		boolean horizontal;
+	
+		for (Barco b : super.flota.getBarcosIniciales()) {
+			colocado = false;
+			while (!colocado) {
+				col= randomizer.nextInt(10);
+				fil = randomizer.nextInt(10);
+				horizontal = randomizer.nextBoolean();
+				colocado = b.colocarBarco(new Coordenada(col, fil), horizontal, super.tablero);
+				super.flota.anadirBarcoColocado(b);
+				//barcosColocados.add(b);				
+			}
+			//añadir para que se muestren los barcos
+			setChanged();
+			notifyObservers(new Object[] {b.getCasillas(), "ColocarBarco"});
+			setChanged();
+			notifyObservers("Barco "+b.getNombre()+" colocado.");
 		
+		}
+		//para que se quiten de la lista de barcos iniciales y la partida empiece
+		super.flota.getBarcosIniciales().clear();
 	}
 		
 	public void colocarBarco(Coordenada pCord, String pTipo, boolean horizontal){
@@ -145,7 +172,10 @@ public class Usuario extends Jugador {
 					}
 				}else if (estado.equals("Escudo")){
 					Barco b = super.flota.buscarBarco(pCoordenada);
-					b.danarEscudo(arma);
+					if (b.danarEscudo(arma)) {
+						setChanged();	
+						notifyObservers(new Object[] {b.getCasillas(), "ColocarBarco"});// en caso de que el escudo se rompa se cambia de color 
+					}
 					System.out.println("Escudo");
 					setChanged();
 					notifyObservers("Escudo :(");

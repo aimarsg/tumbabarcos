@@ -80,7 +80,7 @@ public abstract class Jugador extends Observable{
 		Casilla c = this.tablero.getCasilla(x, y);
 		if(c.comprobarEstado().equals("Barco")){
 			Barco b = this.flota.buscarBarco(pCoord);
-			if (!b.tieneEscudo()) {
+			if (b.getCasillasOcupadas().stream().allMatch(ba -> ba.comprobarEstado().equals("Barco"))) {
 				b.colocarEscudo(pEscudo);
 				utilizado = true;
 				this.mostrarEscudoColocado(pCoord);

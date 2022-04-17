@@ -28,33 +28,36 @@ public class Ordenador extends Jugador {
 				//System.out.println("TURNO DEL ORDENADOR---------------------");
 				col= randomizer.nextInt(10);
 				fil = randomizer.nextInt(10);
-				int armaAleatoria = randomizer.nextInt(2);
+				int armaAleatoria = randomizer.nextInt(3);
 				String[] armas = {"Bomba","Misil","Escudo","Radar"};
 				String eleccion=armas[armaAleatoria];
 				if (!eleccion.equals("Bomba")){
 					if (null!=super.armamento.buscarArma(armas[armaAleatoria])){
 						if (eleccion.equals("Misil")) {
 							jugado = this.disparar(eleccion, new Coordenada(col, fil));
+							System.out.println("ha usado un misil ");
 
 						}else{
 							if(eleccion.equals("Escudo")){
 								boolean usado = false;
-								
+								Escudo esc = (Escudo)super.armamento.eliminarArma(eleccion);
 								while (!usado) {
-									col= randomizer.nextInt(10);
+									col = randomizer.nextInt(10);
 									fil = randomizer.nextInt(10);
-									usado=super.colocarEscudo(new Coordenada(col, fil), (Escudo)super.armamento.eliminarArma(eleccion));
+									usado = super.colocarEscudo(new Coordenada(col, fil), esc );
+									
 								}
 								jugado = true;
+								System.out.println("se ha puesto un escudo fila "+fil+" col "+col);
 							}else { //radar
 								
 							}
 						}
 					}
 				}else {//el arma seleccionada es una bomba
-				System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
-				jugado = this.disparar(eleccion, new Coordenada(col, fil));
-				System.out.println(jugado);
+					System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
+					jugado = this.disparar(eleccion, new Coordenada(col, fil));
+					System.out.println(jugado);
 				}
 			}
 			try {
@@ -92,7 +95,7 @@ public class Ordenador extends Jugador {
 			System.out.println();
 			//setChanged();
 			//notifyObservers(new Object[] {b.getCasillas(), false});
-			
+		
 		}
 	}
 	

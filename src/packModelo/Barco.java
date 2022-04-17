@@ -78,12 +78,15 @@ public abstract class Barco {
 	}
 	
 
-	public void danarEscudo(String pArma) {
+	public boolean danarEscudo(String pArma) {
+		//false cuando sigue el escudo
+		//true cuando se rompe el escudo
 		int imp = this.escudo.danarEscudo(pArma);
 		if (imp == 0) {
 			this.escudo = null;
 			this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Barco"));
-		}
+			return true;
+		}else return false;
 	}
 	
 }
