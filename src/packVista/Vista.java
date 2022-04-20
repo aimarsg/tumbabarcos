@@ -46,6 +46,7 @@ public class Vista extends JFrame implements Observer {
 	private JRadioButton Fragatas;
 	private final ButtonGroup buttonGroup = new ButtonGroup();
 	private JButton dispararBtn;
+	private JButton colocarRad;
 	private JButton colocarAut;
 	private final ButtonGroup buttonGroup_1 = new ButtonGroup();
 	private JLabel texto;
@@ -67,6 +68,7 @@ public class Vista extends JFrame implements Observer {
 	private JPanel panel_colocar;
 	private JButton comprarBtn;
 	private JPanel panel_1;
+	private JPanel PanelBarcos;
 	private JRadioButton BombaBtn;
 	private JRadioButton misilBtn;
 	private JRadioButton escudoBtn;
@@ -90,6 +92,7 @@ public class Vista extends JFrame implements Observer {
 		Modelo.getModelo().getUsuario().addObserver(this);
 		Modelo.getModelo().getOrdenador().addObserver(this);
 		Modelo.getModelo().addObserver(this);
+		
 		this.labelsUsuario = new ArrayList<JLabel>();
 		this.labelsIA = new ArrayList<JLabel>();
 
@@ -108,7 +111,7 @@ public class Vista extends JFrame implements Observer {
 		contentPane.add(ordenadorrdenador);
 		ordenadorrdenador.setLayout(new GridLayout(11, 11, 0, 0));
 
-		JPanel PanelBarcos = new JPanel();
+		 PanelBarcos = new JPanel();
 		contentPane.add(PanelBarcos);
 		PanelBarcos.setLayout(new GridLayout(4, 2, 0, 0));
 
@@ -173,12 +176,12 @@ public class Vista extends JFrame implements Observer {
 		panel_3.add(panel);
 		panel.setLayout(new GridLayout(1, 2, 0, 0));
 
-		dispararBtn = new JButton("Disparar");
+		dispararBtn = new JButton("Utilizar");
 		dispararBtn.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
 		dispararBtn.setBackground(Color.WHITE);
 		dispararBtn.setForeground(new Color(255, 0, 0));
 		dispararBtn.addActionListener(getControler());
-		dispararBtn.setVisible(false);
+		//dispararBtn.setVisible(false);
 
 		panel.add(dispararBtn);
 
@@ -187,10 +190,20 @@ public class Vista extends JFrame implements Observer {
 		comprarBtn.setForeground(Color.RED);
 		comprarBtn.setBackground(Color.WHITE);
 		comprarBtn.addActionListener(getControler());
-		comprarBtn.setVisible(false);
+		//comprarBtn.setVisible(false);
 
 		panel.add(comprarBtn);
+		
+		colocarRad = new JButton("Mover radar");
+		colocarRad.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		colocarRad.setForeground(Color.RED);
+		colocarRad.setBackground(Color.WHITE);
+		colocarRad.addActionListener(getControler());
+		//colocarRad.setVisible(false);
 
+		panel.add(colocarRad);
+		panel.setVisible(false);
+		
 		panel_1 = new JPanel();
 		panel_3.add(panel_1);
 		panel_1.setLayout(new GridLayout(0, 4, 0, 0));
@@ -242,7 +255,7 @@ public class Vista extends JFrame implements Observer {
 	 * btnNewButton.addActionListener(getControler()); return btnNewButton; }
 	 */
 	private JLabel cbt(boolean usuario) { // parámetros de entrada
-		JLabel nuevo = new JLabel();
+		JLabel nuevo = new JLabel("", SwingConstants.CENTER);
 		nuevo.setBorder(BorderFactory.createLineBorder(Color.white));
 		nuevo.setOpaque(true);
 		nuevo.setBackground(Color.cyan);
@@ -345,17 +358,40 @@ public class Vista extends JFrame implements Observer {
 				}
 				else if (b.equals("EscudoUsuario")) {// cuando se dispara
 				
-						labelsUsuario.get(index).setBackground(Color.orange);
+					labelsUsuario.get(index).setBackground(Color.orange);
 				}
 				else if (b.equals("EscudoOrdenador")) {//cuando se dispara
 				
-						labelsIA.get(index).setBackground(Color.orange);
+					labelsIA.get(index).setBackground(Color.orange);
 						
 				}
 				else if (b.equals("PintarEscudo")) {
 				
-						labelsUsuario.get(index).setBackground(Color.yellow);
+					labelsUsuario.get(index).setBackground(Color.yellow);
 				}
+				else if (b.equals("ConsultaRadar")){
+					JLabel casilla = labelsIA.get(index);
+					casilla.setText("X");
+					casilla.setFont(new Font(casilla.getFont().getName(), Font.PLAIN, 18));
+					casilla.setForeground(Color.RED);
+					
+				}
+				else if(b.equals("VerRadar")){
+					JLabel casilla = labelsIA.get(index);
+					casilla.setText("¤");
+					casilla.setFont(new Font(casilla.getFont().getName(), Font.PLAIN, 24));
+					casilla.setForeground(Color.RED);
+				}
+				else if(b.equals("QuitarRadar")){
+					JLabel casilla = labelsIA.get(index);
+					if (!casilla.getText().equals("X")){
+						casilla.setText(null);
+						casilla.setFont(new Font(casilla.getFont().getName(), Font.PLAIN, 24));
+					}
+					
+					//casilla.setForegroud(Color.GREEN);
+				}
+				
 
 			}
 			// actualizacion del marcador cuadno se hunden los barcos
@@ -377,18 +413,31 @@ public class Vista extends JFrame implements Observer {
 		// para mostrar texto
 		if (arg1 instanceof String) {
 			if (((String) arg1).equals("ActivarDisparar")) {
-				dispararBtn.setVisible(true);
-				comprarBtn.setVisible(true);
+				panel.setVisible(true);
 				panel_1.setVisible(true);
 			} else if (((String) arg1).equals("ActivarMarcador")) {
 				marcadorO.setVisible(true);
 				marcadorU.setVisible(true);
-				colocarAut.setVisible(false);
+				//colocarAut.setVisible(false);
+				colocarRad.setVisible(true);
+				PanelBarcos.setVisible(false);
 			} else {
 				texto.setText((String) arg1);
 			}
 
 		}
+		/*
+		if (arg1 instanceof Coordenada) {
+			Coordenada c = (Coordenada) arg1;
+			int x = c.getX();
+			int y = c.getY();
+			int index = x * 10 + y;
+			JLabel casilla = labelsIA.get(index);
+			casilla.setText("¤");
+			casilla.setFont(new Font(casilla.getFont().getName(), Font.PLAIN, 24));
+			casilla.setForegroud(Color.GREEN);
+		}
+		*/
 
 		// disparado
 		/*
@@ -687,16 +736,24 @@ public class Vista extends JFrame implements Observer {
 						System.out.println("no hay nada clickado");		
 						texto.setText("no hay ninguna casilla clicada ");
 					}
+				} else if (radarBtn.isSelected()) {
+					finTurno = usuario.consultarRadar();
+					
 				}
 			}
 			//PARA COMPRAR
 			if (e.getSource().equals(comprarBtn)) {
 				//TODO HACER ESTO
 			}
+			//PADRA MOVER EL ESCUDO
+			if (e.getSource().equals(colocarRad)) {
+				usuario.moverRadar();
+			}
+			
 			//cuando se ha disparado / comprado ya para que se detecte que se ha acabado el turno
 			if (finTurno) {
-				dispararBtn.setVisible(false);
-				comprarBtn.setVisible(false);
+				
+				panel.setVisible(false);
 				panel_1.setVisible(false);
 				//
 				((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();

@@ -1,4 +1,7 @@
 package packModelo;
+
+import java.util.Observable;
+
 public abstract class Arma {
 
 	protected Double precio;

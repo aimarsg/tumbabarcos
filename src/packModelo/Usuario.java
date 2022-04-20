@@ -175,15 +175,19 @@ public class Usuario extends Jugador {
 					if (b.danarEscudo(arma)) {
 						setChanged();	
 						notifyObservers(new Object[] {b.getCasillas(), "ColocarBarco"});// en caso de que el escudo se rompa se cambia de color 
+						System.out.println("Escudo roto");
+						setChanged();
+						notifyObservers("Escudo roto");
+					}else {
+						System.out.println("Escudo");
+						setChanged();
+						notifyObservers("Escudo :(");
+						
+						setChanged();
+						ArrayList<Casilla> casiLista = new ArrayList<>();
+						casiLista.add(casillaActual);
+						notifyObservers(new Object[] {casiLista, "EscudoUsuario"});
 					}
-					System.out.println("Escudo");
-					setChanged();
-					notifyObservers("Escudo :(");
-					
-					setChanged();
-					ArrayList<Casilla> casiLista = new ArrayList<>();
-					casiLista.add(casillaActual);
-					notifyObservers(new Object[] {casiLista, "EscudoUsuario"});
 					
 				}else{
 					System.out.println("Disparado al agua");
@@ -216,6 +220,44 @@ public class Usuario extends Jugador {
 		setChanged();
 		notifyObservers(new Object[] {c, "PintarEscudo"});
 		
+	}
+	
+	@Override
+	public boolean consultarRadar() {
+		Radar r = (Radar) this.armamento.buscarArma("Radar");
+		if (r != null) {
+			if (r.getUbi() == null){super.moverRadar();}
+			setChanged();
+			notifyObservers(new Object[] {r.consultar("Usuario"), "ConsultaRadar"});
+			
+			int consultasRestantes = r.getNumConsultas();
+			if (consultasRestantes == 0) {
+				this.armamento.eliminarArma("Radar");
+				this.verRadar(r.getUbi(), false);
+			}
+			return true;
+		}else {
+			System.out.println("no te quedan armas del tipo RADAR");
+			setChanged();
+			notifyObservers("No te quedan radares");
+			return false;
+		}
+		
+	}
+
+	public void verRadar(Coordenada pCoord, boolean poner){
+		//Casilla casilla= Modelo.getModelo().getOrdenador().tablero.getCasilla(pCoord.getX(), pCoord.getY());
+		Casilla casilla = new Casilla(null, pCoord);
+		ArrayList<Casilla> casillaLista= new ArrayList<Casilla>();
+		casillaLista.add(casilla);
+		setChanged();
+		if (poner){
+			notifyObservers(new Object[]{casillaLista, "VerRadar"});
+		}
+		
+		else{
+			notifyObservers(new Object[]{casillaLista, "QuitarRadar"});
+		}
 	}
 	
 	

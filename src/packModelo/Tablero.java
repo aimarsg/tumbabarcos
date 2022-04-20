@@ -1,4 +1,5 @@
 package packModelo;
+import java.util.ArrayList;
 
 public class Tablero {
 
@@ -56,5 +57,39 @@ public class Tablero {
 			esta=true;
 		}
 		return esta;
+	}
+	public ArrayList<Casilla> obtenerBarcosEncontradosRadar(Coordenada pCoordenada){
+		int x = pCoordenada.getX()-1;
+		int y = pCoordenada.getY()-1;
+		ArrayList<Casilla> resultado = new ArrayList<Casilla>();
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++) {
+				if(this.estaEnTablero(new Coordenada(x+i,y+j))){
+					Casilla objetivo = this.tablero[x+i][y+j];
+					if (objetivo.comprobarEstado().equals("Barco")) {
+						resultado.add(objetivo);
+						return resultado;
+					}
+				}
+				
+			}
+		}
+		return resultado;
+	}
+	public ArrayList<Coordenada> obtenerCasillasAlRededor(Coordenada pCoord){
+		int x = pCoord.getX()-1;
+		int y = pCoord.getY()-1;
+		ArrayList<Coordenada> resultado = new ArrayList<Coordenada>();
+		for (int i = 0; i < 3; i++){
+			for (int j = 0; j < 3; j++) {
+				if(this.estaEnTablero(new Coordenada(x+i,y+j))){
+					if((i+j)%2!=0){
+					Coordenada objetivo = this.tablero[x+i][y+j].getPosicion();
+					resultado.add(objetivo);
+					}	
+				}
+			}
+		}
+		return resultado;
 	}
 }

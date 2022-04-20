@@ -35,7 +35,7 @@ public abstract class Jugador extends Observable{
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Escudo"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Escudo"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Radar"));
-		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Radar"));
+		
 
 
 	}
@@ -88,8 +88,43 @@ public abstract class Jugador extends Observable{
 		}		
 		return utilizado;
 	}
-	public abstract void mostrarEscudoColocado(Coordenada pCoordenada);		/*
-		
+	public abstract void mostrarEscudoColocado(Coordenada pCoordenada);		
+	
+	public abstract boolean consultarRadar();
+	
+	public ArrayList<Casilla> obtenerBarcosEncontradosRadar(Coordenada pCoord) {
+		return this.tablero.obtenerBarcosEncontradosRadar(pCoord);
+	}
+	
+	protected abstract void verRadar(Coordenada pCoord, boolean poner);
+	
+	public void moverRadar() {
+		Radar r = (Radar) this.armamento.buscarArma("Radar");
+		if (r != null) {
+			//para que se quite
+			if (r.getUbi()!=null) {
+				this.verRadar(r.getUbi(), false);
+			}
+			
+			r.mover();
+			int x = r.getUbi().getY()+1;
+			int y = r.getUbi().getX()+1;
+			setChanged();
+			notifyObservers("radar colocado en "+x+y);
+			
+			//para que se ponga
+			this.verRadar(r.getUbi(), true);
+			
+		}else {
+			
+			System.out.println("no tienes ningun radar");
+			setChanged();
+			notifyObservers("no te queda ningun radar");
+			
+		}
+	}
+
+	/*
 
 	private Barco buscarBarco(Coordenada pcord ) {
 		

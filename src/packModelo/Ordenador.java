@@ -3,11 +3,14 @@ package packModelo;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Stack;
 
 public class Ordenador extends Jugador {
+	public Stack<Coordenada> casillasPila;
 
 	public Ordenador() {
 		super();
+		casillasPila= new Stack();
 	}
 
 	public boolean jugarTurno() {
@@ -100,10 +103,47 @@ public class Ordenador extends Jugador {
 	}
 	
 	public boolean disparar(String arma, Coordenada coord){
-			if (arma.equals("Misil")) {this.eliminarArma(arma);}
+			boolean disparado= false;
+			Usuario u = (Usuario) Modelo.getModelo().getUsuario();
+			if(!casillasPila.isEmpty()){
+				Coordenada nueva = casillasPila.pop();
+				
+				if(u.recibirDisparo(nueva, arma)){
+					int x= nueva.getX();
+					int y= nueva.getY();
+					disparado=true;
+					if(u.obtenerEstadoCasilla(x, y).equals("Hundido")){
+						for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
+							if(co!=null){
+								casillasPila.remove(co);
+							}
+			 				
+					}
+					
+					if(u.obtenerEstadoCasilla(x, y).equals("Tocado")){
+						for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
+			 				casillasPila.push(co);
+			 			}
+					}
+				}
+			}else{
+				if (arma.equals("Misil")) {this.eliminarArma(arma);}
 			//System.out.println("en la llamada de ordenador el arma es "+arma);
-			return Modelo.getModelo().getUsuario().recibirDisparo(coord,arma);
+				if(u.recibirDisparo(coord,arma)){
+			 		int x= coord.getX();
+			 		int y= coord.getY();
+			 		disparado = true;
+			 		if(u.obtenerEstadoCasilla(x, y).equals("Tocado")){
+						 //metern las casillas de alrededor
+			 			for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
+			 				casillasPila.push(co);
+			 			}
+						 
+					 }
+				}
+			}
 			
+			}return disparado;	
 		}
 	/*
 	public boolean activarRadar(){
@@ -189,6 +229,31 @@ public class Ordenador extends Jugador {
 	@Override
 	public void mostrarEscudoColocado(Coordenada pCoordenada) {
 	//ESTE METODO NO TIENE QUE HACER NADA, ES SOLO PARA EL USUARIO
+		// TODO Auto-generated method stub
+		
+	}
+	public boolean consultarRadar() {
+		Radar r = (Radar) this.armamento.buscarArma("Radar");
+		if (r != null) {
+			
+			if (r.getUbi() == null){super.moverRadar();}
+			int consultasRestantes = r.getNumConsultas();
+			casillasPila.push(	r.consultar("Ordenador").get(0).getPosicion());
+			if (consultasRestantes == 0) {
+				this.armamento.eliminarArma("Radar");
+			}
+			return true;
+		}else {
+			System.out.println("no te quedan armas del tipo RADAR");
+			setChanged();
+			notifyObservers("No te quedan radares");
+			return false;
+		}
+		
+	}
+	
+	@Override
+	protected void verRadar(Coordenada pCoord, boolean poner) {
 		// TODO Auto-generated method stub
 		
 	}
