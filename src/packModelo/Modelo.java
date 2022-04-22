@@ -18,10 +18,12 @@ public class Modelo extends Observable {
 		
 		
 		while(!acabarO && !acabarU){
+			System.out.println("--------------turno del usuario----------------");
 			if(!this.getUsuario().jugarTurno()){
 				
 				acabarU=true;
 			}
+			System.out.println("--------------turno del ordenador---------------");
 			if(!acabarU){
 				if(!this.getOrdenador().jugarTurno()){
 				acabarO=true;

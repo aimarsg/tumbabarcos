@@ -31,7 +31,7 @@ public class Ordenador extends Jugador {
 				//System.out.println("TURNO DEL ORDENADOR---------------------");
 				col= randomizer.nextInt(10);
 				fil = randomizer.nextInt(10);
-				int armaAleatoria = randomizer.nextInt(3);
+				int armaAleatoria = randomizer.nextInt(4);
 				String[] armas = {"Bomba","Misil","Escudo","Radar"};
 				String eleccion=armas[armaAleatoria];
 				if (!eleccion.equals("Bomba")){
@@ -52,8 +52,15 @@ public class Ordenador extends Jugador {
 								}
 								jugado = true;
 								System.out.println("se ha puesto un escudo fila "+fil+" col "+col);
-							}else { //radar
-								
+							}else if (eleccion.equals("Radar")) { //radar
+								super.moverRadar();
+								System.out.println("Ha entrado a usar un radar");
+								Radar ra = (Radar) super.armamento.buscarArma("Radar");
+								Coordenada coorden = ra.getUbi();
+								System.out.println("Radar del ordenador colocado en fila "+(coorden.getX()+1)+" columna "+(coorden.getY()+1));
+								this.consultarRadar();
+								System.out.println("se ha usado el radar y ahora el numero de consultas restantes es "+ra.getNumConsultas());
+								jugado = true;
 							}
 						}
 					}
@@ -109,41 +116,52 @@ public class Ordenador extends Jugador {
 				Coordenada nueva = casillasPila.pop();
 				
 				if(u.recibirDisparo(nueva, arma)){
+					if (arma.equals("Misil")) {this.eliminarArma(arma);}//
 					int x= nueva.getX();
 					int y= nueva.getY();
 					disparado=true;
 					if(u.obtenerEstadoCasilla(x, y).equals("Hundido")){
-						for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
-							if(co!=null){
-								casillasPila.remove(co);
-							}
-			 				
+						for (Casilla casillaBarco : u.flota.buscarBarco(nueva).getCasillas()) {
+							for (Coordenada co : this.tablero.obtenerCasillasAlRededor(casillaBarco.getPosicion())) {
+								if(co!=null){
+									casillasPila.remove(co);
+								}
+							}	//para quitar de la lista las de alrededor del barco que se ha hundido
+						}
 					}
-					
-					if(u.obtenerEstadoCasilla(x, y).equals("Tocado")){
-						for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
+					if(u.obtenerEstadoCasilla(x, y).equals("Tocado") || u.obtenerEstadoCasilla(x, y).equals("Escudo")){
+						if (u.obtenerEstadoCasilla(x, y).equals("Escudo")) {
+							casillasPila.push(nueva);
+						}
+						/*for (Coordenada co : this.tablero.obtenerCasillasAlRededor(nueva)) {
 			 				casillasPila.push(co);
-			 			}
-					}
+			 			}*/
+						 this.tablero.obtenerCasillasAlRededor(nueva).stream().forEach(c->casillasPila.push(c));
+					}	
 				}
 			}else{
 				if (arma.equals("Misil")) {this.eliminarArma(arma);}
-			//System.out.println("en la llamada de ordenador el arma es "+arma);
+				//System.out.println("en la llamada de ordenador el arma es "+arma);
 				if(u.recibirDisparo(coord,arma)){
 			 		int x= coord.getX();
 			 		int y= coord.getY();
 			 		disparado = true;
-			 		if(u.obtenerEstadoCasilla(x, y).equals("Tocado")){
-						 //metern las casillas de alrededor
-			 			for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
+			 		if(u.obtenerEstadoCasilla(x, y).equals("Tocado") || u.obtenerEstadoCasilla(x, y).equals("Escudo")){
+						if (u.obtenerEstadoCasilla(x, y).equals("Escudo")) {
+							casillasPila.push(coord);
+						}
+						 //meter las casillas de alrededor
+			 			/*
+						for (Coordenada co : this.tablero.obtenerCasillasAlRededor(coord)) {
 			 				casillasPila.push(co);
 			 			}
-						 
+						 */
+						 this.tablero.obtenerCasillasAlRededor(coord).stream().forEach(c->casillasPila.push(c));
 					 }
 				}
 			}
 			
-			}return disparado;	
+			return disparado;	
 		}
 	/*
 	public boolean activarRadar(){
@@ -237,8 +255,14 @@ public class Ordenador extends Jugador {
 		if (r != null) {
 			
 			if (r.getUbi() == null){super.moverRadar();}
+			
+			ArrayList<Casilla> resultado = 	r.consultar("Ordenador");
+			if (!resultado.isEmpty()) {
+				casillasPila.push(resultado.get(0).getPosicion());
+			}else {
+				System.out.println("no ha encontrado barco");
+			}
 			int consultasRestantes = r.getNumConsultas();
-			casillasPila.push(	r.consultar("Ordenador").get(0).getPosicion());
 			if (consultasRestantes == 0) {
 				this.armamento.eliminarArma("Radar");
 			}

@@ -66,7 +66,7 @@ public class Tablero {
 			for (int j = 0; j < 3; j++) {
 				if(this.estaEnTablero(new Coordenada(x+i,y+j))){
 					Casilla objetivo = this.tablero[x+i][y+j];
-					if (objetivo.comprobarEstado().equals("Barco")) {
+					if (objetivo.comprobarEstado().equals("Barco") || objetivo.comprobarEstado().equals("Escudo")) {
 						resultado.add(objetivo);
 						return resultado;
 					}

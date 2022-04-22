@@ -35,7 +35,6 @@ public class Radar extends Arma  {
 	}
 
 	public ArrayList<Casilla> consultar(String jugador) {
-		//devuelve el numero de consultas restantes y si es 0 lo borramos
 		ArrayList<Casilla> reconocimiento = new ArrayList<Casilla>();
 		if (numConsultas != 0) {
 			Jugador objetivo;
