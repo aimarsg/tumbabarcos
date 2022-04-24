@@ -3,7 +3,7 @@ package tumbabarcos;
 import packModelo.*;
 import packVista.*;
 
-public class Main {
+public class main {
 	
 	public static void main(String args[]) {
 		Vista vista = new Vista();
