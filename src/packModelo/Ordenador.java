@@ -121,7 +121,7 @@ public class Ordenador extends Jugador {
 					int y= nueva.getY();
 					disparado=true;
 					if(u.obtenerEstadoCasilla(x, y).equals("Hundido")){
-						for (Casilla casillaBarco : u.flota.buscarBarco(nueva).getCasillasOcupadas()) {
+						for (Casilla casillaBarco : u.flota.buscarBarco(nueva).getCasillas()) {
 							for (Coordenada co : this.tablero.obtenerCasillasAlRededor(casillaBarco.getPosicion())) {
 								if(co!=null){
 									casillasPila.remove(co);
