@@ -11,9 +11,9 @@ public class Misil extends Arma{
 	 * 
 	 * @param Coordenada
 	 */
-	public void lanzar(Coordenada pcord) {
+	/*public void lanzar(Coordenada pcord) {
 		// TODO - implement Misil.lanzar
 		throw new UnsupportedOperationException();
-	}
+	}*/
 
 }

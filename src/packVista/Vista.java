@@ -723,7 +723,7 @@ public class Vista extends JFrame implements Observer {
 								((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
 								System.out.println("se ha utilizado un escudo");
 								finTurno = true;
-								usuario.eliminarArma("Escudo");
+								//usuario.eliminarArma("Escudo");
 							}else {
 								//NO SE HA UTILIZADO EL ESCUDO 					
 							}

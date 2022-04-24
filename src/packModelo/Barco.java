@@ -22,9 +22,9 @@ public abstract class Barco {
 		
 		
 	}
-	public ArrayList<Casilla> getCasillas(){
+	/*public ArrayList<Casilla> getCasillas(){
 		return this.casillasOcupadas;
-	}
+	}*/
 	public String getNombre() {
 		return this.nombre;
 	}
@@ -39,7 +39,9 @@ public abstract class Barco {
 	public ArrayList<Casilla> cambiarAHundido() {
 		this.contLibres = 0;
 		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Hundido"));
+		this.hundido = true;
 		return this.casillasOcupadas;
+		
 	}
 
 	/**
@@ -54,10 +56,10 @@ public abstract class Barco {
 		return nombre.equals(pTipo);
 	}
 
-	public void esTocado() {
+	/*public void esTocado() {
 		// TODO - implement Barco.esTocado
 		throw new UnsupportedOperationException();
-	}
+	}*/
 	public abstract boolean colocarBarco(Coordenada pCoordenada, boolean pHorizontal, Tablero pTablero);
 	
 	protected ArrayList<Casilla> getCasillasOcupadas(){

@@ -11,7 +11,7 @@ public abstract class Jugador extends Observable{
 	protected ListaArmas armamento;
 	protected Double presupuesto;
 	protected Flota flota;
-	protected boolean disparado;
+	//protected boolean disparado;
 
 	public Jugador() {
 		tablero= new Tablero(10,10);
@@ -28,20 +28,16 @@ public abstract class Jugador extends Observable{
 	
 	public abstract boolean jugarTurno();
 	
-	public void inicializarArmamento(){
+	private void inicializarArmamento(){
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Bomba"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Misil"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Misil"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Escudo"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Escudo"));
 		armamento.anadirArma(ArmaFactory.getArmaFactory().crearArma("Radar"));
-		
-
-
 	}
 
-	public  void inicializarFlota() {
-		
+	public  void inicializarFlota() {	
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("PortaAviones"));
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
 		flota.anadirBarco(BarcoFactory.getBarcoFactory().crearBarco("Submarino"));
@@ -64,7 +60,7 @@ public abstract class Jugador extends Observable{
 	
 	public abstract boolean recibirDisparo(Coordenada pCoordenada, String arma);
 	
-	public Arma eliminarArma(String pArma) {
+	protected Arma eliminarArma(String pArma) {
 		return this.armamento.eliminarArma(pArma);
 	}
 
@@ -84,11 +80,12 @@ public abstract class Jugador extends Observable{
 				b.colocarEscudo(pEscudo);
 				utilizado = true;
 				this.mostrarEscudoColocado(pCoord);
+				eliminarArma("Escudo");
 			}else {return false;}
 		}		
 		return utilizado;
 	}
-	public abstract void mostrarEscudoColocado(Coordenada pCoordenada);		
+	protected abstract void mostrarEscudoColocado(Coordenada pCoordenada);		
 	
 	public abstract boolean consultarRadar();
 	

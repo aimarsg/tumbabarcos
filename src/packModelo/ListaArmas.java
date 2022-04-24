@@ -11,9 +11,9 @@ public class ListaArmas {
 		listaArmas=new ArrayList<Arma>();
 	}
 
-	public ArrayList<Arma> getListaArmas(){
+	/*public ArrayList<Arma> getListaArmas(){
 		return listaArmas;
-	}
+	}*/
 	public void anadirArma( Arma pArma) {
 		listaArmas.add(pArma);
 	}

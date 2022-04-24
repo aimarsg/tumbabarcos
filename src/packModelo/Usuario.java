@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.Random;
 
 public class Usuario extends Jugador {
+	private boolean disparado = false;
 
 	public Usuario() {
 		super();
@@ -18,12 +19,12 @@ public class Usuario extends Jugador {
 			setChanged();
 			notifyObservers("ActivarDisparar");//activar el boton
 			//notifyObservers("ActivarComprar");
-			while (!super.disparado) {
+			while (!disparado) {
 				try {Thread.sleep(1000);}
 				catch (InterruptedException e) {// TODO Auto-generated catch block
 				e.printStackTrace();}
 			} //para que espere hasta que este disparado
-			super.disparado = false;//se ha desactivado el boton y se pone false para la siguiente 
+			disparado = false;//se ha desactivado el boton y se pone false para la siguiente 
 			
 			
 		}else{//si ha perdido acaba directamente
@@ -64,7 +65,7 @@ public class Usuario extends Jugador {
 			}
 			//añadir para que se muestren los barcos
 			setChanged();
-			notifyObservers(new Object[] {b.getCasillas(), "ColocarBarco"});
+			notifyObservers(new Object[] {b.getCasillasOcupadas(), "ColocarBarco"});
 			setChanged();
 			notifyObservers("Barco "+b.getNombre()+" colocado.");
 		
@@ -84,7 +85,7 @@ public class Usuario extends Jugador {
 					this.flota.eliminarBarco(nuevo);
 					setChanged();
 					//notifyObservers(new Object[] {nuevo.getCasillas(), true}); este es si pasamos boolean
-					notifyObservers(new Object[] {nuevo.getCasillas(), "ColocarBarco"});// este para String
+					notifyObservers(new Object[] {nuevo.getCasillasOcupadas(), "ColocarBarco"});// este para String
 					setChanged();
 					notifyObservers("Barco "+pTipo+" colocado.");
 					//notifyObservers(nuevo.getCasillas());
@@ -120,12 +121,12 @@ public class Usuario extends Jugador {
 		
 		
 		
-	public boolean activarRadar(){
+	/*public boolean activarRadar(){
 		boolean recibido=false;
 		
 		
 		return recibido;
-	}
+	}*/
 	
 	public boolean recibirDisparo(Coordenada pCoordenada,String arma){
 		boolean disparado= true;
@@ -174,7 +175,7 @@ public class Usuario extends Jugador {
 					Barco b = super.flota.buscarBarco(pCoordenada);
 					if (b.danarEscudo(arma)) {
 						setChanged();	
-						notifyObservers(new Object[] {b.getCasillas(), "ColocarBarco"});// en caso de que el escudo se rompa se cambia de color 
+						notifyObservers(new Object[] {b.getCasillasOcupadas(), "ColocarBarco"});// en caso de que el escudo se rompa se cambia de color 
 						System.out.println("Escudo roto");
 						setChanged();
 						notifyObservers("Escudo roto");

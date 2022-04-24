@@ -1,6 +1,6 @@
 package packModelo;
 
-import java.util.Observable;
+//import java.util.Observable;
 
 public abstract class Arma {
 

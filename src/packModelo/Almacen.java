@@ -1,6 +1,6 @@
 package packModelo;
 
-import java.util.ArrayList;
+//import java.util.ArrayList;
 
 
 public class Almacen {
@@ -27,7 +27,7 @@ public class Almacen {
 			Double precio = arma.getPrecio();
 			if (pSaldo>=precio){
 				
-				this.armas.getListaArmas().remove(pArma);
+				this.armas.eliminarArma(pArma);
 				return (pSaldo-precio);
 			
 			}else return pSaldo; // la resta, sino, si es mismo saldo, no habia saldo suficiente	
@@ -40,13 +40,13 @@ public class Almacen {
 
 	public void inicializarAlmacen(){
 		for(int i=0; i<6; i++){		
-			armas.getListaArmas().add(this.generarArma("Misil"));
+			armas.anadirArma(this.generarArma("Misil"));
 		}
 		for(int i=0; i<2; i++){
-			armas.getListaArmas().add(this.generarArma("Escudo"));
+			armas.anadirArma(this.generarArma("Escudo"));
 		}
 		for(int i=0; i<3; i++){
-			armas.getListaArmas().add(this.generarArma("Radar"));
+			armas.anadirArma(this.generarArma("Radar"));
 		}
 	}
 	

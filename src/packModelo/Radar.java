@@ -29,10 +29,10 @@ public class Radar extends Arma  {
 		return ubicacion;
 	}
 
-	public void activarRadar() {
+	/*public void activarRadar() {
 		// TODO - implement Radar.activarRadar
 		throw new UnsupportedOperationException();
-	}
+	}*/
 
 	public ArrayList<Casilla> consultar(String jugador) {
 		ArrayList<Casilla> reconocimiento = new ArrayList<Casilla>();
