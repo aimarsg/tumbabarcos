@@ -4,11 +4,7 @@ import packModelo.*;
 import packVista.*;
 
 public class Main {
-	//un comentario
 	
-	//xddx
-	//otro comment
-     // va
 	public static void main(String args[]) {
 		Vista vista = new Vista();
 		vista.setVisible(true);
