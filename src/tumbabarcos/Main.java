@@ -3,7 +3,7 @@ package tumbabarcos;
 import packModelo.*;
 import packVista.*;
 
-public class main {
+public class Main {
 	//un comentario
 	
 	//xddx
