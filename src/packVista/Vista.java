@@ -111,29 +111,29 @@ public class Vista extends JFrame implements Observer {
 		contentPane.add(ordenadorrdenador);
 		ordenadorrdenador.setLayout(new GridLayout(11, 11, 0, 0));
 
-		 PanelBarcos = new JPanel();
+		PanelBarcos = new JPanel();
 		contentPane.add(PanelBarcos);
 		PanelBarcos.setLayout(new GridLayout(4, 2, 0, 0));
 
-		PortaAviones = new JRadioButton("PortaAviones");
+		PortaAviones = new JRadioButton("PortaAviones (1)");
 		PortaAviones.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(PortaAviones);
 		PanelBarcos.add(PortaAviones);
 		PortaAviones.addActionListener(getControler());
 
-		Submarinos = new JRadioButton("Submarino");
+		Submarinos = new JRadioButton("Submarino (2)");
 		Submarinos.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Submarinos);
 		PanelBarcos.add(Submarinos);
 		Submarinos.addActionListener(getControler());
 
-		Destructores = new JRadioButton("Destructores");
+		Destructores = new JRadioButton("Destructores (3)");
 		Destructores.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Destructores);
 		PanelBarcos.add(Destructores);
 		Destructores.addActionListener(getControler());
 
-		Fragatas = new JRadioButton("Fragatas");
+		Fragatas = new JRadioButton("Fragatas (4)");
 		Fragatas.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
 		buttonGroup.add(Fragatas);
 		PanelBarcos.add(Fragatas);
@@ -421,7 +421,31 @@ public class Vista extends JFrame implements Observer {
 				//colocarAut.setVisible(false);
 				colocarRad.setVisible(true);
 				PanelBarcos.setVisible(false);
-			} else {
+			} else if (((String) arg1).equals("PortaAviones"))  {
+				String barco = (String) arg1;
+			
+				int num = Character.getNumericValue((PortaAviones.getText().charAt(PortaAviones.getText().length() - 2)));
+				
+				PortaAviones.setText("PortaAviones (" + (num - 1) + ")");
+			} else if (((String) arg1).equals("Submarino"))  {
+				String barco = (String) arg1;
+			
+				int num = Character.getNumericValue((Submarinos.getText().charAt(Submarinos.getText().length() - 2)));
+				
+				Submarinos.setText("Submarinos (" + (num - 1) + ")");
+			} else if (((String) arg1).equals("Destructor"))  {
+				String barco = (String) arg1;
+			
+				int num = Character.getNumericValue((Destructores.getText().charAt(Destructores.getText().length() - 2)));
+				
+				Destructores.setText("Destructores (" + (num - 1) + ")");
+			}else if (((String) arg1).equals("Fragata"))  {
+				String barco = (String) arg1;
+			
+				int num = Character.getNumericValue((Fragatas.getText().charAt(Fragatas.getText().length() - 2)));
+				
+				Fragatas.setText("Fragatas (" + (num - 1) + ")");
+			}else {
 				texto.setText((String) arg1);
 			}
 

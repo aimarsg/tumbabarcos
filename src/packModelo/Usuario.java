@@ -68,6 +68,8 @@ public class Usuario extends Jugador {
 			notifyObservers(new Object[] {b.getCasillasOcupadas(), "ColocarBarco"});
 			setChanged();
 			notifyObservers("Barco "+b.getNombre()+" colocado.");
+			setChanged();
+			notifyObservers(b.getNombre());
 		
 		}
 		//para que se quiten de la lista de barcos iniciales y la partida empiece
@@ -89,6 +91,8 @@ public class Usuario extends Jugador {
 					setChanged();
 					notifyObservers("Barco "+pTipo+" colocado.");
 					//notifyObservers(nuevo.getCasillas());
+					setChanged();
+					notifyObservers(pTipo);
 					
 				}else {
 					System.out.println("El barco no se puede colocar en esa posicion");
