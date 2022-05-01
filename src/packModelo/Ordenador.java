@@ -34,42 +34,57 @@ public class Ordenador extends Jugador {
 				int armaAleatoria = randomizer.nextInt(4);
 				String[] armas = {"Bomba","Misil","Escudo","Radar"};
 				String eleccion=armas[armaAleatoria];
-				if (!eleccion.equals("Bomba")){
-					if (null!=super.armamento.buscarArma(armas[armaAleatoria])){
-						if (eleccion.equals("Misil")) {
-							jugado = this.disparar(eleccion, new Coordenada(col, fil));
-							System.out.println("ha usado un misil ");
+				int accion= randomizer.nextInt(100);
 
-						}else{
-							if(eleccion.equals("Escudo")){
-								boolean usado = false;
-								Escudo esc = (Escudo)super.armamento.eliminarArma(eleccion);
-								while (!usado) {
-									col = randomizer.nextInt(10);
-									fil = randomizer.nextInt(10);
-									usado = super.colocarEscudo(new Coordenada(col, fil), esc );
-									
+				if (accion<60) { // UTILIZAR
+					if (!eleccion.equals("Bomba")){
+						if (null!=super.armamento.buscarArma(armas[armaAleatoria])){
+							if (eleccion.equals("Misil")) {
+								jugado = this.disparar(eleccion, new Coordenada(col, fil));
+								System.out.println("ha usado un misil ");
+
+							}else{
+								if(eleccion.equals("Escudo")){
+									boolean usado = false;
+									Escudo esc = (Escudo)super.armamento.eliminarArma(eleccion);
+									while (!usado) {
+										col = randomizer.nextInt(10);
+										fil = randomizer.nextInt(10);
+										usado = super.colocarEscudo(new Coordenada(col, fil), esc );
+										
+									}
+									jugado = true;
+									System.out.println("se ha puesto un escudo fila "+fil+" col "+col);
+								}else if (eleccion.equals("Radar")) { //radar
+									super.moverRadar();
+									System.out.println("Ha entrado a usar un radar");
+									Radar ra = (Radar) super.armamento.buscarArma("Radar");
+									Coordenada coorden = ra.getUbi();
+									System.out.println("Radar del ordenador colocado en fila "+(coorden.getX()+1)+" columna "+(coorden.getY()+1));
+									this.consultarRadar();
+									System.out.println("se ha usado el radar y ahora el numero de consultas restantes es "+ra.getNumConsultas());
+									jugado = true;
 								}
-								jugado = true;
-								System.out.println("se ha puesto un escudo fila "+fil+" col "+col);
-							}else if (eleccion.equals("Radar")) { //radar
-								super.moverRadar();
-								System.out.println("Ha entrado a usar un radar");
-								Radar ra = (Radar) super.armamento.buscarArma("Radar");
-								Coordenada coorden = ra.getUbi();
-								System.out.println("Radar del ordenador colocado en fila "+(coorden.getX()+1)+" columna "+(coorden.getY()+1));
-								this.consultarRadar();
-								System.out.println("se ha usado el radar y ahora el numero de consultas restantes es "+ra.getNumConsultas());
-								jugado = true;
 							}
 						}
+					}else {//el arma seleccionada es una bomba
+						System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
+						jugado = this.disparar(eleccion, new Coordenada(col, fil));
+						System.out.println(jugado);
 					}
-				}else {//el arma seleccionada es una bomba
-					System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
-					jugado = this.disparar(eleccion, new Coordenada(col, fil));
-					System.out.println(jugado);
 				}
+				else if(accion>80){ // COMPRAR
+					super.comprarArma(eleccion);
+					System.out.println("El ordenador ha comprado un arma");
+					setChanged();
+					notifyObservers("Comprado");
+				}
+				else{ // REPARAR BARCO
+
+				}
+			
 			}
+			
 			try {
 				Thread.sleep(750);
 			} catch (InterruptedException e) {

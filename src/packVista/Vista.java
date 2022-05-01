@@ -19,6 +19,7 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.GridLayout;
+import java.awt.Panel;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
@@ -55,7 +56,7 @@ public class Vista extends JFrame implements Observer {
 	// private JLabel texto2;
 	private ArrayList<JLabel> labelsUsuario;
 	private ArrayList<JLabel> labelsIA;
-	private JRadioButton Seleccion;
+	//private JRadioButton Seleccion;
 	private JCheckBox horizontal;
 	private JCheckBox vertical;
 	private int barcosU, barcosO;
@@ -65,16 +66,20 @@ public class Vista extends JFrame implements Observer {
 	private static JLabel labelClicadoOrdenador;
 	private boolean enHorizontal = true;
 	private JPanel panel;
-	private JPanel panel_colocar;
+	//private JPanel panel_colocar;
 	private JButton comprarBtn;
 	private JPanel panel_1;
-	private JPanel PanelBarcos;
+	private JPanel PanelBarcos; 
 	private JRadioButton BombaBtn;
 	private JRadioButton misilBtn;
 	private JRadioButton escudoBtn;
 	private JRadioButton radarBtn;
 	private final ButtonGroup grupoDispararComprar = new ButtonGroup();
-
+	//panel abajo
+	private JLabel saldo;
+	private JLabel udsMisil;
+	private JLabel udsRadar;
+	private JLabel udsEscudo;
 	/**
 	 * Launch the application.
 	 */
@@ -92,6 +97,7 @@ public class Vista extends JFrame implements Observer {
 		Modelo.getModelo().getUsuario().addObserver(this);
 		Modelo.getModelo().getOrdenador().addObserver(this);
 		Modelo.getModelo().addObserver(this);
+		Almacen.getAlmacen().addObserver(this);
 		
 		this.labelsUsuario = new ArrayList<JLabel>();
 		this.labelsIA = new ArrayList<JLabel>();
@@ -114,6 +120,8 @@ public class Vista extends JFrame implements Observer {
 		PanelBarcos = new JPanel();
 		contentPane.add(PanelBarcos);
 		PanelBarcos.setLayout(new GridLayout(4, 2, 0, 0));
+		
+		
 
 		PortaAviones = new JRadioButton("PortaAviones (1)");
 		PortaAviones.setFont(new Font("Source Code Pro Light", Font.PLAIN, 19));
@@ -156,10 +164,6 @@ public class Vista extends JFrame implements Observer {
 		horizontal.setSelected(true);
 		buttonGroup_1.add(horizontal);
 		horizontal.addActionListener(getControler());
-
-		/*panel_colocar = new JPanel();
-		PanelBarcos.add(panel_colocar);
-		panel_colocar.setLayout(new GridLayout(1, 1, 0, 0));*/
 		
 		colocarAut = new JButton("Colocar automaticamente");
 		colocarAut.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
@@ -212,15 +216,15 @@ public class Vista extends JFrame implements Observer {
 		grupoDispararComprar.add(BombaBtn);
 		panel_1.add(BombaBtn);
 
-		misilBtn = new JRadioButton("MISIL");
+		misilBtn = new JRadioButton("MISIL ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Misil")+")");
 		grupoDispararComprar.add(misilBtn);
 		panel_1.add(misilBtn);
 
-		escudoBtn = new JRadioButton("ESCUDO");
+		escudoBtn = new JRadioButton("ESCUDO ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Escudo")+")");
 		grupoDispararComprar.add(escudoBtn);
 		panel_1.add(escudoBtn);
 
-		radarBtn = new JRadioButton("RADAR");
+		radarBtn = new JRadioButton("RADAR ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Radar")+")");
 		grupoDispararComprar.add(radarBtn);
 		panel_1.add(radarBtn);
 		panel_1.setVisible(false);
@@ -228,6 +232,8 @@ public class Vista extends JFrame implements Observer {
 		texto = new JLabel();
 		texto.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		panel_3.add(texto);
+		
+		
 
 		barcosO = 10;
 		barcosU = 10;
@@ -241,6 +247,7 @@ public class Vista extends JFrame implements Observer {
 		marcadorU.setVisible(false);
 		panel_3.add(marcadorU);
 		crearButtons();
+		
 	}
 
 	private Iterator<JLabel> getIteradorUsuario() {
@@ -390,6 +397,8 @@ public class Vista extends JFrame implements Observer {
 					}
 					
 					//casilla.setForegroud(Color.GREEN);
+				
+				
 				}
 				
 
@@ -420,7 +429,9 @@ public class Vista extends JFrame implements Observer {
 				marcadorU.setVisible(true);
 				//colocarAut.setVisible(false);
 				colocarRad.setVisible(true);
-				PanelBarcos.setVisible(false);
+				//PanelBarcos.setVisible(false);
+				//panelAlmacen.setVisible(true);
+				this.intercambioDePaneles(); //quita lo de los barcos y pone lo del almacen y lo de comprar
 			} else if (((String) arg1).equals("PortaAviones"))  {
 				String barco = (String) arg1;
 			
@@ -445,9 +456,15 @@ public class Vista extends JFrame implements Observer {
 				int num = Character.getNumericValue((Fragatas.getText().charAt(Fragatas.getText().length() - 2)));
 				
 				Fragatas.setText("Fragatas (" + (num - 1) + ")");
-			}else {
+			}else if(((String) arg1).equals("Comprado")){
+				udsRadar.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Radar")));
+				udsEscudo.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Escudo")));
+				udsMisil.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Misil")));
+			}
+			else {
 				texto.setText((String) arg1);
 			}
+			
 
 		}
 		/*
@@ -737,6 +754,9 @@ public class Vista extends JFrame implements Observer {
 					
 				} else if (misilBtn.isSelected()) {
 					finTurno = usuario.disparar("Misil", coordClickadaOrdenador);
+					if (finTurno) {
+						misilBtn.setText("MISIL ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Misil")+")");
+					}
 					
 				} else if (escudoBtn.isSelected()) {
 					Escudo escudo=(Escudo)usuario.buscarArma("Escudo");
@@ -747,6 +767,7 @@ public class Vista extends JFrame implements Observer {
 								((Usuario)Modelo.getModelo().getUsuario()).setDisparadoUsuario();
 								System.out.println("se ha utilizado un escudo");
 								finTurno = true;
+								escudoBtn.setText("ESCUDO ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Escudo")+")");
 								//usuario.eliminarArma("Escudo");
 							}else {
 								//NO SE HA UTILIZADO EL ESCUDO 					
@@ -762,12 +783,32 @@ public class Vista extends JFrame implements Observer {
 					}
 				} else if (radarBtn.isSelected()) {
 					finTurno = usuario.consultarRadar();
+					if (finTurno) {
+						radarBtn.setText("RADAR ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Radar")+")");
+					}
 					
 				}
 			}
 			//PARA COMPRAR
 			if (e.getSource().equals(comprarBtn)) {
-				//TODO HACER ESTO
+				if (BombaBtn.isSelected()) {
+					usuario.comprarArma("Bomba");
+					
+					
+				} else if (misilBtn.isSelected()) {
+					usuario.comprarArma("Misil");
+					udsMisil.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Misil")));
+					misilBtn.setText("MISIL ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Misil")+")");
+				} else if (escudoBtn.isSelected()) {
+					usuario.comprarArma("Escudo");
+					udsEscudo.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Escudo")));
+					escudoBtn.setText("ESCUDO ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Escudo")+")");
+				} else if (radarBtn.isSelected()) {
+					usuario.comprarArma("Radar");
+					udsRadar.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Radar")));
+					radarBtn.setText("RADAR ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Radar")+")");
+				}
+				saldo.setText(Double.toString(usuario.getSaldo()));
 			}
 			//PADRA MOVER EL ESCUDO
 			if (e.getSource().equals(colocarRad)) {
@@ -785,5 +826,39 @@ public class Vista extends JFrame implements Observer {
 			}	
 		}
 		
+	}
+	
+	private void intercambioDePaneles() {
+		//este metodo pretende cambiar el panel de colocar los barcos por el de almacen
+		
+		PanelBarcos.removeAll();
+		PanelBarcos.setLayout(new GridLayout(5, 2, 0, 0));
+		PanelBarcos.updateUI();
+		
+		//saldo
+		JLabel textoSaldo = new JLabel("Saldo restante del usuario: ");
+		saldo = new JLabel(Double.toString(((Usuario) Modelo.getModelo().getUsuario()).getSaldo()));
+		PanelBarcos.add(textoSaldo);
+		PanelBarcos.add(saldo);
+		//
+		JLabel titulo1 = new JLabel("ARMAS EN ALMACEN      PRECIO ");
+		JLabel titulo2 = new JLabel("STOCK DISPONIBLE");
+		PanelBarcos.add(titulo1);
+		PanelBarcos.add(titulo2);
+		//misil
+		JLabel textoMisil = new JLabel ("MISIL.                         Precio: 200.");
+		udsMisil = new JLabel(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Misil")));
+		PanelBarcos.add(textoMisil);
+		PanelBarcos.add(udsMisil);
+		//radar
+		JLabel textoRadar = new JLabel ("RADAR.                       Precio: 150.");
+		udsRadar = new JLabel(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Radar")));
+		PanelBarcos.add(textoRadar);
+		PanelBarcos.add(udsRadar);
+		//escudo
+		JLabel textoEscudo = new JLabel("ESCUDO.                    Precio: 100.");
+		udsEscudo = new JLabel(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Escudo")));
+		PanelBarcos.add(textoEscudo);
+		PanelBarcos.add(udsEscudo);
 	}
 }

@@ -120,6 +120,23 @@ public abstract class Jugador extends Observable{
 			
 		}
 	}
+	public void repararBarco(Coordenada pCord){
+		Barco nuevo = flota.buscarBarco(pCord);
+		setChanged();
+		notifyObservers(new Object[] {nuevo.getCasillasOcupadas(), "ColocarBarco"});
+		nuevo.reparar();
+	}
+
+
+	public void comprarArma(String pArma){
+		Arma arma= Almacen.getAlmacen().comprar(presupuesto, pArma);
+		if (arma!=null){
+			armamento.anadirArma(arma);
+			presupuesto=presupuesto - (arma.getPrecio());
+		}
+		
+	}
+
 
 	/*
 

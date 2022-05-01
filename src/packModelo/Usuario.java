@@ -264,6 +264,13 @@ public class Usuario extends Jugador {
 			notifyObservers(new Object[]{casillaLista, "QuitarRadar"});
 		}
 	}
+
+	public double getSaldo(){
+		return super.presupuesto;
+	}
 	
+	public int cantidadArmasTipo(String pArma){
+			return armamento.devolverNumArmas(pArma);
+	}
 	
 }

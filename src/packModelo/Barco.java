@@ -43,6 +43,13 @@ public abstract class Barco {
 		return this.casillasOcupadas;
 		
 	}
+	public void reparar() {
+		this.contLibres = 0;
+		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Barco"));
+		this.hundido = true;
+		
+		
+	}
 
 	/**
 	 * 

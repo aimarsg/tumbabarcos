@@ -1,9 +1,11 @@
 package packModelo;
 
+import java.util.Observable;
+
 //import java.util.ArrayList;
 
 
-public class Almacen {
+public class Almacen extends Observable {
 
 	private static Almacen miAlmacen;
 	private ListaArmas armas;
@@ -21,17 +23,24 @@ public class Almacen {
 	}
 
 	
-	public double comprar(Double pSaldo,String pArma) {
+	public Arma comprar(Double pSaldo,String pArma) {
 		Arma arma = armas.buscarArma(pArma);
 		if(arma!=null){
 			Double precio = arma.getPrecio();
 			if (pSaldo>=precio){
 				
-				this.armas.eliminarArma(pArma);
-				return (pSaldo-precio);
+				return(this.armas.eliminarArma(pArma));
 			
-			}else return pSaldo; // la resta, sino, si es mismo saldo, no habia saldo suficiente	
-		}else return -1; //no hay armas de ese tipo			
+			}else { // la resta, sino, si es mismo saldo, no habia saldo suficiente
+				setChanged();
+				notifyObservers("No tienes saldo suficiente para comprar ese arma.");
+				return null; 
+			}	
+		}else { //no hay armas de ese tipo
+			setChanged();
+			notifyObservers("No quedan armas de ese tipo para comprar.");
+			return null; 
+		}			
 	}
 	
 	public Arma generarArma(String pTipo) {
@@ -39,17 +48,20 @@ public class Almacen {
 	}
 
 	public void inicializarAlmacen(){
-		for(int i=0; i<6; i++){		
+		for(int i=0; i<10; i++){		
 			armas.anadirArma(this.generarArma("Misil"));
 		}
-		for(int i=0; i<2; i++){
+		for(int i=0; i<4; i++){
 			armas.anadirArma(this.generarArma("Escudo"));
 		}
 		for(int i=0; i<3; i++){
 			armas.anadirArma(this.generarArma("Radar"));
 		}
+		
 	}
-	
+	public int devolverCantArmas(String pNombre){
+		return armas.devolverNumArmas(pNombre);
+	}
 	
 	
 

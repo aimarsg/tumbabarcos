@@ -18,12 +18,12 @@ public class Flota {
 	public ArrayList<Barco> getBarcosIniciales(){
 		return listaBarcosIniciales.getLista();
 	}
-	
-	/*private Iterator<Barco> iteradorColocados(){
-		return barcosColocados.iterator();
+	/*
+	private Iterator<Barco> iteradorColocados(){
+		return barcosColocados.obtenerIterator();
 	}
 	private Iterator<Barco> iteradorIniciales(){
-		return listaBarcosIniciales.iterator();
+		return listaBarcosIniciales.obtenerIterator();
 	}
 	*/
 	public void anadirBarco(Barco pBarco) {
@@ -36,9 +36,13 @@ public class Flota {
 	public void reducirNumBarcos(){
 		numBarcos--;
 	}
+	public void anadirNumBarcos(){
+		numBarcos++;
+	}
 	
 	public Barco obtenerBarcoInicial(String pTipo) {
-		Iterator<Barco> it = iteradorIniciales();
+		return listaBarcosIniciales.buscarBarco(pTipo);
+		/*Iterator<Barco> it = listaBarcosIniciales.obtenerIterador();
 		boolean enc = false;
 		Barco b = null;
 		while (it.hasNext() && !enc) {
@@ -51,7 +55,7 @@ public class Flota {
 			
 			return b;
 		}
-		return null;
+		return null;*/
 	}
 
 	public void eliminarBarco(Barco pBarco){
@@ -63,7 +67,7 @@ public class Flota {
 	}
 
 	public Barco buscarBarco(Coordenada pcord ) {
-		return barcosColocados.buscarBarco(pcord);
+		return barcosColocados.buscarBarcoCord(pcord);
 		/*boolean enc = false;
 		Barco b=null;
 		Iterator<Barco> it = this.iteradorColocados();

@@ -16,6 +16,7 @@ public class ListaArmas {
 	}*/
 	public void anadirArma( Arma pArma) {
 		listaArmas.add(pArma);
+		System.out.println(listaArmas.size());
 	}
 
 	private Iterator<Arma> getIterador() {
@@ -51,8 +52,11 @@ public class ListaArmas {
 		Arma arma=buscarArma(pArma);
 		if (arma!=null) {listaArmas.remove(arma);}
 		return arma;
+		
 	}
-	
+	public int devolverNumArmas(String pArma){
+		return (int) listaArmas.stream().filter(a -> a.getClass().getSimpleName().equals(pArma)).count();
+	}
 
 
 }

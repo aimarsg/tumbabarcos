@@ -38,8 +38,21 @@ public class ListaBarcos {
 	}
 
 	public Barco buscarBarcoCord(Coordenada pCord) {
-		//TODO
-		return null;
+		boolean enc = false;
+		Barco b=null;
+		Iterator<Barco> it = this.obtenerIterador();
+		//barcosColocados.stream().allMatch(b -> b.tieneCordenada(pcord))S;
+		
+		while (!enc && it.hasNext()){
+			b=it.next();
+			enc=b.tieneCordenada(pCord);
+		}
+		if (!enc) {return null;}
+		return b;
+	}
+	
+	public boolean isEmpty(){
+		return lista.isEmpty();
 	}
 
 }
