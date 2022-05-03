@@ -3,6 +3,8 @@ package packModelo;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import packVista.Sonido;
+
 public class Modelo extends Observable {
 
 	private Jugador[] jugadores;
@@ -35,10 +37,12 @@ public class Modelo extends Observable {
 			System.out.println("Usuario has ganado ");
 			setChanged();
 			notifyObservers("Has ganadoooo!!!");
+			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}else{
 			System.out.println("Ordenador has ganado ");
 			setChanged();
 			notifyObservers("El ordenador ha ganadoooo!!");
+			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}
 	}
 

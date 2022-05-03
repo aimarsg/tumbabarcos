@@ -363,14 +363,17 @@ public class Vista extends JFrame implements Observer {
 					// HUNDIR BARCOS
 				} else if (b.equals("HundirOrdenador")) {
 					labelsIA.get(index).setBackground(Color.decode("#7e0000"));
+					Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_misil.wav");
 					coordClickadaOrdenador = null;
 				} else if (b.equals("HundirUsuario")) {
 					labelsUsuario.get(index).setBackground(Color.decode("#7e0000"));
+					Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_misil.wav");
 
 					// DISPARAR
 				} else if (b.equals("DispararAOrdenador")) {
 					if (c.comprobarEstado().equals("Tocado")) {
 						labelsIA.get(index).setBackground(new Color(160, 60, 210));
+						Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_Arma.wav");
 					} else if (c.comprobarEstado().equals("Disparado")) {
 						labelsIA.get(index).setBackground(Color.BLUE);
 						Sonido.getMiSonido().ReproducirSonido("Resources/0008368.wav");
@@ -380,6 +383,7 @@ public class Vista extends JFrame implements Observer {
 				} else if (b.equals("DispararAUsuario")) {
 					if (c.comprobarEstado().equals("Tocado")) {
 						labelsUsuario.get(index).setBackground(new Color(160, 60, 210));
+						Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_Arma.wav");
 					} else if (c.comprobarEstado().equals("Disparado")) {
 						labelsUsuario.get(index).setBackground(Color.BLUE);
 						Sonido.getMiSonido().ReproducirSonido("Resources/0008368.wav");
@@ -389,15 +393,18 @@ public class Vista extends JFrame implements Observer {
 				else if (b.equals("EscudoUsuario")) {// cuando se dispara
 				
 					labelsUsuario.get(index).setBackground(Color.orange);
+					Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_Arma.wav");
 				}
 				else if (b.equals("EscudoOrdenador")) {//cuando se dispara
 				
 					labelsIA.get(index).setBackground(Color.orange);
-						
+					Sonido.getMiSonido().ReproducirSonido("Resources/Impacto_Arma.wav");
 				}
 				else if (b.equals("PintarEscudo")) {
 				
 					labelsUsuario.get(index).setBackground(Color.yellow);
+					Sonido.getMiSonido().ReproducirSonido("Resources/Escudo.wav");
+					
 				}
 				else if (b.equals("ConsultaRadar")){
 					JLabel casilla = labelsIA.get(index);

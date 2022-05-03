@@ -44,7 +44,7 @@ public class Sonido extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == boton1){
         	
-            ReproducirSonido("Resources/0008368.wav");
+            ReproducirSonido("Resources/Impacto_Arma.wav");
         }
     }
     private Sonido() {
