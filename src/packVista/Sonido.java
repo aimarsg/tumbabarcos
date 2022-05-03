@@ -48,7 +48,6 @@ public class Sonido extends JFrame implements ActionListener{
         }
     }
     private Sonido() {
-    	miSonido= new Sonido();
     }
     public static Sonido getMiSonido(){
     	if (miSonido==null) {
