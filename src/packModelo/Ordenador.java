@@ -72,8 +72,7 @@ public class Ordenador extends Jugador {
 						jugado = this.disparar(eleccion, new Coordenada(col, fil));
 						System.out.println(jugado);
 					}
-				}
-				else if(accion>80){ // COMPRAR
+				}else if(accion>80){ // COMPRAR
 					if (!eleccion.equals("Bomba")){
 						super.comprarArma(eleccion);
 						//System.out.println("El ordenador ha comprado un " + eleccion);
@@ -81,9 +80,9 @@ public class Ordenador extends Jugador {
 						//notifyObservers("Comprado");
 					}
 					
-				}
-				else{ // REPARAR BARCO
+				}else{ // REPARAR BARCO
 						//boolean enc=false;
+						System.out.println(accion);
 						System.out.println("Entra a reparar barco");
 						Barco barcoTocado=super.flota.devolverTocadoHundido();
 						if (barcoTocado!=null){

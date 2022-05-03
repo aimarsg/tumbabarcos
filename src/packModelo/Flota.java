@@ -87,7 +87,7 @@ public class Flota {
 
 
 	public Barco devolverTocadoHundido(){
-		Barco barco = this.barcosColocados.devolverTocadoHundido();
-		return barco;
+		return this.barcosColocados.devolverTocadoHundido();
+		//return barco;
 	}
 }

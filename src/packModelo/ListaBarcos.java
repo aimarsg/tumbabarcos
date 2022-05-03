@@ -58,15 +58,17 @@ public class ListaBarcos {
 	}
 
 	public Barco devolverTocadoHundido(){
-		Barco barco=null;
-		boolean enc=false;
-		Iterator itr = this.obtenerIterador();
-		while(enc=false && itr.hasNext()){
-			barco = (Barco) itr.next();
+		Barco barco = null;
+		boolean enc = false;
+		Iterator<Barco> itr = this.obtenerIterador();
+		
+		while(!enc && itr.hasNext()){
+			barco = itr.next();
 			if (barco.estaTocado()!=0){
 				enc =true;
 			}
 		}
+		
 		if(enc==false){barco = null;}
 		return barco;
 	}
