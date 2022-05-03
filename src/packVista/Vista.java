@@ -382,6 +382,7 @@ public class Vista extends JFrame implements Observer {
 						labelsUsuario.get(index).setBackground(new Color(160, 60, 210));
 					} else if (c.comprobarEstado().equals("Disparado")) {
 						labelsUsuario.get(index).setBackground(Color.BLUE);
+						Sonido.getMiSonido().ReproducirSonido("Resources/0008368.wav");
 						
 					}
 				}
