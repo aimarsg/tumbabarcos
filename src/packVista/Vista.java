@@ -75,11 +75,16 @@ public class Vista extends JFrame implements Observer {
 	private JRadioButton escudoBtn;
 	private JRadioButton radarBtn;
 	private final ButtonGroup grupoDispararComprar = new ButtonGroup();
+
+	private JButton repararBtn;
+
+
 	//panel abajo
 	private JLabel saldo;
 	private JLabel udsMisil;
 	private JLabel udsRadar;
 	private JLabel udsEscudo;
+
 	/**
 	 * Launch the application.
 	 */
@@ -206,6 +211,12 @@ public class Vista extends JFrame implements Observer {
 		//colocarRad.setVisible(false);
 
 		panel.add(colocarRad);
+		
+		repararBtn = new JButton("Repara Barco");
+		repararBtn.setBackground(Color.WHITE);
+		repararBtn.setFont(new Font("Source Code Pro Light", Font.PLAIN, 16));
+		repararBtn.setForeground(Color.RED);
+		panel.add(repararBtn);
 		panel.setVisible(false);
 		
 		panel_1 = new JPanel();
