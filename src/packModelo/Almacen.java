@@ -28,7 +28,7 @@ public class Almacen extends Observable {
 		if(arma!=null){
 			Double precio = arma.getPrecio();
 			if (pSaldo>=precio){
-				
+				System.out.println("Se ha comprado el arma "+ pArma);
 				return(this.armas.eliminarArma(pArma));
 			
 			}else { // la resta, sino, si es mismo saldo, no habia saldo suficiente

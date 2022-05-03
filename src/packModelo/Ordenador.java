@@ -46,7 +46,7 @@ public class Ordenador extends Jugador {
 							}else{
 								if(eleccion.equals("Escudo")){
 									boolean usado = false;
-									Escudo esc = (Escudo)super.armamento.eliminarArma(eleccion);
+									Escudo esc = (Escudo)super.armamento.buscarArma(eleccion);
 									while (!usado) {
 										col = randomizer.nextInt(10);
 										fil = randomizer.nextInt(10);
@@ -68,19 +68,31 @@ public class Ordenador extends Jugador {
 							}
 						}
 					}else {//el arma seleccionada es una bomba
-						System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
+						//System.out.println(" disparado en fila "+(col +1)+", col "+(1+fil));
 						jugado = this.disparar(eleccion, new Coordenada(col, fil));
 						System.out.println(jugado);
 					}
 				}
 				else if(accion>80){ // COMPRAR
-					super.comprarArma(eleccion);
-					System.out.println("El ordenador ha comprado un arma");
-					setChanged();
-					notifyObservers("Comprado");
+					if (!eleccion.equals("Bomba")){
+						super.comprarArma(eleccion);
+						//System.out.println("El ordenador ha comprado un " + eleccion);
+						//setChanged();
+						//notifyObservers("Comprado");
+					}
+					
 				}
 				else{ // REPARAR BARCO
-
+						//boolean enc=false;
+						System.out.println("Entra a reparar barco");
+						Barco barcoTocado=super.flota.devolverTocadoHundido();
+						if (barcoTocado!=null){
+							
+							Coordenada coord= barcoTocado.getCasillasOcupadas().get(0).getPosicion();
+							jugado = super.repararBarco(coord);
+						}
+						else jugado=false;
+						
 				}
 			
 			}
@@ -135,6 +147,7 @@ public class Ordenador extends Jugador {
 					int x= nueva.getX();
 					int y= nueva.getY();
 					disparado=true;
+					System.out.println(" disparado en fila "+(x +1)+", col "+(1+y));
 					if(u.obtenerEstadoCasilla(x, y).equals("Hundido")){
 						for (Casilla casillaBarco : u.flota.buscarBarco(nueva).getCasillasOcupadas()) {
 							for (Coordenada co : this.tablero.obtenerCasillasAlRededor(casillaBarco.getPosicion())) {
@@ -153,6 +166,7 @@ public class Ordenador extends Jugador {
 			 			}*/
 						 this.tablero.obtenerCasillasAlRededor(nueva).stream().forEach(c->casillasPila.push(c));
 					}	
+					
 				}
 			}else{
 				if (arma.equals("Misil")) {this.eliminarArma(arma);}
@@ -175,7 +189,7 @@ public class Ordenador extends Jugador {
 					 }
 				}
 			}
-			
+			System.out.println("se ha disparado con un(a)" +arma);
 			return disparado;	
 		}
 	/*
@@ -225,6 +239,8 @@ public class Ordenador extends Jugador {
 						notifyObservers(new Object[] {hundidos, "HundirOrdenador"});
 						setChanged();
 						notifyObservers("El barco "+b.getNombre()+" se ha hundido!!");
+						Modelo.getModelo().getUsuario().aumentarSaldo(100.0);
+						
 					}
 				}else if (estado.equals("Escudo")){
 					Barco b = super.flota.buscarBarco(pCoordenada);
@@ -294,6 +310,14 @@ public class Ordenador extends Jugador {
 	@Override
 	protected void verRadar(Coordenada pCoord, boolean poner) {
 		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	protected void mostrarBarcoReparado(ArrayList<Casilla> barco) {
+		// 
+		
+		setChanged();
+		notifyObservers(new Object[] {barco, "RepararBarcoOrdenador"});
 		
 	}
 }

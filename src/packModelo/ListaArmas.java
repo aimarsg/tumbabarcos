@@ -50,7 +50,9 @@ public class ListaArmas {
 	}
 	public Arma eliminarArma(String pArma){
 		Arma arma=buscarArma(pArma);
-		if (arma!=null) {listaArmas.remove(arma);}
+		if (arma!=null) {
+			System.out.println("Se ha eliminado el arma " + pArma);
+			listaArmas.remove(arma);}
 		return arma;
 		
 	}

@@ -38,7 +38,9 @@ public class ListaBarcos {
 	}
 
 	public Barco buscarBarcoCord(Coordenada pCord) {
+		if (pCord==null) {return null;}
 		boolean enc = false;
+		
 		Barco b=null;
 		Iterator<Barco> it = this.obtenerIterador();
 		//barcosColocados.stream().allMatch(b -> b.tieneCordenada(pcord))S;
@@ -53,6 +55,20 @@ public class ListaBarcos {
 	
 	public boolean isEmpty(){
 		return lista.isEmpty();
+	}
+
+	public Barco devolverTocadoHundido(){
+		Barco barco=null;
+		boolean enc=false;
+		Iterator itr = this.obtenerIterador();
+		while(enc=false && itr.hasNext()){
+			barco = (Barco) itr.next();
+			if (barco.estaTocado()!=0){
+				enc =true;
+			}
+		}
+		if(enc==false){barco = null;}
+		return barco;
 	}
 
 }

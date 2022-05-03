@@ -218,6 +218,7 @@ public class Vista extends JFrame implements Observer {
 		repararBtn.setForeground(Color.RED);
 		panel.add(repararBtn);
 		panel.setVisible(false);
+		repararBtn.addActionListener(getControler());
 		
 		panel_1 = new JPanel();
 		panel_3.add(panel_1);
@@ -372,6 +373,7 @@ public class Vista extends JFrame implements Observer {
 						labelsUsuario.get(index).setBackground(new Color(160, 60, 210));
 					} else if (c.comprobarEstado().equals("Disparado")) {
 						labelsUsuario.get(index).setBackground(Color.BLUE);
+						
 					}
 				}
 				else if (b.equals("EscudoUsuario")) {// cuando se dispara
@@ -411,10 +413,13 @@ public class Vista extends JFrame implements Observer {
 				
 				
 				}
+				else if(b.equals("RepararBarcoOrdenador")){
+					labelsIA.get(index).setBackground(Color.cyan);
+				}
 				
 
 			}
-			// actualizacion del marcador cuadno se hunden los barcos
+			// actualizacion del marcador cuadndo se hunden los barcos
 
 			if (b.equals("HundirOrdenador")) {
 				barcosO--;
@@ -755,6 +760,15 @@ public class Vista extends JFrame implements Observer {
 			if (e.getSource().equals(colocarAut)) {
 				((Usuario)Modelo.getModelo().getUsuario()).pruebasColocarBarcos();
 			}
+			//PARA REPARAR BARCO DE USUARIO
+			if (e.getSource().equals(repararBtn)){
+				if (coordClickadaUsuario!=null) {
+					finTurno = usuario.repararBarco(coordClickadaUsuario);
+					if(finTurno){
+						saldo.setText(Double.toString(usuario.getSaldo()));
+					}
+				}
+			}
 			
 			//PARA DISPARAR
 			if (e.getSource().equals(dispararBtn)) {
@@ -762,11 +776,15 @@ public class Vista extends JFrame implements Observer {
 				// "+coordClickada.getX()+ " y "+coordClickada.getY());
 				if (BombaBtn.isSelected()) {
 					finTurno = usuario.disparar("Bomba", coordClickadaOrdenador);
+					if (finTurno) {
+						saldo.setText(Double.toString(usuario.getSaldo()));
+					}
 					
 				} else if (misilBtn.isSelected()) {
 					finTurno = usuario.disparar("Misil", coordClickadaOrdenador);
 					if (finTurno) {
 						misilBtn.setText("MISIL ("+((Usuario)Modelo.getModelo().getUsuario()).cantidadArmasTipo("Misil")+")");
+						saldo.setText(Double.toString(usuario.getSaldo()));
 					}
 					
 				} else if (escudoBtn.isSelected()) {
@@ -836,6 +854,7 @@ public class Vista extends JFrame implements Observer {
 
 			}	
 		}
+		
 		
 	}
 	

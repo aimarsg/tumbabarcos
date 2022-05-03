@@ -46,19 +46,24 @@ public abstract class Barco {
 	public void reparar() {
 		this.contLibres = 0;
 		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Barco"));
-		this.hundido = true;
+		this.hundido = false;
 		
 		
 	}
 
-	/**
-	 * 
-	 * @param Double
-	 */
-	public double reparBarco(Double pSaldo) {
-		// TODO - implement Barco.reparBarco
-		throw new UnsupportedOperationException();
+	
+	
+	public int estaTocado() {
+		//devuelve el numero de casillas tocadas
+		if (hundido) {
+			return (int) this.casillasOcupadas.stream().filter(c->c.comprobarEstado().equals("Hundido")).count();
+		}else {
+			return (int) this.casillasOcupadas.stream().filter(c->c.comprobarEstado().equals("Tocado")).count();
+		}
+		
+		
 	}
+
 	public boolean esBarco(String pTipo) {
 		return nombre.equals(pTipo);
 	}
@@ -86,7 +91,7 @@ public abstract class Barco {
 		return this.escudo != null;
 	}
 	
-
+	
 	public boolean danarEscudo(String pArma) {
 		//false cuando sigue el escudo
 		//true cuando se rompe el escudo

@@ -120,14 +120,36 @@ public abstract class Jugador extends Observable{
 			
 		}
 	}
-	public void repararBarco(Coordenada pCord){
+	public boolean repararBarco(Coordenada pCord){
 		Barco nuevo = flota.buscarBarco(pCord);
-		setChanged();
-		notifyObservers(new Object[] {nuevo.getCasillasOcupadas(), "ColocarBarco"});
-		nuevo.reparar();
+		if (nuevo!=null) {
+			int numCasillas = nuevo.estaTocado();
+			if (numCasillas != 0) {       
+				if (presupuesto >= numCasillas*100) {
+					nuevo.reparar();
+					presupuesto = presupuesto - (100*numCasillas);
+					mostrarBarcoReparado(nuevo.getCasillasOcupadas());
+					return true;
+				}else{
+					setChanged();
+					notifyObservers("No tienes dinero suficiente");
+					
+				}
+			}else{
+				setChanged();
+				notifyObservers("El barco seleccionado no está tocado");
+				
+			}
+		}else{
+			setChanged();
+			notifyObservers("La casilla seleccionada no contiene un barco");
+			
+		}
+		return false;
 	}
 
-
+	protected abstract void mostrarBarcoReparado(ArrayList<Casilla> barco);
+	
 	public void comprarArma(String pArma){
 		Arma arma= Almacen.getAlmacen().comprar(presupuesto, pArma);
 		if (arma!=null){
@@ -135,6 +157,9 @@ public abstract class Jugador extends Observable{
 			presupuesto=presupuesto - (arma.getPrecio());
 		}
 		
+	}
+	public void aumentarSaldo(Double pSaldo) {
+		this.presupuesto = this.presupuesto + pSaldo;
 	}
 
 

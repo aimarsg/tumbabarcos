@@ -84,4 +84,10 @@ public class Flota {
 	public boolean todosColocados() {
 		return listaBarcosIniciales.isEmpty();
 	}
+
+
+	public Barco devolverTocadoHundido(){
+		Barco barco = this.barcosColocados.devolverTocadoHundido();
+		return barco;
+	}
 }

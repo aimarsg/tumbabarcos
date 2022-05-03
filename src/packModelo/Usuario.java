@@ -174,6 +174,7 @@ public class Usuario extends Jugador {
 						
 						setChanged();
 						notifyObservers("El barco "+b.getNombre()+" se ha hundido!!");
+						Modelo.getModelo().getOrdenador().aumentarSaldo(100.0);
 					}
 				}else if (estado.equals("Escudo")){
 					Barco b = super.flota.buscarBarco(pCoordenada);
@@ -272,5 +273,10 @@ public class Usuario extends Jugador {
 	public int cantidadArmasTipo(String pArma){
 			return armamento.devolverNumArmas(pArma);
 	}
-	
+	@Override
+	protected void mostrarBarcoReparado(ArrayList<Casilla> barco) {
+		setChanged();
+		notifyObservers(new Object[] {barco, "ColocarBarco"});
+		
+	}
 }
