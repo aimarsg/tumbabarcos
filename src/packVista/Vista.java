@@ -8,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Observable;
@@ -28,7 +30,12 @@ import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.Line;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.BorderFactory;
@@ -258,8 +265,7 @@ public class Vista extends JFrame implements Observer {
 		marcadorU.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		marcadorU.setVisible(false);
 		panel_3.add(marcadorU);
-		crearButtons();
-		
+		crearButtons();		
 	}
 
 	private Iterator<JLabel> getIteradorUsuario() {
@@ -334,6 +340,7 @@ public class Vista extends JFrame implements Observer {
 
 	public void update(Observable arg0, Object arg1) { // arg2 es un boolean para indicar que es la flota del ordenador
 
+		
 		if (arg1 instanceof Object[]) {
 
 			// SObject o1 =(Object[])arg1;
@@ -366,6 +373,8 @@ public class Vista extends JFrame implements Observer {
 						labelsIA.get(index).setBackground(new Color(160, 60, 210));
 					} else if (c.comprobarEstado().equals("Disparado")) {
 						labelsIA.get(index).setBackground(Color.BLUE);
+						//Sonido.getMiSonido().ReproducirSonido("Resources/0008368.wav");
+						
 					}
 					coordClickadaOrdenador = null;
 				} else if (b.equals("DispararAUsuario")) {

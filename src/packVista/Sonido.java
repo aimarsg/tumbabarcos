@@ -14,8 +14,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
  
 public class Sonido extends JFrame implements ActionListener{
-    JButton boton1 = new JButton("Pulsame");
-    private Sonido(){
+	private static Sonido miSonido;
+	JButton boton1 = new JButton("Pulsame");
+  /*  public Sonido(){
         super("Pulse el boton");
         setSize(400,80);
         setLocationRelativeTo(null);
@@ -24,7 +25,7 @@ public class Sonido extends JFrame implements ActionListener{
         add(boton1);
         boton1.addActionListener(this);
         setVisible(true);
-    }
+    }*/
     public static void main(String[] Dar10){
     	Sonido sonido = new Sonido();
     	sonido.ReproducirSonido("C:\\Users\\Mario\\OneDrive\\Escritorio\\Sonidos\\0008368.wav");
@@ -43,7 +44,16 @@ public class Sonido extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == boton1){
         	
-            ReproducirSonido("0008368.wav");
+            ReproducirSonido("Resources/0008368.wav");
         }
+    }
+    private Sonido() {
+    	miSonido= new Sonido();
+    }
+    public static Sonido getMiSonido(){
+    	if (miSonido==null) {
+    		miSonido= new Sonido();
+    	}
+    	return miSonido;
     }
 }
