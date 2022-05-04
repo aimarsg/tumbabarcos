@@ -276,7 +276,7 @@ public class Usuario extends Jugador {
 	@Override
 	protected void mostrarBarcoReparado(ArrayList<Casilla> barco) {
 		setChanged();
-		notifyObservers(new Object[] {barco, "ColocarBarco"});
+		notifyObservers(new Object[] {barco, "RepararBarcoUsuario"});
 		
 	}
 }
