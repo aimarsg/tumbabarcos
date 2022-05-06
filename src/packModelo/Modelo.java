@@ -40,12 +40,12 @@ public class Modelo extends Observable {
 			System.out.println("Usuario has ganado ");
 			setChanged();
 			notifyObservers("Has ganadoooo!!!");
-			//Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
+			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}else{
 			System.out.println("Ordenador has ganado ");
 			setChanged();
 			notifyObservers("El ordenador ha ganadoooo!!");
-			//Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
+			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}
 	}
 
