@@ -429,7 +429,10 @@ public class Vista extends JFrame implements Observer {
 					
 					//casilla.setForegroud(Color.GREEN);
 				
-				
+				}else if (b.equals("RepararBarcoUsuario")) {//Repara usuario
+					labelsUsuario.get(index).setBackground(Color.BLACK);
+					Sonido.getMiSonido().ReproducirSonido("Resources/RepararSonido.wav");
+					coordClickadaUsuario = null;
 				}
 				else if(b.equals("RepararBarcoOrdenador")){
 					labelsIA.get(index).setBackground(Color.cyan);
