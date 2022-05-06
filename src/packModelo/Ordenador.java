@@ -82,16 +82,20 @@ public class Ordenador extends Jugador {
 					
 				}else{ // REPARAR BARCO
 						//boolean enc=false;
-						System.out.println(accion);
+						//System.out.println(accion);
+					
 						System.out.println("Entra a reparar barco");
-						Barco barcoTocado=super.flota.devolverTocadoHundido();
-						if (barcoTocado!=null){
-							
-							Coordenada coord= barcoTocado.getCasillasOcupadas().get(0).getPosicion();
-							jugado = super.repararBarco(coord);
-						}
-						else jugado=false;
+						ArrayList<Barco> barcosTocados=super.flota.devolverTocadoHundido();
+						Iterator<Barco> it = barcosTocados.iterator();
+						boolean reparado = false;
+						Barco b = null;
 						
+						while(!reparado && it.hasNext()) {
+							b = it.next();
+							reparado = super.repararBarco(b.getCasillasOcupadas().get(0).getPosicion());
+							
+						}
+						jugado = reparado;					
 				}
 			
 			}

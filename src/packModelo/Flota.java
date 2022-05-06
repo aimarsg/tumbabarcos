@@ -86,7 +86,7 @@ public class Flota {
 	}
 
 
-	public Barco devolverTocadoHundido(){
+	public ArrayList<Barco> devolverTocadoHundido(){
 		return this.barcosColocados.devolverTocadoHundido();
 		//return barco;
 	}

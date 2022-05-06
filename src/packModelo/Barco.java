@@ -44,14 +44,16 @@ public abstract class Barco {
 		
 	}
 	public void reparar() {
-		this.contLibres = 0;
+		this.contLibres = casillasOcupadas.size();
 		this.casillasOcupadas.stream().forEach(c -> c.cambiarEstado("Barco"));
 		this.hundido = false;
 		
 		
 	}
 
-	
+	public boolean hundido() {
+		return hundido;
+	}
 	
 	public int estaTocado() {
 		//devuelve el numero de casillas tocadas

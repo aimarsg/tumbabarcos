@@ -2,6 +2,7 @@ package packModelo;
 import java.util.*;
 
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class ListaBarcos {
 	private ArrayList<Barco> lista;
@@ -57,9 +58,11 @@ public class ListaBarcos {
 		return lista.isEmpty();
 	}
 
-	public Barco devolverTocadoHundido(){
-		Barco barco = null;
-		boolean enc = false;
+	public ArrayList<Barco> devolverTocadoHundido(){
+		
+		return (ArrayList<Barco>) lista.stream().filter( b -> b.estaTocado()>=1 ).collect(Collectors.toList());
+		
+		/*boolean enc = false;
 		Iterator<Barco> itr = this.obtenerIterador();
 		
 		while(!enc && itr.hasNext()){
@@ -70,7 +73,8 @@ public class ListaBarcos {
 		}
 		
 		if(enc==false){barco = null;}
-		return barco;
+		return barco;*/
+		
 	}
 
 }

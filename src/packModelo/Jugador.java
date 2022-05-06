@@ -126,9 +126,15 @@ public abstract class Jugador extends Observable{
 			int numCasillas = nuevo.estaTocado();
 			if (numCasillas != 0) {       
 				if (presupuesto >= numCasillas*100) {
+					if (nuevo.hundido()){
+						flota.anadirNumBarcos();
+					}
 					nuevo.reparar();
 					presupuesto = presupuesto - (100*numCasillas);
 					mostrarBarcoReparado(nuevo.getCasillasOcupadas());
+					setChanged();
+					notifyObservers("ActualizarMarcador");
+				
 					return true;
 				}else{
 					setChanged();
@@ -162,6 +168,9 @@ public abstract class Jugador extends Observable{
 		this.presupuesto = this.presupuesto + pSaldo;
 	}
 
+	public int getNumBarcos(){
+		return flota.getNumBarcos();
+	}
 
 	/*
 

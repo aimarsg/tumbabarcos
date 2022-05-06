@@ -33,6 +33,9 @@ public class Modelo extends Observable {
 			}
 			
 		}
+		try {Thread.sleep(2500);}//PARA ESPERAR DOS SEGUNDO Y QUE NO SE SOLAPEN LOS AUDIOS
+		catch (InterruptedException e) {// TODO Auto-generated catch block
+		e.printStackTrace();}
 		if(acabarO){
 			System.out.println("Usuario has ganado ");
 			setChanged();

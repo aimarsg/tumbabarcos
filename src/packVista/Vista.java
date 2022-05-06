@@ -66,7 +66,7 @@ public class Vista extends JFrame implements Observer {
 	//private JRadioButton Seleccion;
 	private JCheckBox horizontal;
 	private JCheckBox vertical;
-	private int barcosU, barcosO;
+	//private int barcosU, barcosO;
 	private static Coordenada coordClickadaUsuario;
 	private static Coordenada coordClickadaOrdenador;
 	private static JLabel labelClicadoUsuario;
@@ -254,24 +254,25 @@ public class Vista extends JFrame implements Observer {
 		
 		
 
-		barcosO = 10;
-		barcosU = 10;
 
-		marcadorO = new JLabel("Barcos restantes del Ordenador: " + barcosO);
+		marcadorO = new JLabel();
 		marcadorO.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		marcadorO.setVisible(false);
 		panel_3.add(marcadorO);
-		marcadorU = new JLabel("Barcos restantes del Usuario: " + barcosU);
+		marcadorU = new JLabel();
 		marcadorU.setFont(new Font("Mongolian Baiti", Font.PLAIN, 14));
 		marcadorU.setVisible(false);
 		panel_3.add(marcadorU);
+		
+		this.actualizarMarcador();
+		
 		crearButtons();		
 	}
 
-	private Iterator<JLabel> getIteradorUsuario() {
+	/*private Iterator<JLabel> getIteradorUsuario() {
 		return this.labelsUsuario.iterator();
 	}
-
+*/
 	/*
 	 * private JButton cbt(int i, int j) { //parámetros de entrada
 	 * 
@@ -436,14 +437,11 @@ public class Vista extends JFrame implements Observer {
 				
 
 			}
-			// actualizacion del marcador cuadndo se hunden los barcos
+			// actualizacion del marcador cuando se hunden los barcos
 
-			if (b.equals("HundirOrdenador")) {
-				barcosO--;
-				marcadorO.setText("Barcos restantes del Ordenador: " + barcosO);
-			} else if (b.equals("HundirUsuario")) {
-				barcosU--;
-				marcadorU.setText("Barcos restantes del Usuario: " + barcosU);
+			if (b.equals("HundirOrdenador")||b.equals("HundirUsuario")) {
+				this.actualizarMarcador();
+				
 			}
 
 			buttonGroup.clearSelection();
@@ -493,6 +491,8 @@ public class Vista extends JFrame implements Observer {
 				udsRadar.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Radar")));
 				udsEscudo.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Escudo")));
 				udsMisil.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Misil")));
+			}else if (((String) arg1).equals("ActualizarMarcador")){
+				this.actualizarMarcador();
 			}
 			else {
 				texto.setText((String) arg1);
@@ -873,6 +873,11 @@ public class Vista extends JFrame implements Observer {
 		}
 		
 		
+	}
+	private void actualizarMarcador() {
+		//este metodo actualiza el numero de barcos que se muestran restantes 
+		marcadorU.setText("Barcos restantes del Usuario: " + Modelo.getModelo().getUsuario().getNumBarcos());
+		marcadorO.setText("Barcos restantes del Ordenador: " + Modelo.getModelo().getOrdenador().getNumBarcos());
 	}
 	
 	private void intercambioDePaneles() {

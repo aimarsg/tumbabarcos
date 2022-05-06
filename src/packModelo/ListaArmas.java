@@ -16,7 +16,7 @@ public class ListaArmas {
 	}*/
 	public void anadirArma( Arma pArma) {
 		listaArmas.add(pArma);
-		System.out.println(listaArmas.size());
+		//System.out.println(listaArmas.size());
 	}
 
 	private Iterator<Arma> getIterador() {
