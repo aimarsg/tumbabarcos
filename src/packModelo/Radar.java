@@ -11,7 +11,6 @@ public class Radar extends Arma  {
 		super(pPrecio);
 		//ubicacion= pUbicacion;
 		numConsultas= pConsultas;
-		arma= new ActRadar();
 	}
 
 

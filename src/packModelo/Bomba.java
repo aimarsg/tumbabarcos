@@ -4,7 +4,6 @@ public class Bomba extends Arma {
 
 	public Bomba(double pPrecio) {
 		super(pPrecio);
-		arma = new BombaDisp();
 		
 	}
 

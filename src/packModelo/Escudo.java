@@ -8,7 +8,6 @@ public class Escudo extends Arma {
 	public Escudo(double pPrecio, int pImpactos) {
 		super(pPrecio);
 		numImpactos= pImpactos;
-		arma = new ColocarEscudo();
 	}
 
 	/*public void esAlcanzado() {
