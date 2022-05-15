@@ -107,7 +107,7 @@ public abstract class Jugador extends Observable{
 			int x = r.getUbi().getY()+1;
 			int y = r.getUbi().getX()+1;
 			setChanged();
-			notifyObservers("radar colocado en "+x+y);
+			notifyObservers("radar colocado en columna "+x+" y fila "+y);
 			
 			//para que se ponga
 			this.verRadar(r.getUbi(), true);

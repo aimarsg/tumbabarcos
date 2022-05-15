@@ -28,6 +28,7 @@ import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.sound.sampled.AudioInputStream;
@@ -43,6 +44,10 @@ import javax.swing.JTextField;
 
 public class Vista extends JFrame implements Observer {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private Controler controler = null;
 	private MouseControler mouseC = null;
@@ -267,6 +272,8 @@ public class Vista extends JFrame implements Observer {
 		this.actualizarMarcador();
 		
 		crearButtons();		
+		
+		setVisible(true);
 	}
 
 	/*private Iterator<JLabel> getIteradorUsuario() {
@@ -496,6 +503,10 @@ public class Vista extends JFrame implements Observer {
 				udsMisil.setText(Integer.toString(Almacen.getAlmacen().devolverCantArmas("Misil")));
 			}else if (((String) arg1).equals("ActualizarMarcador")){
 				this.actualizarMarcador();
+			}else if(((String) arg1).equals("GanaUsuario")) {
+				JOptionPane.showMessageDialog(this, "Enhorabuena! Has ganado!");
+			}else if(((String) arg1).equals("GanaOrdenador")) {
+				JOptionPane.showMessageDialog(this, "lo sentimos, has perdido!!");
 			}
 			else {
 				texto.setText((String) arg1);
@@ -916,4 +927,5 @@ public class Vista extends JFrame implements Observer {
 		PanelBarcos.add(textoEscudo);
 		PanelBarcos.add(udsEscudo);
 	}
+	
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import packVista.Sonido;
+import tumbabarcos.main;
 
 public class Modelo extends Observable {
 
@@ -40,13 +41,22 @@ public class Modelo extends Observable {
 			System.out.println("Usuario has ganado ");
 			setChanged();
 			notifyObservers("Has ganadoooo!!!");
+			setChanged();
+			notifyObservers("GanaUsuario");
 			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}else{
 			System.out.println("Ordenador has ganado ");
 			setChanged();
 			notifyObservers("El ordenador ha ganadoooo!!");
+			setChanged();
+			notifyObservers("GanaOrdenador");
 			Sonido.getMiSonido().ReproducirSonido("Resources/Fin.wav");
 		}
+		/*try {Thread.sleep(2500);}//PARA ESPERAR DOS SEGUNDO Y QUE NO SE SOLAPEN LOS AUDIOS
+		catch (InterruptedException e) {// TODO Auto-generated catch block
+		e.printStackTrace();}
+		main.main(null);*/
+		
 	}
 
 	public void inicializar() {
